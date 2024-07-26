@@ -14,6 +14,7 @@ struct BaseView: View {
         VStack{
             Text("00.00.00")
                 .font(.title)
+                .padding(.bottom, 30)
             //      dateformatter
             HStack{
                 Text("무계획 여행")
@@ -24,9 +25,15 @@ struct BaseView: View {
                 Text("누적 00건")
             }
             .padding(.bottom, 50)
-            
-            Image(systemName: "airplane.departure")
-                .font(.title)
+            ZStack{
+                Circle()
+                    .fill(.white)
+                    .stroke(Color.blue, lineWidth: 3)
+                    .frame(width: 250)
+                Image(systemName: "airplane.departure")
+                    .font(.system(size: 50, weight: .bold, design: .default))
+                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            }
             
             }
             //
