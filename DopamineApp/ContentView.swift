@@ -6,16 +6,14 @@
 //
 
 import SwiftUI
+import Combine
+import Foundation
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+
+        BaseView()
+        
     }
 }
 
