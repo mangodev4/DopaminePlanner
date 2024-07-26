@@ -13,18 +13,22 @@ struct BaseView: View {
         //  MainView
         VStack{
             Text("00.00.00")
-                .font(.title)
+                .font(.pretendardBold28)
                 .foregroundColor(.blue1)
                 .padding(.bottom, 30)
             //      dateformatter
             HStack{
                 Text("무계획 여행")
+                    .font(.pretendardSemiBold16)
                 Text("누적 00건")
+                    .font(.pretendardMedium16)
                     .foregroundColor(.gray1)
             }
             HStack{
                 Text("수정된 일정")
+                    .font(.pretendardSemiBold16)
                 Text("누적 00건")
+                    .font(.pretendardMedium16)
                     .foregroundColor(.gray1)
             }
             .padding(.bottom, 50)
@@ -40,7 +44,7 @@ struct BaseView: View {
             
             Button("여행 시작하기") { }
             .buttonStyle(.borderedProminent)
-            .font(.title3)
+            .font(.pretendardMedium18)
             .tint(.blue1)
             .padding(.top, 30)
             

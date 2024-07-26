@@ -1,5 +1,5 @@
 //
-//  ColorExtentsion.swift
+//  ColorExtension.swift
 //  DopamineApp
 //
 //  Created by Yujin Son on 7/26/24.
@@ -11,23 +11,22 @@ import SwiftUI
 // make color extension
 
 extension Color {
-    
+    //MARK: App System color
     static let blue1 = Color(hex: "00B2FF")
     static let blue2 = Color(hex: "F7FDFF") //  plan box selected
     static let blue3 = Color(hex: "")
     static let blue4 = Color(hex: "EAF9FF") //  circle border
+    
+    //MARK: Gray Scale
     static let gray1 = Color(hex: "7F7F7F")
 
-    
-
-    
  
     static let peach = Color(hex: "ff8882")
     static let ivory = Color(hex: "f8ede3")
     static let brown = Color(hex: "897853")
 }
 
-//  Hex code extension
+//  UIColor Hex code extension
 
 extension Color {
   init(hex: String) {
