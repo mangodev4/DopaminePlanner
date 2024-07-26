@@ -14,26 +14,35 @@ struct BaseView: View {
         VStack{
             Text("00.00.00")
                 .font(.title)
+                .foregroundColor(.blue1)
                 .padding(.bottom, 30)
             //      dateformatter
             HStack{
                 Text("무계획 여행")
                 Text("누적 00건")
+                    .foregroundColor(.gray1)
             }
             HStack{
                 Text("수정된 일정")
                 Text("누적 00건")
+                    .foregroundColor(.gray1)
             }
             .padding(.bottom, 50)
             ZStack{
                 Circle()
                     .fill(.white)
-                    .stroke(Color.blue, lineWidth: 3)
+                    .stroke(Color.blue4, lineWidth: 6)
                     .frame(width: 250)
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 50, weight: .bold, design: .default))
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(.blue1)
             }
+            
+            Button("여행 시작하기") { }
+            .buttonStyle(.borderedProminent)
+            .font(.title3)
+            .tint(.blue1)
+            .padding(.top, 30)
             
             }
             //
