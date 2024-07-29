@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct CalenderView: View {
-  @State var month: Date
-  @State var offset: CGSize = CGSize()
-  @State var clickedDates: Set<Date> = []
+    @State var month: Date
+    @State var offset: CGSize = CGSize()
+    @State var clickedDates: Set<Date> = []
+    @State var startDate: Date? = nil
+    @State var endDate: Date? = nil
   
   var body: some View {
     VStack {
       headerView
+            .background(Color.blue2)
+            .zIndex(1)
       calendarGridView
     }
     .gesture(
@@ -34,21 +38,43 @@ struct CalenderView: View {
   }
   
   // MARK: - 헤더 뷰
-  private var headerView: some View {
-    VStack {
-      Text(month, formatter: Self.dateFormatter)
-        .font(.title)
-        .padding(.bottom)
-      
-      HStack {
-        ForEach(Self.weekdaySymbols, id: \.self) { symbol in
-          Text(symbol)
-            .frame(maxWidth: .infinity)
+    private var headerView: some View {
+        VStack {
+            HStack {
+                Button(action: {
+                    changeMonth(by: -1)
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.gray1)
+                        .font(.title3)
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 10)
+                }
+                Text(month, formatter: Self.dateFormatter)
+                    .frame(width: 220)
+                    .font(.pretendardSemiBold28)
+                    .padding(.bottom)
+                Button(action: {
+                    changeMonth(by: 1)
+                }) {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray1)
+                        .font(.title3)
+                        .padding(.leading, 20)
+                        .padding(.bottom, 10)
+                }
+            }
+            HStack {
+                ForEach(Self.weekdaySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .foregroundColor(.gray2)
+                        .font(.pretendardMedium18)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            .padding(.bottom, 5)
         }
-      }
-      .padding(.bottom, 5)
     }
-  }
   
   // MARK: - 날짜 그리드 뷰
   private var calendarGridView: some View {
@@ -56,30 +82,65 @@ struct CalenderView: View {
     let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
 
     return VStack {
-      LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-        ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-          if index < firstWeekday {
-            RoundedRectangle(cornerRadius: 5)
-              .foregroundColor(Color.clear)
-          } else {
-            let date = getDate(for: index - firstWeekday)
-            let day = index - firstWeekday + 1
-            let clicked = clickedDates.contains(date)
-            
-            CellView(day: day, clicked: clicked)
-              .onTapGesture {
-                if clicked {
-                  clickedDates.remove(date)
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+            ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
+                if index < firstWeekday {
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(Color.clear)
                 } else {
-                  clickedDates.insert(date)
+                    let date = getDate(for: index - firstWeekday)
+                    let day = index - firstWeekday + 1
+                    let clicked = clickedDates.contains(date)
+                    let isInRange = isDateInRange(date)
+                    
+                    
+                    ZStack {
+                        if isInRange {
+                            RoundedRectangle(cornerRadius: 100)
+                                .frame(width: 55)
+                                .foregroundColor(.blue)
+                                .opacity(0.3)
+                        }
+                        
+                        CellView(day: day, clicked: clicked)
+                            .background(
+                                Circle()
+                                    .frame(width: 50)
+                                    .foregroundColor(clicked ? Color.blue3 : Color.clear)
+                                    .scaleEffect(4)
+                            )
+                            .onTapGesture {
+                                if startDate == nil {
+                                    startDate = date
+                                } else if endDate == nil {
+                                    endDate = date
+                                } else {
+                                    startDate = date
+                                    endDate = nil
+                                }
+                                if clicked {
+                                    clickedDates.remove(date)
+                                } else {
+                                    clickedDates.insert(date)
+                                }
+                            }
+                            .padding(10)
+                    }
                 }
-              }
-          }
+            }
         }
-      }
     }
   }
+
+
+private func isDateInRange(_ date: Date) -> Bool {
+    guard let start = startDate, let end = endDate else {
+        return false
+    }
+    return date >= start && date <= end
 }
+}
+
 
 // MARK: - 일자 셀 뷰
 private struct CellView: View {
@@ -96,13 +157,14 @@ private struct CellView: View {
       RoundedRectangle(cornerRadius: 5)
         .opacity(0)
         .overlay(Text(String(day)))
-        .foregroundColor(.blue)
+        .foregroundColor(.black)
+        .font(.pretendardMedium20)
       
-      if clicked {
-        Text("Click")
-          .font(.caption)
-          .foregroundColor(.red)
-      }
+//      if clicked {
+//        Text("Click")
+//          .font(.caption)
+//          .foregroundColor(.red)
+//      }
     }
   }
 }
@@ -154,5 +216,5 @@ extension CalenderView {
 }
 
 #Preview {
-    CalenderView(month: <#Date#>)
+    CalenderView(month: Date())
 }

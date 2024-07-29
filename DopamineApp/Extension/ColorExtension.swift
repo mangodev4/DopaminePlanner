@@ -14,11 +14,12 @@ extension Color {
     //MARK: App System color
     static let blue1 = Color(hex: "00B2FF")
     static let blue2 = Color(hex: "F7FDFF") //  plan box selected
-    static let blue3 = Color(hex: "")
+    static let blue3 = Color(hex: "68D2FF")
     static let blue4 = Color(hex: "EAF9FF") //  circle border
     
     //MARK: Gray Scale
-    static let gray1 = Color(hex: "7F7F7F")
+    static let gray1 = Color(hex: "6D6D6D")
+    static let gray2 = Color(hex: "7F7F7F")
 
  
     static let peach = Color(hex: "ff8882")

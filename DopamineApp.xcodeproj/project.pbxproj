@@ -75,7 +75,6 @@
 				A5ABD6CF2C5384AC003AF62A /* Extension */,
 				A5ABD6CA2C5244AD003AF62A /* Model */,
 				A5ABD6C92C5244A3003AF62A /* View */,
-				A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */,
 				A5ABD6BD2C522F2B003AF62A /* ContentView.swift */,
 				A5ABD6BF2C522F2C003AF62A /* Assets.xcassets */,
 				A5ABD6C12C522F2C003AF62A /* Preview Content */,
@@ -94,6 +93,7 @@
 		A5ABD6C92C5244A3003AF62A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */,
 				A5ABD6CB2C5244D1003AF62A /* BaseView.swift */,
 				A5ABD6CD2C5353E7003AF62A /* CalenderView.swift */,
 				A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */,

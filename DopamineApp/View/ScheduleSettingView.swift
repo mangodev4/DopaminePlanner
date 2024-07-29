@@ -15,10 +15,11 @@ struct ScheduleSettingView: View {
             VStack {
                 Text(isStartDate ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
                     .font(.pretendardBold18)
+                    .padding(20)
                 
                 
                 // 캘린더 뷰 띄울 위치
-                CalenderView()
+                CalenderView(month: Date())
                 
                 Button(action: {
                     isStartDate.toggle()
