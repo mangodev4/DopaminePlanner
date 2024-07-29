@@ -9,7 +9,13 @@ import SwiftUI
 
 struct PlanSettingView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("포항 여행 할일")
+                .font(.pretendardBold28)
+        }
+            .navigationTitle("")
+            .navigationBarBackButtonHidden(true)
+
     }
 }
 

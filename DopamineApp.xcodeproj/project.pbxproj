@@ -19,6 +19,8 @@
 		A5ABD6D92C5394EA003AF62A /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6D52C5394EA003AF62A /* Pretendard-Regular.otf */; };
 		A5ABD6DA2C5394EA003AF62A /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6D62C5394EA003AF62A /* Pretendard-SemiBold.otf */; };
 		A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6DC2C53952E003AF62A /* FontExtension.swift */; };
+		A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */; };
+		A5ABD6E12C54BBD9003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		A5ABD6D52C5394EA003AF62A /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		A5ABD6D62C5394EA003AF62A /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		A5ABD6DC2C53952E003AF62A /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettingView.swift; sourceTree = "<group>"; };
+		A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 			children = (
 				A5ABD6CB2C5244D1003AF62A /* BaseView.swift */,
 				A5ABD6CD2C5353E7003AF62A /* CalenderView.swift */,
+				A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */,
+				A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,7 +213,9 @@
 			files = (
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
+				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
+				A5ABD6E12C54BBD9003AF62A /* PlanSettingView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
 				A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */,
