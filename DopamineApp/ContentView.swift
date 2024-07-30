@@ -11,8 +11,9 @@ import Foundation
 
 struct ContentView: View {
     var body: some View {
-
-        BaseView()
+        
+        ScheduleSettingView()
+//        BaseView()
         
     }
 }

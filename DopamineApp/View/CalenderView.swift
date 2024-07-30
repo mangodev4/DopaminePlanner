@@ -11,8 +11,8 @@ struct CalenderView: View {
     @State var month: Date
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
-    @State var startDate: Date? = nil
-    @State var endDate: Date? = nil
+    @Binding var startDate: Date?
+    @Binding var endDate: Date?
   
   var body: some View {
     VStack {
@@ -226,6 +226,6 @@ extension CalenderView {
   static let weekdaySymbols = Calendar.current.veryShortWeekdaySymbols
 }
 
-#Preview {
-    CalenderView(month: Date())
-}
+//#Preview {
+//    CalenderView(month: Date(), startDate: $startDate, endDate: $endDate)
+//}
