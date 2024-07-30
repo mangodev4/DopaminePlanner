@@ -92,6 +92,7 @@ struct CalenderView: View {
                     let day = index - firstWeekday + 1
                     let clicked = clickedDates.contains(date)
                     let isInRange = isDateInRange(date)
+                    let isStartOrEndDate = date == startDate || date == endDate
                     
                     
                     ZStack {
@@ -106,18 +107,23 @@ struct CalenderView: View {
                             .background(
                                 Circle()
                                     .frame(width: 50)
-                                    .foregroundColor(clicked ? Color.blue3 : Color.clear)
+                                    .foregroundColor(isStartOrEndDate ? Color.blue3 : Color.clear)
                                     .scaleEffect(4)
                             )
                             .onTapGesture {
-                                if startDate == nil {
+                                if let start = startDate, let end = endDate {
+                                    resetDates()
+                                    startDate = date
+                                } else if startDate == nil {
                                     startDate = date
                                 } else if endDate == nil {
-                                    endDate = date
-                                } else {
-                                    startDate = date
-                                    endDate = nil
-                                }
+                                    if date < startDate! {
+                                        resetDates()
+                                        startDate = date
+                                    } else {
+                                        endDate = date
+                                    }
+                                    }
                                 if clicked {
                                     clickedDates.remove(date)
                                 } else {
@@ -139,6 +145,11 @@ private func isDateInRange(_ date: Date) -> Bool {
     }
     return date >= start && date <= end
 }
+    private func resetDates() {
+        clickedDates.removeAll()
+        startDate = nil
+        endDate = nil
+    }
 }
 
 

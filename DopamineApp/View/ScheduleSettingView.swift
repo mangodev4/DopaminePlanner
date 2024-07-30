@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScheduleSettingView: View {
     @State private var isStartDate = true
-
+   
     var body: some View {
         NavigationStack {
             VStack {
