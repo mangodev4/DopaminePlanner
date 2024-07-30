@@ -23,6 +23,7 @@ struct ScheduleSettingView: View {
                 CalenderView(month: Date(), startDate: $startDate, endDate: $endDate)
                     .padding(.top, 20)
                     .padding(.bottom, 50)
+                    
 
                 NavigationLink(destination: PlanSettingView()) {
                     Text("다음")
