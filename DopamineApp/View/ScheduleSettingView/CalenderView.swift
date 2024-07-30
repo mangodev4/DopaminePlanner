@@ -17,7 +17,7 @@ struct CalenderView: View {
   var body: some View {
     VStack {
       headerView
-            .background(Color.blue2)
+            .background(Color.clear)
             .zIndex(1)
       calendarGridView
     }
@@ -98,9 +98,9 @@ struct CalenderView: View {
                     ZStack {
                         if isInRange {
                             RoundedRectangle(cornerRadius: 100)
-                                .frame(width: 55)
+                                .frame(width: 40)
                                 .foregroundColor(.blue)
-                                .opacity(0.3)
+                                .opacity(0.2)
                         }
                         
                         CellView(day: day, clicked: clicked)
@@ -223,7 +223,7 @@ extension CalenderView {
     return formatter
   }()
   
-  static let weekdaySymbols = Calendar.current.veryShortWeekdaySymbols
+  static let weekdaySymbols = Calendar.current.shortWeekdaySymbols
 }
 
 //#Preview {

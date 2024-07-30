@@ -93,10 +93,9 @@
 		A5ABD6C92C5244A3003AF62A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A5ABD6E42C58989F003AF62A /* ScheduleSettingView */,
 				A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */,
 				A5ABD6CB2C5244D1003AF62A /* BaseView.swift */,
-				A5ABD6CD2C5353E7003AF62A /* CalenderView.swift */,
-				A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */,
 				A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */,
 			);
 			path = View;
@@ -135,6 +134,15 @@
 				A5ABD6D62C5394EA003AF62A /* Pretendard-SemiBold.otf */,
 			);
 			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		A5ABD6E42C58989F003AF62A /* ScheduleSettingView */ = {
+			isa = PBXGroup;
+			children = (
+				A5ABD6CD2C5353E7003AF62A /* CalenderView.swift */,
+				A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */,
+			);
+			path = ScheduleSettingView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

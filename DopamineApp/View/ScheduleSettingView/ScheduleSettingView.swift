@@ -16,19 +16,20 @@ struct ScheduleSettingView: View {
             VStack {
                 Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
                     .font(.pretendardMedium24)
-                    .padding(20)
+                    .padding(.bottom, 50)
                 
                 
                 // 캘린더 뷰 띄울 위치
                 CalenderView(month: Date(), startDate: $startDate, endDate: $endDate)
                     .padding(.top, 20)
-                    .padding(.bottom, 50)
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 100)
                     
 
                 NavigationLink(destination: PlanSettingView()) {
                     Text("다음")
                         .frame(width: 200, height: 20)
-                        .font(.pretendardBold18)
+                        .font(.pretendardBold20)
                         .padding()
                         .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
                         .foregroundColor(.white)
@@ -36,7 +37,6 @@ struct ScheduleSettingView: View {
                 }
                 .disabled(startDate == nil || endDate == nil)
             }
-            .padding()
         }
     }
     
