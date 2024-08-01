@@ -11,6 +11,14 @@ struct PlanSettingView: View {
     var startDate: Date
     var endDate: Date
     
+    @State private var currentPage: Date
+     
+     init(startDate: Date, endDate: Date) {
+         self.startDate = startDate
+         self.endDate = endDate
+         _currentPage = State(initialValue: startDate)
+     }
+    
     var body: some View {
         VStack {
             headerView
@@ -35,16 +43,16 @@ struct PlanSettingView: View {
             
             Spacer()
             
-            return Button(action: {
+            Button(action: {
                 changePage(by: 1)
-            }){
+            }) {
                 Image(systemName: "chevron.right")
             }
+        
             .padding()
         }
     }
     
-    @State private var currentPage: Date = Date()
     
     private var pageView: some View {
         VStack {
@@ -59,10 +67,11 @@ struct PlanSettingView: View {
     private func changePage(by value: Int) {
         let calendar = Calendar.current
         if let newPage = calendar.date(byAdding: .day, value: value, to: currentPage),
-            newPage >= startDate && newPage <= endDate {
-             currentPage = newPage
-         }
+           newPage >= startDate && newPage <= endDate {
+            currentPage = newPage
+        }
     }
+    
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy.MM.dd"
