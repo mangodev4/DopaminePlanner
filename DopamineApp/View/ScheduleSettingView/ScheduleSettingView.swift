@@ -10,6 +10,7 @@ import SwiftUI
 struct ScheduleSettingView: View {
     @State private var startDate: Date? = nil
     @State private var endDate: Date? = nil
+    @State private var isNavigating = false
    
     var body: some View {
         NavigationStack {
@@ -26,16 +27,26 @@ struct ScheduleSettingView: View {
                     .padding(.bottom, 100)
                     
 
-                NavigationLink(destination: PlanSettingView()) {
-                    Text("다음")
-                        .frame(width: 200, height: 20)
-                        .font(.pretendardBold20)
-                        .padding()
-                        .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                Button(action: {
+                                if startDate != nil && endDate != nil {
+                                    isNavigating = true
+                                }
+                            }) {
+                                Text("다음")
+                                    .frame(width: 100)
+                                    .font(.pretendardBold18)
+                                    .padding()
+                                    .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
                 }
                 .disabled(startDate == nil || endDate == nil)
+                
+                NavigationLink(
+                               destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                               isActive: $isNavigating,
+                               label: { EmptyView() }
+                           )
             }
         }
     }
