@@ -7,25 +7,40 @@
 
 import SwiftUI
 
+enum HeaderButtonType {
+    case set
+    case plan
+}
+
 struct HeaderButtonsView: View {
-    
-    var onBack: () -> Void
+    var type: HeaderButtonType
+    var onBack: (() -> Void)?
     var onEnd: () -> Void
     
     var body: some View {
         
         HStack {
-            Button(action: onBack, label: {
-                Text("뒤로")
-            })
-            
+            if type == .set {
+                Button(action: {
+                    onBack?()
+                }) {
+                    Text("<뒤로")
+                        .font(.pretendardBold18)
+                        .foregroundColor(.gray)
+                        .underline()
+                }
+            }
             Spacer()
             
-            Button(action: onBack, label: {
+            Button(action: onEnd, label: {
                 Text("여행종료")
+                    .font(.pretendardBold18)
+                    .foregroundColor(.gray)
+                    .underline()
             })
             
         }
+        .padding(.horizontal)
         
     }
 }
