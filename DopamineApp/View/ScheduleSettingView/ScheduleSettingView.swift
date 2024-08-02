@@ -10,6 +10,7 @@ import SwiftUI
 struct ScheduleSettingView: View {
     @State private var startDate: Date? = nil
     @State private var endDate: Date? = nil
+//    @State private var isNavigating = false
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
 
@@ -17,17 +18,7 @@ struct ScheduleSettingView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HeaderButtonsView(
-                    type: .set,
-                    onBack: {
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController?.dismiss(animated: true, completion: nil)
-                        }
-                    },
-                    onEnd: {
-                        isNavigatingToBase = true
-                    }
-                )
+                HeaderButtons
                 
                 Spacer()
                 
@@ -62,7 +53,7 @@ struct ScheduleSettingView: View {
                 .disabled(startDate == nil || endDate == nil)
                 
                 NavigationLink(
-                               destination: PlanSettingView(),
+                               destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
                                isActive: $isNavigatingToPlan,
                                label: { EmptyView() }
                            )
@@ -78,33 +69,35 @@ struct ScheduleSettingView: View {
         }
     }
     
-//    // MARK: 헤더 버튼 뷰
-//    private var HeaderButtons: some View {
-//        HStack {
-//            Button(action: {
-//                }
-//            }) {
-//                Text("<뒤로")
-//                    .font(.pretendardBold18)
-//                    .foregroundColor(.gray)
-//                    .underline()
-//            }
-//            .padding(.leading, 10)
-//            
-//            Spacer()
-//            
-//            Button(action: {
-//                isNavigatingToBase = true
-//            }) {
-//                Text("여행 종료")
-//                    .font(.pretendardBold18)
-//                    .foregroundColor(.gray)
-//                    .underline()
-//            }
-//            .padding(.trailing, 10)
-//        }
-//        .padding()
-//    }
+    // MARK: 헤더 버튼 뷰
+    private var HeaderButtons: some View {
+        HStack {
+            Button(action: {
+                if let window = UIApplication.shared.windows.first {
+                    window.rootViewController?.dismiss(animated: true, completion: nil)
+                }
+            }) {
+                Text("<뒤로")
+                    .font(.pretendardBold18)
+                    .foregroundColor(.gray)
+                    .underline()
+            }
+            .padding(.leading, 10)
+            
+            Spacer()
+            
+            Button(action: {
+                isNavigatingToBase = true
+            }) {
+                Text("여행 종료")
+                    .font(.pretendardBold18)
+                    .foregroundColor(.gray)
+                    .underline()
+            }
+            .padding(.trailing, 10)
+        }
+        .padding()
+    }
     
 }
 
