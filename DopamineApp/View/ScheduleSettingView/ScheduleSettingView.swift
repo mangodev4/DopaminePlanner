@@ -53,7 +53,7 @@ struct ScheduleSettingView: View {
                 .disabled(startDate == nil || endDate == nil)
                 
                 NavigationLink(
-                               destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                               destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
                                isActive: $isNavigating,
                                label: { EmptyView() }
                            )

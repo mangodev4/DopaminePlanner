@@ -20,7 +20,9 @@
 		A5ABD6DA2C5394EA003AF62A /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6D62C5394EA003AF62A /* Pretendard-SemiBold.otf */; };
 		A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6DC2C53952E003AF62A /* FontExtension.swift */; };
 		A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */; };
-		A5ABD6E12C54BBD9003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */; };
+		A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E02C54BBD9003AF62A /* PlanView.swift */; };
+		A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */; };
+		A5ABD6E92C5C934C003AF62A /* HeaderButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E82C5C934C003AF62A /* HeaderButtonsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +40,9 @@
 		A5ABD6D62C5394EA003AF62A /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		A5ABD6DC2C53952E003AF62A /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettingView.swift; sourceTree = "<group>"; };
-		A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
+		A5ABD6E02C54BBD9003AF62A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
+		A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
+		A5ABD6E82C5C934C003AF62A /* HeaderButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderButtonsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,10 +97,10 @@
 		A5ABD6C92C5244A3003AF62A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A5ABD6E72C5C78F7003AF62A /* PlanView */,
 				A5ABD6E42C58989F003AF62A /* ScheduleSettingView */,
 				A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */,
 				A5ABD6CB2C5244D1003AF62A /* BaseView.swift */,
-				A5ABD6E02C54BBD9003AF62A /* PlanSettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -143,6 +147,16 @@
 				A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */,
 			);
 			path = ScheduleSettingView;
+			sourceTree = "<group>";
+		};
+		A5ABD6E72C5C78F7003AF62A /* PlanView */ = {
+			isa = PBXGroup;
+			children = (
+				A5ABD6E02C54BBD9003AF62A /* PlanView.swift */,
+				A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */,
+				A5ABD6E82C5C934C003AF62A /* HeaderButtonsView.swift */,
+			);
+			path = PlanView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,9 +235,11 @@
 			files = (
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
+				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
+				A5ABD6E92C5C934C003AF62A /* HeaderButtonsView.swift in Sources */,
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
-				A5ABD6E12C54BBD9003AF62A /* PlanSettingView.swift in Sources */,
+				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
 				A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */,

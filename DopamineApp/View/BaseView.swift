@@ -48,12 +48,13 @@ struct BaseView: View {
                 .padding(.bottom, 30)
                 
                 NavigationLink(destination: ScheduleSettingView()) {
-                                    Text("시작하기")
+                                    Text("여행 시작하기")
+                                        .frame(width: 250)
                                         .font(.pretendardBold18)
                                         .padding()
                                         .background(Color.blue1)
                                         .foregroundColor(.white)
-                                        .cornerRadius(10)
+                                        .cornerRadius(14)
                                 }
                 .navigationTitle("")
             }

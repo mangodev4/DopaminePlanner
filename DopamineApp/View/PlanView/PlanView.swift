@@ -1,5 +1,5 @@
 //
-//  PlanSettingView.swift
+//  PlanView.swift
 //  DopamineApp
 //
 //  Created by Yujin Son on 7/27/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlanSettingView: View {
+struct PlanView: View {
     var startDate: Date
     var endDate: Date
     
@@ -89,5 +89,5 @@ struct PlanSettingView: View {
 
 
 //#Preview {
-//    PlanSettingView(startDate: $startDate, endDate: $endDate)
+//    PlanView(startDate: $startDate, endDate: $endDate)
 //}
