@@ -45,7 +45,7 @@ struct CalenderView: View {
                     changeMonth(by: -1)
                 }) {
                     Image(systemName: "chevron.left")
-                        .foregroundColor(.gray1)
+                        .foregroundColor(.blue3)
                         .font(.title3)
                         .padding(.trailing, 20)
                         .padding(.bottom, 10)
@@ -58,12 +58,14 @@ struct CalenderView: View {
                     changeMonth(by: 1)
                 }) {
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.gray1)
+                        .foregroundColor(.blue3)
                         .font(.title3)
                         .padding(.leading, 20)
                         .padding(.bottom, 10)
                 }
             }
+            .padding(.bottom, 10)
+            
             HStack {
                 ForEach(Self.weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)

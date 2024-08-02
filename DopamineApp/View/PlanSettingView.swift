@@ -23,6 +23,8 @@ struct PlanSettingView: View {
         VStack {
             headerView
             pageView
+            
+            Spacer()
         }
             .navigationTitle("")
             .navigationBarBackButtonHidden(true)
@@ -31,6 +33,8 @@ struct PlanSettingView: View {
     
     private var headerView: some View {
         HStack {
+            Spacer()
+
             Button(action: {
                 changePage(by: -1)
             }){
@@ -39,7 +43,7 @@ struct PlanSettingView: View {
             Spacer()
             
             Text(currentPage, formatter: Self.dateFormatter)
-                .font(.pretendardBold20)
+                .font(.pretendardBold24)
             
             Spacer()
             
@@ -48,9 +52,10 @@ struct PlanSettingView: View {
             }) {
                 Image(systemName: "chevron.right")
             }
-        
-            .padding()
-        }
+            
+            Spacer()
+            }
+        .padding(.top, 10)
     }
     
     
@@ -62,6 +67,7 @@ struct PlanSettingView: View {
         .onAppear{
             currentPage = startDate
         }
+        .padding(.top, 5)
     }
     
     private func changePage(by value: Int) {

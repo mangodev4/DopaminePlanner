@@ -16,7 +16,7 @@ struct ScheduleSettingView: View {
         NavigationStack {
             VStack {
                 Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
-                    .font(.pretendardMedium24)
+                    .font(.pretendardBold24)
                     .padding(.bottom, 50)
                 
                 
