@@ -18,7 +18,7 @@ enum AppScreen: Hashable, Identifiable, CaseIterable {
     case base
     case title
     case calendar
-    case setting
+    case list
     case plan
     
     var id: AppScreen { self }
@@ -35,7 +35,7 @@ extension AppScreen {
             TitleView()
         case .calendar:
             ScheduleSettingView()
-        case .setting:
+        case .list:
             PlanSettingView()
         case .plan:
             PlanView(startDate: manager.startDate ?? Date(), endDate: manager.endDate ?? Date())
