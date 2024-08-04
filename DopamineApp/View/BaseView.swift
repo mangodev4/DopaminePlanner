@@ -13,14 +13,13 @@ struct BaseView: View {
     
     var body: some View {
         NavigationStack {
-            
             //  MainView
             VStack{
-                Text("00.00.00")
+                Text(currentDateString())
                     .font(.pretendardBold28)
                     .foregroundColor(.blue1)
                     .padding(.bottom, 30)
-                //      dateformatter
+                
                 HStack{
                     Text("무계획 여행")
                         .font(.pretendardSemiBold16)
@@ -57,9 +56,16 @@ struct BaseView: View {
                                         .cornerRadius(14)
                                 }
                 .navigationTitle("")
+                .navigationBarBackButtonHidden(true)
             }
         }
     }
+    private func currentDateString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM.dd"
+        return dateFormatter.string(from: Date())
+    }
+
 }
             
 
