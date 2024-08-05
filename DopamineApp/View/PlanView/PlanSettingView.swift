@@ -22,7 +22,7 @@ struct PlanSettingView: View {
     //    @State private var startDate: Date? = nil
     //    @State private var endDate: Date? = nil
     @State private var isNavigatingToBase = false
-    @State private var isNavigatingToCal = false
+    @State private var isNavigatingToPlan = false
     
     var body: some View {
         NavigationStack {
@@ -35,7 +35,9 @@ struct PlanSettingView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: PlanView(startDate: startDate , endDate: endDate)) {
+                Button(action: {
+                    isNavigatingToPlan = true
+                }) {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
@@ -45,25 +47,25 @@ struct PlanSettingView: View {
                         .cornerRadius(14)
                 }
                 
-//                NavigationLink(
-//                    destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
-//                    isActive: $isNavigatingToPlan,
-//                    label: { EmptyView() }
-//                )
+                NavigationLink(
+                    destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                    isActive: $isNavigatingToPlan,
+                    label: { EmptyView() }
+                )
                 
                 
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        isNavigatingToCal = true
-                    }) {
-                        Text("<뒤로")
-                            .font(.pretendardBold18)
-                            .foregroundColor(.gray)
-                            .underline()
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button(action: {
+//                        isNavigatingToCal = true
+//                    }) {
+//                        Text("<뒤로")
+//                            .font(.pretendardBold18)
+//                            .foregroundColor(.gray)
+//                            .underline()
+//                    }
+//                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -76,9 +78,9 @@ struct PlanSettingView: View {
                     }
                 }
             }
-            .navigationDestination(isPresented: $isNavigatingToCal) {
-                    ScheduleSettingView()
-            }
+//            .navigationDestination(isPresented: $isNavigatingToCal) {
+//                    ScheduleSettingView()
+//            }
             .navigationDestination(isPresented: $isNavigatingToBase) {
                     BaseView()
             }

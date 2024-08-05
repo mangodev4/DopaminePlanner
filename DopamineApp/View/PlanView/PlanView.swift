@@ -12,6 +12,7 @@ struct PlanView: View {
     var endDate: Date
     
     @State private var currentPage: Date
+    @State private var isNavigatingToBase = false
      
      init(startDate: Date, endDate: Date) {
          self.startDate = startDate
@@ -25,6 +26,21 @@ struct PlanView: View {
             pageView
             
             Spacer()
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isNavigatingToBase = true
+                }) {
+                    Text("여행 종료")
+                        .font(.pretendardBold18)
+                        .foregroundColor(.gray)
+                        .underline()
+                }
+            }
+        }
+        .navigationDestination(isPresented: $isNavigatingToBase) {
+                BaseView()
         }
             .navigationTitle("")
             .navigationBarBackButtonHidden(true)

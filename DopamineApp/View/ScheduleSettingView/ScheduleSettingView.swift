@@ -13,12 +13,13 @@ struct ScheduleSettingView: View {
 //    @State private var isNavigating = false
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
+    @State private var isNavigatingToTitle = false
 
    
     var body: some View {
         NavigationStack {
             VStack {
-                HeaderButtons
+//                HeaderButtons
 
                 Spacer()
                 
@@ -36,12 +37,7 @@ struct ScheduleSettingView: View {
                     .padding(.bottom, 100)
                     
                 Spacer()
-                
-                Button(action: {
-                                if startDate != nil && endDate != nil {
-                                    isNavigatingToPlan = true
-                                }
-                            }) {
+                NavigationLink(destination: PlanSettingView(startDate: Date(), endDate: Date())) {
                                 Text("다음")
                                     .frame(width: 300)
                                     .font(.pretendardBold18)
@@ -52,15 +48,45 @@ struct ScheduleSettingView: View {
                 }
                 .disabled(startDate == nil || endDate == nil)
                 
-                NavigationLink(
-                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
-                               isActive: $isNavigatingToPlan,
-                               label: { EmptyView() }
-                           )
+//                NavigationLink(
+//                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+//                               isActive: $isNavigatingToPlan,
+//                               label: { EmptyView() }
+//                           )
                 Spacer()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    isNavigatingToTitle = true
+                }) {
+                    Text("<뒤로")
+                        .font(.pretendardBold18)
+                        .foregroundColor(.gray)
+                        .underline()
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isNavigatingToBase = true
+                }) {
+                    Text("여행 종료")
+                        .font(.pretendardBold18)
+                        .foregroundColor(.gray)
+                        .underline()
+                }
+            }
+        }
+        .navigationDestination(isPresented: $isNavigatingToTitle) {
+                TitleView()
+        }
+        .navigationDestination(isPresented: $isNavigatingToBase) {
+                BaseView()
+        }
         .navigationBarBackButtonHidden(true)
+        
     }
     
     private func checkIfBothDatesAreSelected() {
@@ -70,37 +96,36 @@ struct ScheduleSettingView: View {
         }
     }
     
-    // MARK: 헤더 버튼 뷰
-    private var HeaderButtons: some View {
-        HStack {
-            Button(action: {
-                if let window = UIApplication.shared.windows.first {
-                    window.rootViewController?.dismiss(animated: true, completion: nil)
-                }
-            }) {
-                Text("<뒤로")
-                    .font(.pretendardBold18)
-                    .foregroundColor(.gray)
-                    .underline()
-            }
-            .padding(.leading, 10)
-            
-            Spacer()
-            
-            Button(action: {
-                isNavigatingToBase = true
-            }) {
-                Text("여행 종료")
-                    .font(.pretendardBold18)
-                    .foregroundColor(.gray)
-                    .underline()
-            }
-            .padding(.trailing, 10)
-        }
-        .padding()
+//    // MARK: 헤더 버튼 뷰
+//    private var HeaderButtons: some View {
+//        HStack {
+//            Button(action: {
+//                if let window = UIApplication.shared.windows.first {
+//                    window.rootViewController?.dismiss(animated: true, completion: nil)
+//                }
+//            }) {
+//                Text("<뒤로")
+//                    .font(.pretendardBold18)
+//                    .foregroundColor(.gray)
+//                    .underline()
+//            }
+//            .padding(.leading, 10)
+//            
+//            Spacer()
+//            
+//            Button(action: {
+//                isNavigatingToBase = true
+//            }) {
+//                Text("여행 종료")
+//                    .font(.pretendardBold18)
+//                    .foregroundColor(.gray)
+//                    .underline()
+//            }
+//            .padding(.trailing, 10)
+//        }
+//        .padding()
     }
-    
-}
+
 
 
 
