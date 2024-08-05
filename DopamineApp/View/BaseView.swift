@@ -15,6 +15,9 @@ struct BaseView: View {
         NavigationStack {
             //  MainView
             VStack{
+                
+                Spacer()
+                
                 Text(currentDateString())
                     .font(.pretendardBold28)
                     .foregroundColor(.blue1)
@@ -44,9 +47,10 @@ struct BaseView: View {
                         .font(.system(size: 50, weight: .bold, design: .default))
                         .foregroundColor(.blue1)
                 }
-                .padding(.bottom, 30)
+
+                Spacer()
                 
-                NavigationLink(destination: ScheduleSettingView()) {
+                NavigationLink(destination: TitleView()) {
                                     Text("여행 시작하기")
                                         .frame(width: 250)
                                         .font(.pretendardBold18)
@@ -55,6 +59,7 @@ struct BaseView: View {
                                         .foregroundColor(.white)
                                         .cornerRadius(14)
                                 }
+                .padding(.bottom, 50)
                 .navigationTitle("")
                 .navigationBarBackButtonHidden(true)
             }

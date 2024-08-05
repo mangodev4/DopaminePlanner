@@ -20,6 +20,9 @@ extension Color {
     //MARK: Gray Scale
     static let gray1 = Color(hex: "6D6D6D")
     static let gray2 = Color(hex: "7F7F7F")
+    static let gray3 = Color(hex: "D0D0D0")
+    static let gray4 = Color(hex: "F4F4F4")
+    
 
  
     static let peach = Color(hex: "ff8882")

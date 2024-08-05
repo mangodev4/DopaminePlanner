@@ -22,7 +22,7 @@ struct PlanSettingView: View {
     //    @State private var startDate: Date? = nil
     //    @State private var endDate: Date? = nil
     @State private var isNavigatingToBase = false
-    @State private var isNavigatingToPlan = false
+    @State private var isNavigatingToCal = false
     
     var body: some View {
         NavigationStack {
@@ -35,9 +35,7 @@ struct PlanSettingView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    isNavigatingToPlan = true
-                }) {
+                NavigationLink(destination: PlanView(startDate: startDate , endDate: endDate)) {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
@@ -47,21 +45,18 @@ struct PlanSettingView: View {
                         .cornerRadius(14)
                 }
                 
-                NavigationLink(
-                    destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
-                    isActive: $isNavigatingToPlan,
-                    label: { EmptyView() }
-                )
+//                NavigationLink(
+//                    destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+//                    isActive: $isNavigatingToPlan,
+//                    label: { EmptyView() }
+//                )
                 
                 
             }
-            .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController?.dismiss(animated: true, completion: nil)
-                        }
+                        isNavigatingToCal = true
                     }) {
                         Text("<뒤로")
                             .font(.pretendardBold18)
@@ -71,21 +66,23 @@ struct PlanSettingView: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(
-                        destination: BaseView(),
-                        isActive: $isNavigatingToBase,
-                        label: {
-                            Button(action: {
-                                isNavigatingToBase = true
-                            }) {
-                                Text("여행 종료")
-                                    .font(.pretendardBold18)
-                                    .foregroundColor(.gray)
-                                    .underline()
-                            }
-                        }
-                    )}
+                    Button(action: {
+                        isNavigatingToBase = true
+                    }) {
+                        Text("여행 종료")
+                            .font(.pretendardBold18)
+                            .foregroundColor(.gray)
+                            .underline()
+                    }
+                }
             }
+            .navigationDestination(isPresented: $isNavigatingToCal) {
+                    ScheduleSettingView()
+            }
+            .navigationDestination(isPresented: $isNavigatingToBase) {
+                    BaseView()
+            }
+            .navigationBarBackButtonHidden()
         }
     }
 }
