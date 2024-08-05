@@ -25,16 +25,14 @@ struct ScheduleSettingView: View {
                 
                 Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
                     .font(.pretendardBold24)
-//                    .padding(.vertical, 30)
                 
                 Spacer()
 
                 
                 // 캘린더 뷰
                 CalenderView(month: Date(), startDate: $startDate, endDate: $endDate)
-                    .padding(.top, 20)
                     .padding(.horizontal, 10)
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 10)
                     
                 Spacer()
                 NavigationLink(destination: PlanSettingView(startDate: Date(), endDate: Date())) {

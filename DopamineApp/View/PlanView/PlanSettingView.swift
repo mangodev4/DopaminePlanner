@@ -48,7 +48,7 @@ struct PlanSettingView: View {
                 }
                 
                 NavigationLink(
-                    destination: PlanView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                    destination: PlanView(startDate: startDate, endDate: endDate),
                     isActive: $isNavigatingToPlan,
                     label: { EmptyView() }
                 )

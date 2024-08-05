@@ -82,9 +82,11 @@ struct CalenderView: View {
   private var calendarGridView: some View {
     let daysInMonth: Int = numberOfDays(in: month)
     let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
+    let today = Calendar.current.startOfDay(for: Date())
+
 
     return VStack {
-        LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 7),spacing: 3) {
             ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                 if index < firstWeekday {
                     RoundedRectangle(cornerRadius: 5)
@@ -95,22 +97,29 @@ struct CalenderView: View {
                     let clicked = clickedDates.contains(date)
                     let isInRange = isDateInRange(date)
                     let isStartOrEndDate = date == startDate || date == endDate
-                    
+                    let isToday = Calendar.current.isDate(date, inSameDayAs: today)
+
                     
                     ZStack {
                         if isInRange {
-                            RoundedRectangle(cornerRadius: 100)
-                                .frame(width: 40)
+                            Circle()
+                                .frame(width: 36, height: 36)
                                 .foregroundColor(.blue)
                                 .opacity(0.2)
                         }
                         
+                        if isToday {
+                            Circle()
+                                .stroke(Color.blue1, lineWidth: 1)
+                                .frame(width: 36, height: 36)
+                                                }
+                        
                         CellView(day: day, clicked: clicked)
                             .background(
                                 Circle()
-                                    .frame(width: 50)
+                                    .frame(width: 36, height: 36)
                                     .foregroundColor(isStartOrEndDate ? Color.blue3 : Color.clear)
-                                    .scaleEffect(4)
+//                                    .scaleEffect(4)
                             )
                             .onTapGesture {
                                 if let start = startDate, let end = endDate {
@@ -167,12 +176,13 @@ private struct CellView: View {
   
   var body: some View {
     VStack {
-      RoundedRectangle(cornerRadius: 5)
+      Rectangle()
+            .frame(width: 25, height: 25)
         .opacity(0)
         .overlay(Text(String(day)))
         .foregroundColor(.black)
         .font(.pretendardMedium20)
-      
+
 //      if clicked {
 //        Text("Click")
 //          .font(.caption)
