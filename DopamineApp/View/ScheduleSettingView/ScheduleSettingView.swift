@@ -35,22 +35,26 @@ struct ScheduleSettingView: View {
                     .padding(.bottom, 10)
                     
                 Spacer()
-                NavigationLink(destination: PlanSettingView(startDate: Date(), endDate: Date())) {
-                                Text("다음")
-                                    .frame(width: 300)
-                                    .font(.pretendardBold18)
-                                    .padding()
-                                    .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(14)
+                Button(action: {
+                    if startDate != nil && endDate != nil {
+                        isNavigatingToPlan = true
+                    }
+                }) {
+                    Text("다음")
+                        .frame(width: 300)
+                        .font(.pretendardBold18)
+                        .padding()
+                        .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
                 }
                 .disabled(startDate == nil || endDate == nil)
                 
-//                NavigationLink(
-//                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
-//                               isActive: $isNavigatingToPlan,
-//                               label: { EmptyView() }
-//                           )
+                NavigationLink(
+                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                               isActive: $isNavigatingToPlan,
+                               label: { EmptyView() }
+                           )
                 Spacer()
             }
         }
