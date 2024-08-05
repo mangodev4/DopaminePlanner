@@ -11,9 +11,7 @@ struct TitleView: View {
     @State var title: String = ""
     @State var subtitle: String = ""
     @State private var isButtonEnabled: Bool = false
-    @State private var isNavigatingToBase = false
-    @State private var isNavigatingToCal = false
-    
+    @State private var isNavigatingToBase = false    
     
     
     var body: some View {
@@ -48,7 +46,7 @@ struct TitleView: View {
                     TextField("부제를 입력해 주세요.", text: $subtitle)
                         .font(.pretendardBold24)
                         .frame(width: 300)
-                        .onChange(of: title) {
+                        .onChange(of: subtitle) {
                             checkButtonState()
                         }
                 }

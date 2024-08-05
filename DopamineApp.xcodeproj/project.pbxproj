@@ -23,6 +23,7 @@
 		A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E02C54BBD9003AF62A /* PlanView.swift */; };
 		A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */; };
 		A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */; };
+		A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6F12C60BE89003AF62A /* TravelingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		A5ABD6E02C54BBD9003AF62A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
 		A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		A5ABD6F12C60BE89003AF62A /* TravelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			children = (
 				A5ABD6E02C54BBD9003AF62A /* PlanView.swift */,
 				A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */,
+				A5ABD6F12C60BE89003AF62A /* TravelingView.swift */,
 			);
 			path = PlanView;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
+				A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */,
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,

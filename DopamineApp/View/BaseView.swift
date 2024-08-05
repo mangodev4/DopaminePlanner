@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+
 struct BaseView: View {
+    @State var title: String = ""
+    @State var subtitle: String = ""
     
     @State private var goesToSetting: Bool = false
+//    @State private var showTitleAndSubtitle: Bool = true
     
     var body: some View {
         NavigationStack {
@@ -18,7 +22,19 @@ struct BaseView: View {
                 
                 Spacer()
                 
-                Text(currentDateString())
+//                Text(currentDateString())
+                
+//                if showTitleAndSubtitle && !title.isEmpty && !subtitle.isEmpty {
+//                                    VStack {
+//                                        Text(title)
+//                                            .font(.system(size: 16, weight: .semibold))
+//                                        Text(subtitle)
+//                                            .font(.system(size: 16, weight: .medium))
+//                                            .foregroundColor(.gray)
+//                                    }
+//                                }
+                
+                Text("무계획의 여행")
                     .font(.pretendardBold28)
                     .foregroundColor(.blue1)
                     .padding(.bottom, 30)
