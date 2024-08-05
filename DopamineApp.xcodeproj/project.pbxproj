@@ -22,7 +22,6 @@
 		A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */; };
 		A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E02C54BBD9003AF62A /* PlanView.swift */; };
 		A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */; };
-		A5ABD6EC2C5D2E79003AF62A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6EB2C5D2E79003AF62A /* NavigationManager.swift */; };
 		A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +42,6 @@
 		A5ABD6DE2C5397BB003AF62A /* ScheduleSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettingView.swift; sourceTree = "<group>"; };
 		A5ABD6E02C54BBD9003AF62A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
-		A5ABD6EB2C5D2E79003AF62A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,7 +163,6 @@
 		A5ABD6EA2C5D2E60003AF62A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				A5ABD6EB2C5D2E79003AF62A /* NavigationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -244,7 +241,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5ABD6EC2C5D2E79003AF62A /* NavigationManager.swift in Sources */,
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
 				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
