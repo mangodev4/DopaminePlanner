@@ -68,7 +68,7 @@ struct BaseView: View {
                 
                 NavigationLink(destination: TitleView()) {
                                     Text("여행 시작하기")
-                                        .frame(width: 250)
+                                        .frame(width: 300)
                                         .font(.pretendardBold18)
                                         .padding()
                                         .background(Color.blue1)

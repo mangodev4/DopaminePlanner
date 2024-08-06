@@ -12,7 +12,7 @@ struct PlanView: View {
     var endDate: Date
     
     @State private var currentViewPage: Date
-    @State private var isNavigatingToBase = false
+    @State private var isNavigatingToEnd = false
     @Binding var todoItems: [[String]]
 
      init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
@@ -32,7 +32,7 @@ struct PlanView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    isNavigatingToBase = true
+                    isNavigatingToEnd = true
                 }) {
                     Text("여행 종료")
                         .font(.pretendardBold18)
@@ -41,8 +41,8 @@ struct PlanView: View {
                 }
             }
         }
-        .navigationDestination(isPresented: $isNavigatingToBase) {
-                BaseView()
+        .navigationDestination(isPresented: $isNavigatingToEnd) {
+                TripEndView()
         }
             .navigationTitle("")
             .navigationBarBackButtonHidden(true)

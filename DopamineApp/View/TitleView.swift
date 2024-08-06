@@ -11,7 +11,10 @@ struct TitleView: View {
     @State var title: String = ""
     @State var subtitle: String = ""
     @State private var isButtonEnabled: Bool = false
-    @State private var isNavigatingToBase = false    
+    @State private var isNavigatingToBase = false  
+    @FocusState private var titleFocused: Bool
+    @FocusState private var subTitleFocused: Bool
+
     
     
     var body: some View {
@@ -29,7 +32,7 @@ struct TitleView: View {
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
-                        .foregroundColor(.gray4)
+                        .foregroundColor(titleFocused ? Color.blue4 : Color.gray4)
                     
                     TextField("제목을 입력해 주세요.", text: $title)
                         .font(.pretendardBold24)
@@ -37,18 +40,28 @@ struct TitleView: View {
                         .onChange(of: title) {
                             checkButtonState()
                         }
+                        .focused($titleFocused)
+                        .onAppear{
+                            titleFocused = true
+                        }
+                        .onSubmit {
+                            titleFocused = false
+                            subTitleFocused = true
+                        }
+
                 }
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
-                        .foregroundColor(.gray4)
-                    
+                        .foregroundColor(subTitleFocused ? Color.blue4 : Color.gray4)
+
                     TextField("부제를 입력해 주세요.", text: $subtitle)
                         .font(.pretendardBold24)
                         .frame(width: 300)
                         .onChange(of: subtitle) {
                             checkButtonState()
                         }
+                        .focused($subTitleFocused)
                 }
                 Spacer()
                 
