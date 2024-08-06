@@ -7,20 +7,38 @@
 
 import SwiftUI
 
+
 struct BaseView: View {
+    @State var title: String = ""
+    @State var subtitle: String = ""
     
     @State private var goesToSetting: Bool = false
+//    @State private var showTitleAndSubtitle: Bool = true
     
     var body: some View {
         NavigationStack {
-            
             //  MainView
             VStack{
-                Text("00.00.00")
+                
+                Spacer()
+                
+//                Text(currentDateString())
+                
+//                if showTitleAndSubtitle && !title.isEmpty && !subtitle.isEmpty {
+//                                    VStack {
+//                                        Text(title)
+//                                            .font(.system(size: 16, weight: .semibold))
+//                                        Text(subtitle)
+//                                            .font(.system(size: 16, weight: .medium))
+//                                            .foregroundColor(.gray)
+//                                    }
+//                                }
+                
+                Text("무계획의 여행")
                     .font(.pretendardBold28)
                     .foregroundColor(.blue1)
                     .padding(.bottom, 30)
-                //      dateformatter
+                
                 HStack{
                     Text("무계획 여행")
                         .font(.pretendardSemiBold16)
@@ -45,20 +63,30 @@ struct BaseView: View {
                         .font(.system(size: 50, weight: .bold, design: .default))
                         .foregroundColor(.blue1)
                 }
-                .padding(.bottom, 30)
+
+                Spacer()
                 
-                NavigationLink(destination: ScheduleSettingView()) {
-                                    Text("시작하기")
+                NavigationLink(destination: TitleView()) {
+                                    Text("여행 시작하기")
+                                        .frame(width: 300)
                                         .font(.pretendardBold18)
                                         .padding()
                                         .background(Color.blue1)
                                         .foregroundColor(.white)
-                                        .cornerRadius(10)
+                                        .cornerRadius(14)
                                 }
+                .padding(.bottom, 50)
                 .navigationTitle("")
+                .navigationBarBackButtonHidden(true)
             }
         }
     }
+    private func currentDateString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM.dd"
+        return dateFormatter.string(from: Date())
+    }
+
 }
             
 
