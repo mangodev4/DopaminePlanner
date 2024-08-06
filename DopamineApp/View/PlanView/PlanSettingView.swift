@@ -93,26 +93,59 @@ struct PlanSettingView: View {
             
             
             Spacer()
-            
-            Button(action: {
-                isNavigatingToPlan = true
-            }) {
-                Text("다음")
-                    .frame(width: 300)
-                    .font(.pretendardBold18)
-                    .padding()
-                    .background(Color.blue1)
-                    .foregroundColor(.white)
-                    .cornerRadius(14)
-            }
-            
-            NavigationLink(
-                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-                isActive: $isNavigatingToPlan,
-                label: { EmptyView() }
-            )
-            
-            
+//            HStack {
+//                Button(action: {
+//                    if currentSettingPage > 1 {
+//                        currentSettingPage -= 1
+//                    }
+//                }) {
+//                    Text("이전")
+//                        .frame(width: 100)
+//                        .font(.pretendardBold18)
+//                        .padding()
+//                        .background(Color.blue1)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(14)
+//                }
+//                .disabled(currentSettingPage <= 1)
+//                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+//                
+//                
+//                
+//                Button(action: {
+//                    if currentSettingPage < numberOfDays {
+//                        currentSettingPage += 1
+//                    }
+//                }) {
+//                    Text("다음")
+//                        .frame(width: 200)
+//                        .font(.pretendardBold18)
+//                        .padding()
+//                        .background(Color.blue1)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(14)
+//                }
+//                .disabled(currentSettingPage >= numberOfDays)
+//                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+//            }
+                
+                Button(action: {
+                    isNavigatingToPlan = true
+                }) {
+                    Text("다음")
+                        .frame(width: 200)
+                        .font(.pretendardBold18)
+                        .padding()
+                        .background(Color.blue1)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
+                }
+                
+                NavigationLink(
+                    destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+                    isActive: $isNavigatingToPlan,
+                    label: { EmptyView() }
+                )
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
