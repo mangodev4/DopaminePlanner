@@ -11,13 +11,15 @@ struct PlanView: View {
     var startDate: Date
     var endDate: Date
     
-    @State private var currentPage: Date
+    @State private var currentViewPage: Date
     @State private var isNavigatingToBase = false
-     
-     init(startDate: Date, endDate: Date) {
+    @Binding var todoItems: [[String]]
+
+     init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
          self.startDate = startDate
          self.endDate = endDate
-         _currentPage = State(initialValue: startDate)
+         self._todoItems = todoItems
+         self._currentViewPage = State(initialValue: startDate)
      }
     
     var body: some View {
@@ -58,7 +60,7 @@ struct PlanView: View {
             }
             Spacer()
             
-            Text(currentPage, formatter: Self.dateFormatter)
+            Text(currentViewPage, formatter: Self.dateFormatter)
                 .font(.pretendardBold24)
             
             Spacer()
@@ -81,16 +83,16 @@ struct PlanView: View {
                 .font(.pretendardMedium20)
         }
         .onAppear{
-            currentPage = startDate
+            currentViewPage = startDate
         }
         .padding(.top, 5)
     }
     
     private func changePage(by value: Int) {
         let calendar = Calendar.current
-        if let newPage = calendar.date(byAdding: .day, value: value, to: currentPage),
+        if let newPage = calendar.date(byAdding: .day, value: value, to: currentViewPage),
            newPage >= startDate && newPage <= endDate {
-            currentPage = newPage
+            currentViewPage = newPage
         }
     }
     
