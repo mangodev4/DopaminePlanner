@@ -43,6 +43,7 @@ struct PlanSettingView: View {
                         }
                     }, label: {
                         Image(systemName: "chevron.left")
+                            .foregroundColor(Color.blue3)
                             .font(.title)
                     })
                     .disabled(currentSettingPage <= 1)
@@ -63,10 +64,11 @@ struct PlanSettingView: View {
                         }
                     }, label: {
                         Image(systemName: "chevron.right")
+                            .foregroundColor(Color.blue3)
                             .font(.title)
                     })
                     .disabled(currentSettingPage >= numberOfDays)
-                    .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+                    .opacity(currentSettingPage >= numberOfDays ? 0.2 : 1.0)
                     
                 }
                 .padding(.horizontal, 30)
@@ -133,13 +135,14 @@ struct PlanSettingView: View {
                     isNavigatingToPlan = true
                 }) {
                     Text("다음")
-                        .frame(width: 200)
+                        .frame(width: 300)
                         .font(.pretendardBold18)
                         .padding()
                         .background(Color.blue1)
                         .foregroundColor(.white)
                         .cornerRadius(14)
                 }
+                .padding(.bottom, 30)
                 
                 NavigationLink(
                     destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
@@ -204,14 +207,17 @@ struct PlanSettingView: View {
                     focusedIndex = index + 1
                 }
             )
-            Button(action: {
-                deleteTodo(at: index)
-            }, label: {
-                Image(systemName: "xmark")
-                    .font(.headline)
-                    .foregroundColor(.blue1)
-            })
-            .padding(.trailing, 15)
+            
+            if !todoItems[currentSettingPage - 1][index].isEmpty {
+                Button(action: {
+                    deleteTodo(at: index)
+                }, label: {
+                    Image(systemName: "xmark")
+                        .font(.headline)
+                        .foregroundColor(.blue1)
+                })
+                .padding(.trailing, 15)
+            }
         }
     }
     
@@ -225,7 +231,7 @@ struct PlanSettingView: View {
         var body: some View {
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .stroke(Color.blue1, lineWidth: 1)
+                    .stroke(Color.gray2, lineWidth: 1)
                     .frame(width: 300, height: 60)
                     .opacity(0.5)
                 
@@ -233,6 +239,7 @@ struct PlanSettingView: View {
                 TextField("할 일을 입력하세요", text: $todo)
                     .focused($focusedIndex, equals: index)
                     .font(.pretendardBold20)
+                    .foregroundColor(.gray1)
                     .padding(.leading, 20)
                     .frame(width: 280, height: 60, alignment: .leading)
                     .submitLabel(.next)
