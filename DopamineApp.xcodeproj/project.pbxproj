@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5596D542C627D0400491C70 /* TripEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D532C627D0400491C70 /* TripEndView.swift */; };
 		A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */; };
 		A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BD2C522F2B003AF62A /* ContentView.swift */; };
 		A5ABD6C02C522F2C003AF62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6BF2C522F2C003AF62A /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A5596D532C627D0400491C70 /* TripEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripEndView.swift; sourceTree = "<group>"; };
 		A5ABD6B82C522F2B003AF62A /* DopamineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DopamineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DopamineAppApp.swift; sourceTree = "<group>"; };
 		A5ABD6BD2C522F2B003AF62A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */,
 				A5ABD6CB2C5244D1003AF62A /* BaseView.swift */,
 				A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */,
+				A5596D532C627D0400491C70 /* TripEndView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
+				A5596D542C627D0400491C70 /* TripEndView.swift in Sources */,
 				A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */,
 				A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */,
 			);
