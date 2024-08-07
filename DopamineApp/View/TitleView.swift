@@ -36,7 +36,7 @@ struct TitleView: View {
                     
                     TextField("제목을 입력해 주세요.", text: $title)
                         .font(.pretendardBold20)
-                        .frame(width: 300, height: 0)
+                        .frame(width: 300)
                         .onChange(of: title) {
                             checkButtonState()
                         }

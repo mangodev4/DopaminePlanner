@@ -14,17 +14,19 @@ struct PlanView: View {
     @State private var currentViewPage: Date
     @State private var isNavigatingToEnd = false
     @Binding var todoItems: [[String]]
+//    @FocusState private var focusedIndex: Int?
+
     
-//    var numberOfDays: Int {
-//        startDate.numberOfDays(to: endDate)
-//    }
+    //    var numberOfDays: Int {
+    //        startDate.numberOfDays(to: endDate)
+    //    }
     
-     init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
-         self.startDate = startDate
-         self.endDate = endDate
-         self._todoItems = todoItems
-         self._currentViewPage = State(initialValue: startDate)
-     }
+    init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self._todoItems = todoItems
+        self._currentViewPage = State(initialValue: startDate)
+    }
     
     var body: some View {
         VStack {
@@ -47,24 +49,24 @@ struct PlanView: View {
             }
         }
         .navigationDestination(isPresented: $isNavigatingToEnd) {
-                TripEndView()
+            TripEndView()
         }
-            .navigationTitle("")
-            .navigationBarBackButtonHidden(true)
-
+        .navigationTitle("")
+        .navigationBarBackButtonHidden(true)
+        
     }
     
     private var headerView: some View {
         HStack {
             Spacer()
-
+            
             Button(action: {
                 changePage(by: -1)
             }){
                 Image(systemName: "chevron.left")
                     .foregroundColor(Color.blue3)
                     .font(.title)
-
+                
             }
             Spacer()
             
@@ -80,22 +82,23 @@ struct PlanView: View {
                 Image(systemName: "chevron.right")
                     .foregroundColor(Color.blue3)
                     .font(.title)
-
+                
             }
-//            .disabled(currentViewPage >= numberOfDays)
-//            .opacity(currentViewPage >= numberOfDays ? 0.2 : 1.0)
-
+            //            .disabled(currentViewPage >= numberOfDays)
+            //            .opacity(currentViewPage >= numberOfDays ? 0.2 : 1.0)
+            
             
             Spacer()
-            }
+        }
         .padding(.top, 10)
     }
     
     
     private var pageView: some View {
         VStack {
-            Text("할 일 목록")
-                .font(.pretendardMedium20)
+            Text("(대충 할 일을 수정해 보라는 내용)")
+                .font(.pretendardMedium18)
+                .foregroundStyle(Color.gray2)
         }
         .onAppear{
             currentViewPage = startDate
@@ -108,17 +111,41 @@ struct PlanView: View {
         let dayIndex = Calendar.current.dateComponents([.day], from: startDate, to: currentViewPage).day ?? 0
         return VStack(alignment: .leading, spacing: 10) {
             ForEach(todoItems[dayIndex].indices, id: \.self) { index in
-                HStack {
-                    Text("\(index + 1).")
-                        .font(.pretendardBold18)
-                    Text(todoItems[dayIndex][index])
-                        .font(.pretendardMedium16)
-                }
+                todoItemView(for: index, in: dayIndex)
             }
         }
         .padding()
     }
-
+    
+    private func todoItemView(for index: Int, in dayIndex: Int) -> some View {
+        ZStack(alignment: .trailing) {
+            TodoItemView(
+                todo: Binding(
+                    get: { index < todoItems[dayIndex].count ? todoItems[dayIndex][index] : "" },
+                    set: { newValue in
+                        if index < todoItems[dayIndex].count {
+                            todoItems[dayIndex][index] = newValue
+                        } else if !newValue.isEmpty {
+                            todoItems[dayIndex].append(newValue)
+                        }
+                    }
+                ),
+                index: index
+            )
+            
+            
+//            Button(action: {
+//                //                    deleteTodo(at: index)
+//            }, label: {
+//                Image(systemName: "arrow.2.squarepath")
+//                    .font(.headline)
+//                    .foregroundColor(.blue3)
+//            })
+//            .padding(.trailing, 15)
+            
+            
+        }
+    }
     
     private func changePage(by value: Int) {
         let calendar = Calendar.current
@@ -133,8 +160,90 @@ struct PlanView: View {
         formatter.dateFormat = "yyyy.MM.dd"
         return formatter
     }()
-}
+    
+    struct TodoItemView: View {
+        @Binding var todo: String
+        let index: Int
+        @FocusState private var isFocused: Bool
 
+        @State private var isEditing = false
+        @State private var editedTodo: String
+        
+        init(todo: Binding<String>, index: Int) {
+            self._todo = todo
+            self.index = index
+            self._editedTodo = State(initialValue: todo.wrappedValue)
+        }
+        
+        var body: some View {
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .stroke(Color.gray2, lineWidth: 1)
+                    .frame(width: 300, height: 60)
+                    .background(isFocused ? Color.gray4 : Color.white )
+                    .opacity(0.5)
+                
+                if isEditing {
+                    TextField("할 일을 입력하세요", text: $editedTodo, onCommit: saveChanges)
+                        .font(.pretendardMedium16)
+                        .foregroundColor(.gray1)
+                        .padding(.leading, 20)
+                        .frame(width: 280, height: 60, alignment: .leading)
+                        .submitLabel(.done)
+                } else {
+                    Text(todo)
+                        .font(.pretendardMedium16)
+                        .foregroundColor(.gray1)
+                        .padding(.leading, 20)
+                        .frame(width: 280, height: 60, alignment: .leading)
+                    //                    .submitLabel(.next)
+                    //                    .onSubmit{
+                    //                        onCommit()
+                    //                    }
+                    //                    .onChange(of: todo) { newValue in
+                    //                        if newValue.count > 15 {
+                    //                            todo = String(newValue.prefix(15))
+                    //                        }
+                    //                    }
+                }
+                
+                
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        if isEditing {
+                            saveChanges()
+                        } else {
+                            isEditing = true
+                            isFocused = true
+                        }
+                    }) {
+                        if isEditing {
+                            Text("저장")
+                                .font(.pretendardMedium16)
+                                .foregroundColor(.blue3)
+                        } else {
+                            Image(systemName: "arrow.2.squarepath")
+                                .font(.headline)
+                                .foregroundColor(.blue3)
+                        }
+                    }
+                    .padding(.trailing, 15)
+                }
+            }
+//            .onTapGesture {
+//                isFocused = true
+//            }
+        }
+        
+        private func saveChanges() {
+            todo = editedTodo
+            isEditing = false
+            isFocused = false
+        }
+    }
+}
 
 
 

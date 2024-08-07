@@ -80,7 +80,7 @@ struct PlanSettingView: View {
                 Spacer()
                 
                 
-                Text("일정을 입력해 주세요!(최대 10개)")
+                Text("일정을 입력해 주세요! (최대 10개)")
                     .font(.pretendardBold18)
                     .foregroundStyle(Color.gray2)
                 
@@ -231,6 +231,7 @@ struct PlanSettingView: View {
                     deleteTodo(at: index)
                 }, label: {
                     Image(systemName: "xmark")
+                        .frame(width: 30, height: 30)
                         .font(.headline)
                         .foregroundColor(.blue3)
                 })
