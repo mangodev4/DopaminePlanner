@@ -21,14 +21,15 @@ struct TitleView: View {
         NavigationStack {
             VStack {
                 HeaderButtons
-                Spacer()
+//                Spacer()
                 
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .foregroundColor(.blue1)
                     .padding(.trailing, 200)
+                    .padding(.vertical, 60)
                 
-                Spacer()
+//                Spacer()
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
@@ -61,7 +62,7 @@ struct TitleView: View {
                         .foregroundColor(subtitleFocused ? Color.blue4 : Color.gray4)
                      
                     TextField("부제를 입력해 주세요.", text: $subtitle)
-                        .font(.pretendardBold20)
+                        .font(.pretendardMedium20)
                         .frame(width: 300)
                         .onChange(of: subtitle) {
                             checkButtonState()
@@ -73,7 +74,8 @@ struct TitleView: View {
                     }
                     
                 }
-                Spacer()
+                .padding(.bottom, 50)
+//                Spacer()
                 
                 
                 NavigationLink(destination: ScheduleSettingView()) {
@@ -86,8 +88,8 @@ struct TitleView: View {
                         .cornerRadius(14)
                 }
                 .disabled(!isButtonEnabled)
-                .padding(.bottom, 50)
-//                Spacer()
+//                .padding(.bottom, 50)
+                Spacer()
                 
             }
         }
