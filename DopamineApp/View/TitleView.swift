@@ -13,7 +13,7 @@ struct TitleView: View {
     @State private var isButtonEnabled: Bool = false
     @State private var isNavigatingToBase = false  
     @FocusState private var titleFocused: Bool
-    @FocusState private var subTitleFocused: Bool
+    @FocusState private var subtitleFocused: Bool
 
     
     
@@ -35,7 +35,7 @@ struct TitleView: View {
                         .foregroundColor(titleFocused ? Color.blue4 : Color.gray4)
                     
                     TextField("제목을 입력해 주세요.", text: $title)
-                        .font(.pretendardBold24)
+                        .font(.pretendardBold20)
                         .frame(width: 300, height: 0)
                         .onChange(of: title) {
                             checkButtonState()
@@ -46,22 +46,31 @@ struct TitleView: View {
                         }
                         .onSubmit {
                             titleFocused = false
-                            subTitleFocused = true
+                            subtitleFocused = true
                         }
+                    
+                    if subtitleFocused {
+                        textChecker
+                    }
 
                 }
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
-                        .foregroundColor(subTitleFocused ? Color.blue4 : Color.gray4)
-
+                        .foregroundColor(subtitleFocused ? Color.blue4 : Color.gray4)
+                     
                     TextField("부제를 입력해 주세요.", text: $subtitle)
-                        .font(.pretendardBold24)
+                        .font(.pretendardBold20)
                         .frame(width: 300)
                         .onChange(of: subtitle) {
                             checkButtonState()
                         }
-                        .focused($subTitleFocused)
+                        .focused($subtitleFocused)
+                    
+                    if titleFocused {
+                        textChecker
+                    }
+                    
                 }
                 Spacer()
                 
@@ -76,7 +85,8 @@ struct TitleView: View {
                         .cornerRadius(14)
                 }
                 .disabled(!isButtonEnabled)
-                Spacer()
+                .padding(.bottom, 50)
+//                Spacer()
                 
             }
         }
@@ -85,6 +95,12 @@ struct TitleView: View {
     
     private func checkButtonState() {
         isButtonEnabled = !title.isEmpty && !subtitle.isEmpty
+    }
+    
+    private var textChecker: some View {
+        Text("\(title.count)/16")
+                .font(.pretendardBold14)
+                .foregroundColor(.gray2)
     }
     
     // MARK: 헤더 버튼 뷰

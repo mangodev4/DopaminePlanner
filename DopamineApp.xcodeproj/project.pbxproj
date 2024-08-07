@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A5596D542C627D0400491C70 /* TripEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D532C627D0400491C70 /* TripEndView.swift */; };
+		A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D552C63242900491C70 /* KeyboardManager.swift */; };
 		A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */; };
 		A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BD2C522F2B003AF62A /* ContentView.swift */; };
 		A5ABD6C02C522F2C003AF62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6BF2C522F2C003AF62A /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		A5596D532C627D0400491C70 /* TripEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripEndView.swift; sourceTree = "<group>"; };
+		A5596D552C63242900491C70 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		A5ABD6B82C522F2B003AF62A /* DopamineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DopamineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DopamineAppApp.swift; sourceTree = "<group>"; };
 		A5ABD6BD2C522F2B003AF62A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		A5ABD6EA2C5D2E60003AF62A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A5596D552C63242900491C70 /* KeyboardManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
 				A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */,
+				A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */,
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
