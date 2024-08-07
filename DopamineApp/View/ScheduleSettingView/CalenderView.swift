@@ -180,7 +180,7 @@ private struct CellView: View {
             .frame(width: 25, height: 25)
         .opacity(0)
         .overlay(Text(String(day)))
-        .foregroundColor(.black)
+//        .foregroundColor(.black)
         .font(.pretendardMedium20)
 
 //      if clicked {

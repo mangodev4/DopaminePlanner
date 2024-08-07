@@ -32,8 +32,10 @@ struct PlanView: View {
         VStack {
             headerView
             pageView
-            todoListView
             
+            ScrollView {
+                todoListView
+            }
             Spacer()
         }
         .toolbar {
@@ -183,6 +185,7 @@ struct PlanView: View {
                     .background(isFocused ? Color.gray4 : Color.white )
                     .opacity(0.5)
                 
+                HStack {
                 if isEditing {
                     TextField("할 일을 입력하세요", text: $editedTodo, onCommit: saveChanges)
                         .font(.pretendardMedium16)
@@ -208,8 +211,6 @@ struct PlanView: View {
                 }
                 
                 
-                HStack {
-                    Spacer()
                     
                     Button(action: {
                         if isEditing {

@@ -45,8 +45,8 @@ struct PlanSettingView: View {
                             currentSettingPage -= 1
                         }
                     }, label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(Color.blue3)
+                        Image(systemName: "arrowtriangle.left.fill")
+                            .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
                             .font(.title)
                     })
                     .disabled(currentSettingPage <= 1)
@@ -66,12 +66,12 @@ struct PlanSettingView: View {
                             currentSettingPage += 1
                         }
                     }, label: {
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color.blue3)
+                        Image(systemName: "arrowtriangle.right.fill")
+                            .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
                             .font(.title)
                     })
                     .disabled(currentSettingPage >= numberOfDays)
-                    .opacity(currentSettingPage >= numberOfDays ? 0.2 : 1.0)
+                    .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
                     
                 }
                 .padding(.horizontal, 45)
@@ -135,24 +135,25 @@ struct PlanSettingView: View {
             //                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
             //            }
             
-            Button(action: {
-                isNavigatingToPlan = true
-            }) {
-                Text("다음")
-                    .frame(width: 300)
-                    .font(.pretendardBold18)
-                    .padding()
-                    .background(Color.blue1)
-                    .foregroundColor(.white)
-                    .cornerRadius(14)
-            }
-            .padding(.bottom, 10)
-            
-            NavigationLink(
-                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-                isActive: $isNavigatingToPlan,
-                label: { EmptyView() }
-            )
+        //  MARK: 다음 버튼 (주석처리)
+//            Button(action: {
+//                isNavigatingToPlan = true
+//            }) {
+//                Text("다음")
+//                    .frame(width: 300)
+//                    .font(.pretendardBold18)
+//                    .padding()
+//                    .background(Color.blue1)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(14)
+//            }
+//            .padding(.bottom, 10)
+//            
+//            NavigationLink(
+//                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+//                isActive: $isNavigatingToPlan,
+//                label: { EmptyView() }
+//            )
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
