@@ -74,14 +74,15 @@ struct PlanSettingView: View {
                     .opacity(currentSettingPage >= numberOfDays ? 0.2 : 1.0)
                     
                 }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 25)
+                .padding(.horizontal, 45)
+                .padding(.vertical, 20)
                 
                 Spacer()
                 
                 
-                Text("일정을 입력해 주세요!")
-                    .font(.pretendardBold20)
+                Text("일정을 입력해 주세요!(최대 10개)")
+                    .font(.pretendardBold18)
+                    .foregroundStyle(Color.gray2)
                 
                 
                 ScrollView {
@@ -145,7 +146,7 @@ struct PlanSettingView: View {
                     .foregroundColor(.white)
                     .cornerRadius(14)
             }
-            .padding(.bottom, 30)
+            .padding(.bottom, 10)
             
             NavigationLink(
                 destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
@@ -186,7 +187,7 @@ struct PlanSettingView: View {
     
     private var todoListView: some View {
         VStack(spacing: 10) {
-            ForEach(Array(todoItems[currentSettingPage - 1].enumerated()), id: \.offset) { index, item in
+            ForEach(Array(todoItems[currentSettingPage - 1].prefix(10).enumerated()), id: \.offset) { index, item in
                 todoItemView(for: index)
             }
         }
@@ -258,6 +259,7 @@ struct PlanSettingView: View {
                 Rectangle()
                     .stroke(Color.gray2, lineWidth: 1)
                     .frame(width: 300, height: 60)
+                    .background((focusedIndex == index) ? Color.gray4 : Color.white )
                     .opacity(0.5)
                 
                 
