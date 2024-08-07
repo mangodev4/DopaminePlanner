@@ -49,9 +49,10 @@ struct TitleView: View {
                             subtitleFocused = true
                         }
                     
-                    if subtitleFocused {
-                        textChecker
+                    if titleFocused {
+                        textChecker(title.count)
                     }
+                        
 
                 }
                 ZStack  {
@@ -67,8 +68,8 @@ struct TitleView: View {
                         }
                         .focused($subtitleFocused)
                     
-                    if titleFocused {
-                        textChecker
+                    if subtitleFocused {
+                        textChecker(subtitle.count)
                     }
                     
                 }
@@ -97,10 +98,15 @@ struct TitleView: View {
         isButtonEnabled = !title.isEmpty && !subtitle.isEmpty
     }
     
-    private var textChecker: some View {
-        Text("\(title.count)/16")
+    private func textChecker(_ count: Int) -> some View {
+        HStack {
+            Spacer()
+            
+            Text("\(count)/15")
                 .font(.pretendardBold14)
                 .foregroundColor(.gray2)
+                .padding(.trailing, 40)
+        }
     }
     
     // MARK: 헤더 버튼 뷰
