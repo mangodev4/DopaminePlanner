@@ -80,8 +80,8 @@ struct PlanSettingView: View {
                 Spacer()
                 
                 
-                Text("일정을 입력해 주세요! (최대 10개)")
-                    .font(.pretendardBold18)
+                Text("일정을 입력해 주세요!")
+                    .font(.pretendardMedium18)
                     .foregroundStyle(Color.gray2)
                 
                 

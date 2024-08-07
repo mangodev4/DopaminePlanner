@@ -23,8 +23,12 @@ struct ScheduleSettingView: View {
 
                 Spacer()
                 
-                Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
+                Text("여행 기간을 선택해 주세요.")
                     .font(.pretendardBold24)
+
+                
+//                Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
+//                    .font(.pretendardBold24)
                 
                 Spacer()
 

@@ -74,7 +74,6 @@ struct TitleView: View {
                     }
                     
                 }
-                .padding(.bottom, 50)
 //                Spacer()
                 
                 
@@ -88,7 +87,7 @@ struct TitleView: View {
                         .cornerRadius(14)
                 }
                 .disabled(!isButtonEnabled)
-//                .padding(.bottom, 50)
+                .padding(.top, 50)
                 Spacer()
                 
             }
