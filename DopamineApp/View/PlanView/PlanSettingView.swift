@@ -195,9 +195,9 @@ struct PlanSettingView: View {
     }
     
     private var textChecker: some View {
-        Text("\(focusedIndex ?? 0 + 1)/16")
+        Text("\(todoItems[currentSettingPage - 1][focusedIndex ?? 0].count)/15")
                 .font(.pretendardBold14)
-                .foregroundStyle(Color.gray3)
+                .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count == 15) ? Color.peach : Color.gray3)
                 .padding(.trailing, 15)
         }
     
@@ -273,6 +273,11 @@ struct PlanSettingView: View {
                     .onSubmit{
                         onCommit()
                     }
+                    .onChange(of: todo) { newValue in
+                            if newValue.count > 15 {
+                                todo = String(newValue.prefix(15))
+                            }
+                        }
             }
             .onTapGesture {
                 focusedIndex = index
