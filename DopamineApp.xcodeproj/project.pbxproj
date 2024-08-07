@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A5596D542C627D0400491C70 /* TripEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D532C627D0400491C70 /* TripEndView.swift */; };
+		A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D552C63242900491C70 /* KeyboardManager.swift */; };
+		A5596D582C63654D00491C70 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596D572C63654D00491C70 /* DateExtension.swift */; };
 		A5ABD6BC2C522F2B003AF62A /* DopamineAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */; };
 		A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6BD2C522F2B003AF62A /* ContentView.swift */; };
 		A5ABD6C02C522F2C003AF62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5ABD6BF2C522F2C003AF62A /* Assets.xcassets */; };
@@ -29,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		A5596D532C627D0400491C70 /* TripEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripEndView.swift; sourceTree = "<group>"; };
+		A5596D552C63242900491C70 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		A5596D572C63654D00491C70 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		A5596D592C63AA1E00491C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5ABD6B82C522F2B003AF62A /* DopamineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DopamineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5ABD6BB2C522F2B003AF62A /* DopamineAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DopamineAppApp.swift; sourceTree = "<group>"; };
 		A5ABD6BD2C522F2B003AF62A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +84,7 @@
 		A5ABD6BA2C522F2B003AF62A /* DopamineApp */ = {
 			isa = PBXGroup;
 			children = (
+				A5596D592C63AA1E00491C70 /* Info.plist */,
 				A5ABD6EA2C5D2E60003AF62A /* Manager */,
 				A5ABD6D22C5394BE003AF62A /* Resource */,
 				A5ABD6CF2C5384AC003AF62A /* Extension */,
@@ -124,6 +130,7 @@
 			children = (
 				A5ABD6D02C5384EA003AF62A /* ColorExtension.swift */,
 				A5ABD6DC2C53952E003AF62A /* FontExtension.swift */,
+				A5596D572C63654D00491C70 /* DateExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -169,6 +176,7 @@
 		A5ABD6EA2C5D2E60003AF62A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A5596D552C63242900491C70 /* KeyboardManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -248,11 +256,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
+				A5596D582C63654D00491C70 /* DateExtension.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
 				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
 				A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */,
+				A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */,
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
@@ -395,6 +405,7 @@
 				DEVELOPMENT_TEAM = HH4G2BS7C9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DopamineApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -424,6 +435,7 @@
 				DEVELOPMENT_TEAM = HH4G2BS7C9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DopamineApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

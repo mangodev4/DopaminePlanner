@@ -13,7 +13,7 @@ struct TitleView: View {
     @State private var isButtonEnabled: Bool = false
     @State private var isNavigatingToBase = false  
     @FocusState private var titleFocused: Bool
-    @FocusState private var subTitleFocused: Bool
+    @FocusState private var subtitleFocused: Bool
 
     
     
@@ -21,49 +21,61 @@ struct TitleView: View {
         NavigationStack {
             VStack {
                 HeaderButtons
-                Spacer()
+//                Spacer()
                 
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .foregroundColor(.blue1)
                     .padding(.trailing, 200)
+                    .padding(.vertical, 60)
                 
-                Spacer()
+//                Spacer()
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
                         .foregroundColor(titleFocused ? Color.blue4 : Color.gray4)
+                    HStack {
+                        TextField("제목을 입력해 주세요.", text: $title)
+                            .font(.pretendardBold20)
+                            .frame(width: 300)
+                            .onChange(of: title) {
+                                checkButtonState()
+                            }
+                            .focused($titleFocused)
+                            .onAppear{
+                                titleFocused = true
+                            }
+                            .onSubmit {
+                                titleFocused = false
+                                subtitleFocused = true
+                            }
+                    }
+                        if titleFocused {
+                            textChecker(title.count)
+                        }
                     
-                    TextField("제목을 입력해 주세요.", text: $title)
-                        .font(.pretendardBold24)
-                        .frame(width: 300, height: 0)
-                        .onChange(of: title) {
-                            checkButtonState()
-                        }
-                        .focused($titleFocused)
-                        .onAppear{
-                            titleFocused = true
-                        }
-                        .onSubmit {
-                            titleFocused = false
-                            subTitleFocused = true
-                        }
 
                 }
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
-                        .foregroundColor(subTitleFocused ? Color.blue4 : Color.gray4)
-
-                    TextField("부제를 입력해 주세요.", text: $subtitle)
-                        .font(.pretendardBold24)
-                        .frame(width: 300)
-                        .onChange(of: subtitle) {
-                            checkButtonState()
+                        .foregroundColor(subtitleFocused ? Color.blue4 : Color.gray4)
+                    HStack {
+                        TextField("부제를 입력해 주세요.", text: $subtitle)
+                            .font(.pretendardMedium20)
+                            .frame(width: 300)
+                            .onChange(of: subtitle) {
+                                checkButtonState()
+                            }
+                            .focused($subtitleFocused)
+                    }
+                        if subtitleFocused {
+                            textChecker(subtitle.count)
                         }
-                        .focused($subTitleFocused)
+                
+
                 }
-                Spacer()
+//                Spacer()
                 
                 
                 NavigationLink(destination: ScheduleSettingView()) {
@@ -76,6 +88,7 @@ struct TitleView: View {
                         .cornerRadius(14)
                 }
                 .disabled(!isButtonEnabled)
+                .padding(.top, 50)
                 Spacer()
                 
             }
@@ -85,6 +98,18 @@ struct TitleView: View {
     
     private func checkButtonState() {
         isButtonEnabled = !title.isEmpty && !subtitle.isEmpty
+    }
+    
+    private func textChecker(_ count: Int) -> some View {
+        HStack {
+            Spacer()
+            
+            Text("\(count)/15")
+                .font(.pretendardBold14)
+                .foregroundColor(.gray2)
+                .padding(.trailing, 25)
+                .padding()
+        }
     }
     
     // MARK: 헤더 버튼 뷰

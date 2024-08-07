@@ -17,6 +17,9 @@ struct PlanSettingView: View {
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
     
+//    @StateObject var keyboardManager = KeyboardManager()
+
+    
     
     var numberOfDays: Int {
         max(0,Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0) + 1
@@ -42,8 +45,8 @@ struct PlanSettingView: View {
                             currentSettingPage -= 1
                         }
                     }, label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(Color.blue3)
+                        Image(systemName: "arrowtriangle.left.fill")
+                            .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
                             .font(.title)
                     })
                     .disabled(currentSettingPage <= 1)
@@ -63,22 +66,23 @@ struct PlanSettingView: View {
                             currentSettingPage += 1
                         }
                     }, label: {
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color.blue3)
+                        Image(systemName: "arrowtriangle.right.fill")
+                            .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
                             .font(.title)
                     })
                     .disabled(currentSettingPage >= numberOfDays)
-                    .opacity(currentSettingPage >= numberOfDays ? 0.2 : 1.0)
+                    .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
                     
                 }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 25)
+                .padding(.horizontal, 45)
+                .padding(.vertical, 20)
                 
                 Spacer()
                 
                 
                 Text("일정을 입력해 주세요!")
-                    .font(.pretendardBold20)
+                    .font(.pretendardMedium18)
+                    .foregroundStyle(Color.gray2)
                 
                 
                 ScrollView {
@@ -95,60 +99,61 @@ struct PlanSettingView: View {
             
             
             Spacer()
-//            HStack {
-//                Button(action: {
-//                    if currentSettingPage > 1 {
-//                        currentSettingPage -= 1
-//                    }
-//                }) {
-//                    Text("이전")
-//                        .frame(width: 100)
-//                        .font(.pretendardBold18)
-//                        .padding()
-//                        .background(Color.blue1)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(14)
-//                }
-//                .disabled(currentSettingPage <= 1)
-//                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
-//                
-//                
-//                
-//                Button(action: {
-//                    if currentSettingPage < numberOfDays {
-//                        currentSettingPage += 1
-//                    }
-//                }) {
-//                    Text("다음")
-//                        .frame(width: 200)
-//                        .font(.pretendardBold18)
-//                        .padding()
-//                        .background(Color.blue1)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(14)
-//                }
-//                .disabled(currentSettingPage >= numberOfDays)
-//                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+            //            HStack {
+            //                Button(action: {
+            //                    if currentSettingPage > 1 {
+            //                        currentSettingPage -= 1
+            //                    }
+            //                }) {
+            //                    Text("이전")
+            //                        .frame(width: 100)
+            //                        .font(.pretendardBold18)
+            //                        .padding()
+            //                        .background(Color.blue1)
+            //                        .foregroundColor(.white)
+            //                        .cornerRadius(14)
+            //                }
+            //                .disabled(currentSettingPage <= 1)
+            //                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+            //
+            //
+            //
+            //                Button(action: {
+            //                    if currentSettingPage < numberOfDays {
+            //                        currentSettingPage += 1
+            //                    }
+            //                }) {
+            //                    Text("다음")
+            //                        .frame(width: 200)
+            //                        .font(.pretendardBold18)
+            //                        .padding()
+            //                        .background(Color.blue1)
+            //                        .foregroundColor(.white)
+            //                        .cornerRadius(14)
+            //                }
+            //                .disabled(currentSettingPage >= numberOfDays)
+            //                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+            //            }
+            
+        //  MARK: 다음 버튼 (주석처리)
+//            Button(action: {
+//                isNavigatingToPlan = true
+//            }) {
+//                Text("다음")
+//                    .frame(width: 300)
+//                    .font(.pretendardBold18)
+//                    .padding()
+//                    .background(Color.blue1)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(14)
 //            }
-                
-                Button(action: {
-                    isNavigatingToPlan = true
-                }) {
-                    Text("다음")
-                        .frame(width: 300)
-                        .font(.pretendardBold18)
-                        .padding()
-                        .background(Color.blue1)
-                        .foregroundColor(.white)
-                        .cornerRadius(14)
-                }
-                .padding(.bottom, 30)
-                
-                NavigationLink(
-                    destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-                    isActive: $isNavigatingToPlan,
-                    label: { EmptyView() }
-                )
+//            .padding(.bottom, 10)
+//            
+//            NavigationLink(
+//                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+//                isActive: $isNavigatingToPlan,
+//                label: { EmptyView() }
+//            )
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -165,7 +170,12 @@ struct PlanSettingView: View {
         .navigationDestination(isPresented: $isNavigatingToBase) {
             BaseView()
         }
-        .navigationBarBackButtonHidden()
+        .navigationBarBackButtonHidden(true)
+//        .onChange(of: keyboardManager.isKeyboardDissmissed) { isDismissed in
+//            if isDismissed {
+//                focusedIndex = nil
+//            }
+//        }
     }
     
     private func deleteTodo(at index: Int) {
@@ -178,12 +188,21 @@ struct PlanSettingView: View {
     
     private var todoListView: some View {
         VStack(spacing: 10) {
-            ForEach(Array(todoItems[currentSettingPage - 1].enumerated()), id: \.offset) { index, item in
+            ForEach(Array(todoItems[currentSettingPage - 1].prefix(10).enumerated()), id: \.offset) { index, item in
                 todoItemView(for: index)
             }
         }
         .padding()
     }
+    
+    private var textChecker: some View {
+        Text("\(todoItems[currentSettingPage - 1][focusedIndex ?? 0].count)/15")
+                .font(.pretendardBold14)
+                .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count == 15) ? Color.peach : Color.gray3)
+                .padding(.trailing, 15)
+        }
+    
+    
     
     private func todoItemView(for index: Int) -> some View {
         ZStack(alignment: .trailing) {
@@ -208,18 +227,27 @@ struct PlanSettingView: View {
                 }
             )
             
-            if !todoItems[currentSettingPage - 1][index].isEmpty {
+            if focusedIndex != index {
                 Button(action: {
                     deleteTodo(at: index)
                 }, label: {
                     Image(systemName: "xmark")
+                        .frame(width: 30, height: 30)
                         .font(.headline)
-                        .foregroundColor(.blue1)
+                        .foregroundColor(.blue3)
                 })
                 .padding(.trailing, 15)
+            } else {
+                textChecker
             }
         }
     }
+    
+//    //  MARK: Keyboard 내려감 방지
+//    private func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
+
     
     
     struct TodoItemView: View {
@@ -233,12 +261,13 @@ struct PlanSettingView: View {
                 Rectangle()
                     .stroke(Color.gray2, lineWidth: 1)
                     .frame(width: 300, height: 60)
+                    .background((focusedIndex == index) ? Color.gray4 : Color.white )
                     .opacity(0.5)
                 
                 
                 TextField("할 일을 입력하세요", text: $todo)
                     .focused($focusedIndex, equals: index)
-                    .font(.pretendardBold20)
+                    .font(.pretendardMedium16)
                     .foregroundColor(.gray1)
                     .padding(.leading, 20)
                     .frame(width: 280, height: 60, alignment: .leading)
@@ -246,6 +275,11 @@ struct PlanSettingView: View {
                     .onSubmit{
                         onCommit()
                     }
+                    .onChange(of: todo) { newValue in
+                            if newValue.count > 15 {
+                                todo = String(newValue.prefix(15))
+                            }
+                        }
             }
             .onTapGesture {
                 focusedIndex = index
