@@ -14,7 +14,11 @@ struct PlanView: View {
     @State private var currentViewPage: Date
     @State private var isNavigatingToEnd = false
     @Binding var todoItems: [[String]]
-
+    
+//    var numberOfDays: Int {
+//        startDate.numberOfDays(to: endDate)
+//    }
+    
      init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
          self.startDate = startDate
          self.endDate = endDate
@@ -26,6 +30,7 @@ struct PlanView: View {
         VStack {
             headerView
             pageView
+            todoListView
             
             Spacer()
         }
@@ -57,11 +62,15 @@ struct PlanView: View {
                 changePage(by: -1)
             }){
                 Image(systemName: "chevron.left")
+                    .foregroundColor(Color.blue3)
+                    .font(.title)
+
             }
             Spacer()
             
             Text(currentViewPage, formatter: Self.dateFormatter)
                 .font(.pretendardBold24)
+                .foregroundStyle(Color.blue1)
             
             Spacer()
             
@@ -69,7 +78,13 @@ struct PlanView: View {
                 changePage(by: 1)
             }) {
                 Image(systemName: "chevron.right")
+                    .foregroundColor(Color.blue3)
+                    .font(.title)
+
             }
+//            .disabled(currentViewPage >= numberOfDays)
+//            .opacity(currentViewPage >= numberOfDays ? 0.2 : 1.0)
+
             
             Spacer()
             }
@@ -87,6 +102,23 @@ struct PlanView: View {
         }
         .padding(.top, 5)
     }
+    
+    //  MARK: TodoListView
+    private var todoListView: some View {
+        let dayIndex = Calendar.current.dateComponents([.day], from: startDate, to: currentViewPage).day ?? 0
+        return VStack(alignment: .leading, spacing: 10) {
+            ForEach(todoItems[dayIndex].indices, id: \.self) { index in
+                HStack {
+                    Text("\(index + 1).")
+                        .font(.pretendardBold18)
+                    Text(todoItems[dayIndex][index])
+                        .font(.pretendardMedium16)
+                }
+            }
+        }
+        .padding()
+    }
+
     
     private func changePage(by value: Int) {
         let calendar = Calendar.current
@@ -107,5 +139,8 @@ struct PlanView: View {
 
 
 //#Preview {
-//    PlanSettingView(startDate: $startDate, endDate: $endDate)
+//    PlanView(        startDate: self.startDate,
+//                     endDate: self.endDate,
+//                     todoItems: $todoItems
+//)
 //}

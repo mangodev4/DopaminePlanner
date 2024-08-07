@@ -265,7 +265,7 @@ struct PlanSettingView: View {
                 
                 TextField("할 일을 입력하세요", text: $todo)
                     .focused($focusedIndex, equals: index)
-                    .font(.pretendardBold20)
+                    .font(.pretendardMedium16)
                     .foregroundColor(.gray1)
                     .padding(.leading, 20)
                     .frame(width: 280, height: 60, alignment: .leading)
