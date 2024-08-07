@@ -10,6 +10,7 @@ import SwiftUI
 struct ScheduleSettingView: View {
     @State private var startDate: Date? = nil
     @State private var endDate: Date? = nil
+    @State var offset: CGSize = CGSize()
 //    @State private var isNavigating = false
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
@@ -18,26 +19,30 @@ struct ScheduleSettingView: View {
    
     var body: some View {
         NavigationStack {
+            GeometryReader { geometry in
             VStack {
-//                HeaderButtons
-
-                Spacer()
+                
+//                Spacer()
                 
                 Text("여행 기간을 선택해 주세요.")
                     .font(.pretendardBold24)
+                    .padding(.top, 90)
+                    .frame(width: geometry.size.width)
 
                 
-//                Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
-//                    .font(.pretendardBold24)
+                
+                //                Text(startDate == nil ? "여행 출발하는 날이 언제인가요?" : "여행 마지막 날이 언제인가요?")
+                //                    .font(.pretendardBold24)
                 
                 Spacer()
-
+                
                 
                 // 캘린더 뷰
                 CalenderView(month: Date(), startDate: $startDate, endDate: $endDate)
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
-                    
+                    .padding(.top, 10)
+                
                 Spacer()
                 Button(action: {
                     if startDate != nil && endDate != nil {
@@ -47,20 +52,25 @@ struct ScheduleSettingView: View {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
+                    
                         .padding()
                         .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
                         .foregroundColor(.white)
                         .cornerRadius(14)
                 }
                 .disabled(startDate == nil || endDate == nil)
+                .frame(width: geometry.size.width)
+                .padding(.bottom, 30)
+
                 
                 NavigationLink(
                     destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
-                               isActive: $isNavigatingToPlan,
-                               label: { EmptyView() }
-                           )
-                Spacer()
+                    isActive: $isNavigatingToPlan,
+                    label: { EmptyView() }
+                )
+//                Spacer()
             }
+        }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -98,38 +108,9 @@ struct ScheduleSettingView: View {
     private func checkIfBothDatesAreSelected() {
         if startDate != nil && endDate != nil {
             print("Both startDate and endDate are selected")
-            // Add any additional logic you need here
         }
     }
     
-//    // MARK: 헤더 버튼 뷰
-//    private var HeaderButtons: some View {
-//        HStack {
-//            Button(action: {
-//                if let window = UIApplication.shared.windows.first {
-//                    window.rootViewController?.dismiss(animated: true, completion: nil)
-//                }
-//            }) {
-//                Text("<뒤로")
-//                    .font(.pretendardBold18)
-//                    .foregroundColor(.gray)
-//                    .underline()
-//            }
-//            .padding(.leading, 10)
-//            
-//            Spacer()
-//            
-//            Button(action: {
-//                isNavigatingToBase = true
-//            }) {
-//                Text("여행 종료")
-//                    .font(.pretendardBold18)
-//                    .foregroundColor(.gray)
-//                    .underline()
-//            }
-//            .padding(.trailing, 10)
-//        }
-//        .padding()
     }
 
 
