@@ -17,8 +17,8 @@ struct PlanSettingView: View {
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
     
-//    @StateObject var keyboardManager = KeyboardManager()
-
+    //    @StateObject var keyboardManager = KeyboardManager()
+    
     
     
     var numberOfDays: Int {
@@ -135,25 +135,25 @@ struct PlanSettingView: View {
             //                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
             //            }
             
-        //  MARK: 다음 버튼 (주석처리)
-//            Button(action: {
-//                isNavigatingToPlan = true
-//            }) {
-//                Text("다음")
-//                    .frame(width: 300)
-//                    .font(.pretendardBold18)
-//                    .padding()
-//                    .background(Color.blue1)
-//                    .foregroundColor(.white)
-//                    .cornerRadius(14)
-//            }
-//            .padding(.bottom, 10)
-//            
-//            NavigationLink(
-//                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-//                isActive: $isNavigatingToPlan,
-//                label: { EmptyView() }
-//            )
+            //  MARK: 다음 버튼 (주석처리)
+            //            Button(action: {
+            //                isNavigatingToPlan = true
+            //            }) {
+            //                Text("다음")
+            //                    .frame(width: 300)
+            //                    .font(.pretendardBold18)
+            //                    .padding()
+            //                    .background(Color.blue1)
+            //                    .foregroundColor(.white)
+            //                    .cornerRadius(14)
+            //            }
+            //            .padding(.bottom, 10)
+            //
+            //            NavigationLink(
+            //                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+            //                isActive: $isNavigatingToPlan,
+            //                label: { EmptyView() }
+            //            )
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -171,11 +171,11 @@ struct PlanSettingView: View {
             BaseView()
         }
         .navigationBarBackButtonHidden(true)
-//        .onChange(of: keyboardManager.isKeyboardDissmissed) { isDismissed in
-//            if isDismissed {
-//                focusedIndex = nil
-//            }
-//        }
+        //        .onChange(of: keyboardManager.isKeyboardDissmissed) { isDismissed in
+        //            if isDismissed {
+        //                focusedIndex = nil
+        //            }
+        //        }
     }
     
     private func deleteTodo(at index: Int) {
@@ -197,10 +197,10 @@ struct PlanSettingView: View {
     
     private var textChecker: some View {
         Text("\(todoItems[currentSettingPage - 1][focusedIndex ?? 0].count)/15")
-                .font(.pretendardBold14)
-                .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count == 15) ? Color.peach : Color.gray3)
-                .padding(.trailing, 15)
-        }
+            .font(.pretendardBold14)
+            .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count == 15) ? Color.peach : Color.gray3)
+            .padding(.trailing, 15)
+    }
     
     
     
@@ -243,11 +243,11 @@ struct PlanSettingView: View {
         }
     }
     
-//    //  MARK: Keyboard 내려감 방지
-//    private func hideKeyboard() {
-//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
-
+    //    //  MARK: Keyboard 내려감 방지
+    //    private func hideKeyboard() {
+    //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    //    }
+    
     
     
     struct TodoItemView: View {
@@ -265,24 +265,30 @@ struct PlanSettingView: View {
                     .opacity(0.5)
                 
                 
-                TextField("할 일을 입력하세요", text: $todo)
+                TextField("할 일을 입력하세요", text: $todo, axis: .vertical)
                     .focused($focusedIndex, equals: index)
                     .font(.pretendardMedium16)
                     .foregroundColor(.gray1)
                     .padding(.leading, 20)
                     .frame(width: 280, height: 60, alignment: .leading)
                     .submitLabel(.next)
-                    .onSubmit{
-                        onCommit()
-                    }
+                //                    .onSubmit{
+                //                        onCommit()
+                //                    }
+                //                    .onChange(of: todo) { newValue in
+                //                            if newValue.count > 15 {
+                //                                todo = String(newValue.prefix(15))
+                //                            }
+                
                     .onChange(of: todo) { newValue in
-                            if newValue.count > 15 {
-                                todo = String(newValue.prefix(15))
-                            }
+                        if newValue.hasSuffix("\n") {
+                            todo.removeLast() // \n 제거
+                            onCommit()
                         }
-            }
-            .onTapGesture {
-                focusedIndex = index
+                    }
+                    .onTapGesture {
+                        focusedIndex = index
+                    }
             }
         }
     }
