@@ -198,7 +198,7 @@ struct PlanSettingView: View {
     private var textChecker: some View {
         Text("\(todoItems[currentSettingPage - 1][focusedIndex ?? 0].count)/15")
             .font(.pretendardBold14)
-            .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count == 15) ? Color.peach : Color.gray3)
+            .foregroundStyle((focusedIndex != nil && todoItems[currentSettingPage - 1][focusedIndex!].count >= 15) ? Color.peach : Color.gray3)
             .padding(.trailing, 15)
     }
     
@@ -224,6 +224,9 @@ struct PlanSettingView: View {
                         todoItems[currentSettingPage - 1].append("")
                     }
                     focusedIndex = index + 1
+                },
+                onDelete: {
+                    deleteTodo(at: index)
                 }
             )
             
@@ -255,6 +258,9 @@ struct PlanSettingView: View {
         let index: Int
         @FocusState.Binding var focusedIndex: Int?
         var onCommit: () -> Void
+        var onDelete: () -> Void
+        
+        @State private var isDeleting = false
         
         var body: some View {
             ZStack(alignment: .leading) {
@@ -272,18 +278,25 @@ struct PlanSettingView: View {
                     .padding(.leading, 20)
                     .frame(width: 280, height: 60, alignment: .leading)
                     .submitLabel(.next)
-                //                    .onSubmit{
-                //                        onCommit()
-                //                    }
-                //                    .onChange(of: todo) { newValue in
-                //                            if newValue.count > 15 {
-                //                                todo = String(newValue.prefix(15))
-                //                            }
-                
+                    .onSubmit {
+                        if isDeleting {
+                            onDelete()
+                        } else {
+                            onCommit()
+                        }
+                    }
                     .onChange(of: todo) { newValue in
                         if newValue.hasSuffix("\n") {
                             todo.removeLast() // \n 제거
                             onCommit()
+                        }
+                        if newValue.count > 15 {
+                            todo = String(newValue.prefix(15))
+                        }
+                        if todo.isEmpty {
+                            isDeleting = true
+                        } else {
+                            isDeleting = false
                         }
                     }
                     .onTapGesture {
