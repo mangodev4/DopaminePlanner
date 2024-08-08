@@ -14,12 +14,12 @@ struct PlanSettingView: View {
     @State private var currentSettingPage: Int = 1
     @State private var todoItems: [[String]] = []
     @FocusState private var focusedIndex: Int?
+    @State var offset: CGSize = CGSize()
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
+    @State private var buttonHeight: CGFloat = 0
     
-    //    @StateObject var keyboardManager = KeyboardManager()
-    
-    
+    let autoCorrectionHeight: CGFloat = 57
     
     var numberOfDays: Int {
         max(0,Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0) + 1
@@ -36,126 +36,107 @@ struct PlanSettingView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        if currentSettingPage > 1 {
-                            currentSettingPage -= 1
-                        }
-                    }, label: {
-                        Image(systemName: "arrowtriangle.left.fill")
-                            .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
-                            .font(.title)
-                    })
-                    .disabled(currentSettingPage <= 1)
-                    .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+            GeometryReader { geometry in
+                VStack {
+                    Spacer()
+                    
+                    HStack {
+                        Button(action: {
+                            if currentSettingPage > 1 {
+                                currentSettingPage -= 1
+                            }
+                        }, label: {
+                            Image(systemName: "arrowtriangle.left.fill")
+                                .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
+                                .font(.title)
+                        })
+                        .disabled(currentSettingPage <= 1)
+                        .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+                        
+                        Spacer()
+                        
+                        Text("DAY \(currentSettingPage)")
+                            .font(.system(size: 35).bold())
+                            .foregroundStyle(Color.blue1)
+                        
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            if currentSettingPage < numberOfDays {
+                                currentSettingPage += 1
+                            }
+                        }, label: {
+                            Image(systemName: "arrowtriangle.right.fill")
+                                .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
+                                .font(.title)
+                        })
+                        .disabled(currentSettingPage >= numberOfDays)
+                        .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+                        
+                    }
+                    .padding(.horizontal, 45)
+                    .padding(.vertical, 20)
                     
                     Spacer()
                     
-                    Text("DAY \(currentSettingPage)")
-                        .font(.system(size: 35).bold())
-                        .foregroundStyle(Color.blue1)
+                    
+                    Text("일정을 입력해 주세요!")
+                        .font(.pretendardMedium18)
+                        .foregroundStyle(Color.gray2)
+                    
+                    
+                    ScrollView {
+                        todoListView
+                    }
+                    .padding(.top, 5)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            focusedIndex = 0
+                        }
+                    }
+                    
+                    
+                    
                     
                     
                     Spacer()
                     
-                    Button(action: {
-                        if currentSettingPage < numberOfDays {
-                            currentSettingPage += 1
+                        // MARK: 다음 버튼
+                        Button(action: {
+                            cleanUpTodoItems()
+                            isNavigatingToPlan = true
+                        }) {
+                            Text("다음")
+                                .frame(width: 300)
+                                .font(.pretendardBold18)
+                                .padding()
+                                .background(Color.blue1)
+                                .foregroundColor(.white)
+                                .cornerRadius(14)
                         }
-                    }, label: {
-                        Image(systemName: "arrowtriangle.right.fill")
-                            .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
-                            .font(.title)
-                    })
-                    .disabled(currentSettingPage >= numberOfDays)
-                    .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
-                    
-                }
-                .padding(.horizontal, 45)
-                .padding(.vertical, 20)
-                
-                Spacer()
-                
-                
-                Text("일정을 입력해 주세요!")
-                    .font(.pretendardMedium18)
-                    .foregroundStyle(Color.gray2)
-                
-                
-                ScrollView {
-                    todoListView
-                }
-                .padding(.top, 5)
-            }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    focusedIndex = 0
+                        .frame(width: geometry.size.width)
+                        .padding(.bottom, 10)
+                        .background {
+                            GeometryReader { proxy in
+                                Color.clear
+                                    .onAppear {
+                                        self.buttonHeight = proxy.size.height
+                                    }
+                            }
+                        }
+
+                        //                .disabled()
+                        
+                        NavigationLink(
+                            destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+                            isActive: $isNavigatingToPlan,
+                            label: { EmptyView() }
+                        )
                 }
             }
+    }
             
-            
-            
-            Spacer()
-            //            HStack {
-            //                Button(action: {
-            //                    if currentSettingPage > 1 {
-            //                        currentSettingPage -= 1
-            //                    }
-            //                }) {
-            //                    Text("이전")
-            //                        .frame(width: 100)
-            //                        .font(.pretendardBold18)
-            //                        .padding()
-            //                        .background(Color.blue1)
-            //                        .foregroundColor(.white)
-            //                        .cornerRadius(14)
-            //                }
-            //                .disabled(currentSettingPage <= 1)
-            //                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
-            //
-            //
-            //
-            //                Button(action: {
-            //                    if currentSettingPage < numberOfDays {
-            //                        currentSettingPage += 1
-            //                    }
-            //                }) {
-            //                    Text("다음")
-            //                        .frame(width: 200)
-            //                        .font(.pretendardBold18)
-            //                        .padding()
-            //                        .background(Color.blue1)
-            //                        .foregroundColor(.white)
-            //                        .cornerRadius(14)
-            //                }
-            //                .disabled(currentSettingPage >= numberOfDays)
-            //                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
-            //            }
-            
-            //  MARK: 다음 버튼
-            //            Button(action: {
-//            cleanUpTodoItems()
-            //                isNavigatingToPlan = true
-            //            }) {
-            //                Text("다음")
-            //                    .frame(width: 300)
-            //                    .font(.pretendardBold18)
-            //                    .padding()
-            //                    .background(Color.blue1)
-            //                    .foregroundColor(.white)
-            //                    .cornerRadius(14)
-            //            }
-            //            .padding(.bottom, 10)
-            //
-            //            NavigationLink(
-            //                destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-            //                isActive: $isNavigatingToPlan,
-            //                label: { EmptyView() }
-            //            )
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -172,11 +153,6 @@ struct PlanSettingView: View {
             BaseView()
         }
         .navigationBarBackButtonHidden(true)
-        //        .onChange(of: keyboardManager.isKeyboardDissmissed) { isDismissed in
-        //            if isDismissed {
-        //                focusedIndex = nil
-        //            }
-        //        }
     }
     
     // MARK: - 빈 todo 항목 제거
@@ -254,12 +230,6 @@ struct PlanSettingView: View {
             }
         }
     }
-    
-    //    //  MARK: Keyboard 내려감 방지
-    //    private func hideKeyboard() {
-    //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    //    }
-    
     
     
     struct TodoItemView: View {
