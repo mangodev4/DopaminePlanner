@@ -135,8 +135,9 @@ struct PlanSettingView: View {
             //                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
             //            }
             
-            //  MARK: 다음 버튼 (주석처리)
+            //  MARK: 다음 버튼
             //            Button(action: {
+//            cleanUpTodoItems()
             //                isNavigatingToPlan = true
             //            }) {
             //                Text("다음")
@@ -178,6 +179,7 @@ struct PlanSettingView: View {
         //        }
     }
     
+    // MARK: - 빈 todo 항목 제거
     private func deleteTodo(at index: Int) {
         todoItems[currentSettingPage - 1].remove(at: index)
         if todoItems[currentSettingPage - 1].isEmpty {
@@ -185,6 +187,13 @@ struct PlanSettingView: View {
         }
     }
     
+    // MARK: - 빈 todo index 삭제
+    private func cleanUpTodoItems() {
+        for dayIndex in todoItems.indices {
+            todoItems[dayIndex].removeAll { $0.isEmpty }
+        }
+    }
+
     
     private var todoListView: some View {
         VStack(spacing: 10) {
