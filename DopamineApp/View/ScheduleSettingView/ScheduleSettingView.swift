@@ -25,7 +25,7 @@ struct ScheduleSettingView: View {
 //                Spacer()
                 
                 Text("여행 기간을 선택해 주세요.")
-                    .font(.pretendardBold24)
+                    .font(.pretendardMedium24)
                     .padding(.top, 90)
                     .frame(width: geometry.size.width)
 
