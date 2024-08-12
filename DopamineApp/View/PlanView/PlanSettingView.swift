@@ -81,16 +81,17 @@ struct PlanSettingView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(14)
                         }
-                        .frame(width: geometry.size.width)
+//                        .frame(width: geometry.size.width)
                         .padding(.bottom, 10)
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear
-                                    .onAppear {
-                                        self.buttonHeight = proxy.size.height
-                                    }
-                            }
-                        }
+//                        .background {
+//                            GeometryReader { proxy in
+//                                Color.clear
+//                                    .onAppear {
+//                                        self.buttonHeight = proxy.size.height
+//                                    }
+//                            }
+//                        }
+                        .zIndex(1)
 
                         //                .disabled()
                         
@@ -99,6 +100,11 @@ struct PlanSettingView: View {
                             isActive: $isNavigatingToPlan,
                             label: { EmptyView() }
                         )
+                }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .contentShape(Rectangle()) 
+                .onTapGesture {
+                    hideKeyboard()
                 }
             }
     }
@@ -289,6 +295,14 @@ struct PlanSettingView: View {
         }
     }
 }
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
 
 #Preview {
     PlanSettingView(startDate: Date(), endDate: Date())
