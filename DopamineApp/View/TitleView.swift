@@ -35,13 +35,22 @@ struct TitleView: View {
                         .frame(width: 350, height: 60)
                         .foregroundColor(titleFocused ? Color.blue4 : Color.gray4)
                     HStack {
-                        TextField("제목을 입력해 주세요.", text: $title)
+                        TextField("제목을 입력해 주세요.", text: $title, axis: .vertical)
                             .font(.pretendardBold20)
                             .frame(width: 300)
-                            .onChange(of: title) {
-                                checkButtonState()
+                            .onChange(of: title) { newValue in
+                                if let newLineIndex = title.lastIndex(of: "\n") {
+                                    title.remove(at: newLineIndex)
+                                    print("submission!")
+                                    subtitleFocused = true
+                                }
                             }
+//                            .onChange(of: title) {
+//                                checkButtonState()
+//
+//                            }
                             .focused($titleFocused)
+                            .submitLabel(.next)
                             .onAppear{
                                 titleFocused = true
                             }
@@ -68,6 +77,9 @@ struct TitleView: View {
                                 checkButtonState()
                             }
                             .focused($subtitleFocused)
+                            .submitLabel(.next)
+                            .submitScope()
+
                     }
                         if subtitleFocused {
                             textChecker(subtitle.count)

@@ -14,6 +14,9 @@ struct PlanView: View {
     @State private var currentViewPage: Date
     @State private var isNavigatingToEnd = false
     @Binding var todoItems: [[String]]
+    
+    @State private var showAlert = false
+
 //    @FocusState private var focusedIndex: Int?
 
     
@@ -29,19 +32,34 @@ struct PlanView: View {
     }
     
     var body: some View {
-        VStack {
-            headerView
-            pageView
-            
-            ScrollView {
-                todoListView
+        ZStack {
+            VStack {
+                headerView
+                pageView
+                
+                ScrollView {
+                    todoListView
+                }
+                Spacer()
             }
-            Spacer()
+            .zIndex(1)
+                
+                if showAlert {
+                        Color.black
+                            .opacity(0.5)
+                            .ignoresSafeArea()
+                            .zIndex(2)
+                        AlertView(showAlert: $showAlert, isNavigatingToEnd: $isNavigatingToEnd)
+                            .transition(.scale)
+                            .zIndex(3)
+                }
+                
+            
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    isNavigatingToEnd = true
+                    showAlert = true
                 }) {
                     Text("여행 종료")
                         .font(.pretendardBold18)
@@ -57,6 +75,9 @@ struct PlanView: View {
         .navigationBarBackButtonHidden(true)
         
     }
+    
+    
+    
     
     private var headerView: some View {
         HStack {
@@ -98,7 +119,7 @@ struct PlanView: View {
     
     private var pageView: some View {
         VStack {
-            Text("(대충 할 일을 수정해 보라는 내용)")
+            Text("할 일 목록")
                 .font(.pretendardMedium18)
                 .foregroundStyle(Color.gray2)
         }

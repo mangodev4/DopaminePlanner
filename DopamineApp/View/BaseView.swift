@@ -66,6 +66,25 @@ struct BaseView: View {
 
                 Spacer()
                 
+                Button(action: {
+                    if let url = URL(string: "https://jigu1.notion.site/61491e311eba4793890149494fc46f09") {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    HStack(spacing: 1) {
+                        Image(systemName: "info.circle")
+                            .foregroundStyle(Color.gray2)
+                            .font(.caption)
+                        Text("무계획의 계획 알아보기")
+                            .font(.pretendardRegular14)
+                            .foregroundStyle(Color.gray2)
+                            .underline() // 링크에 밑줄 추가
+                    }
+                }
+                .padding(.bottom, 10)
+
+
+                
                 NavigationLink(destination: TitleView()) {
                                     Text("여행 시작하기")
                                         .frame(width: 300)
