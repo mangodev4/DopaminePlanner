@@ -11,17 +11,17 @@ struct TitleView: View {
     @State var title: String = ""
     @State var subtitle: String = ""
     @State private var isButtonEnabled: Bool = false
-    @State private var isNavigatingToBase = false  
+    @State private var isNavigatingToBase = false
     @FocusState private var titleFocused: Bool
     @FocusState private var subtitleFocused: Bool
-
+    
     
     
     var body: some View {
         NavigationStack {
             VStack {
                 HeaderButtons
-//                Spacer()
+                //                Spacer()
                 
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 50, weight: .bold, design: .default))
@@ -29,7 +29,7 @@ struct TitleView: View {
                     .padding(.trailing, 200)
                     .padding(.vertical, 60)
                 
-//                Spacer()
+                //                Spacer()
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)
@@ -43,12 +43,11 @@ struct TitleView: View {
                                     title.remove(at: newLineIndex)
                                     print("submission!")
                                     subtitleFocused = true
+                                } else if newValue.count > 15 {
+                                    title = String(newValue.prefix(15))
                                 }
+                                checkButtonState()
                             }
-//                            .onChange(of: title) {
-//                                checkButtonState()
-//
-//                            }
                             .focused($titleFocused)
                             .submitLabel(.next)
                             .onAppear{
@@ -59,11 +58,11 @@ struct TitleView: View {
                                 subtitleFocused = true
                             }
                     }
-                        if titleFocused {
-                            textChecker(title.count)
-                        }
+                    if titleFocused {
+                        textChecker(title.count)
+                    }
                     
-
+                    
                 }
                 ZStack  {
                     Capsule()
@@ -73,21 +72,24 @@ struct TitleView: View {
                         TextField("부제를 입력해 주세요.", text: $subtitle)
                             .font(.pretendardMedium20)
                             .frame(width: 300)
-                            .onChange(of: subtitle) {
+                            .onChange(of: subtitle) { newValue in
+                                if newValue.count > 15 {
+                                    subtitle = String(newValue.prefix(15))}
                                 checkButtonState()
                             }
                             .focused($subtitleFocused)
                             .submitLabel(.next)
                             .submitScope()
-
+                        
+                        
                     }
-                        if subtitleFocused {
-                            textChecker(subtitle.count)
-                        }
-                
-
+                    if subtitleFocused {
+                        textChecker(subtitle.count)
+                    }
+                    
+                    
                 }
-//                Spacer()
+                //                Spacer()
                 
                 
                 NavigationLink(destination: ScheduleSettingView()) {
@@ -118,7 +120,7 @@ struct TitleView: View {
             
             Text("\(count)/15")
                 .font(.pretendardBold14)
-                .foregroundColor(.gray2)
+                .foregroundColor(count >= 15 ? Color.peach : .gray2)
                 .padding(.trailing, 25)
                 .padding()
         }
@@ -140,25 +142,25 @@ struct TitleView: View {
                         .foregroundColor(.gray)
                         .underline()
                 }
-
+                
             }
             .padding(.leading, 10)
             
             
             Spacer()
             
-//            Button(action: {
-//                isNavigatingToBase = true
-//            }) {
-//                NavigationLink(destination: BaseView()) {
-//                    Text("여행 종료")
-//                        .font(.pretendardBold18)
-//                        .foregroundColor(.gray)
-//                        .underline()
-//                }
-//            }
-//            .padding(.trailing, 10)
-        }
+            //            Button(action: {
+            //                isNavigatingToBase = true
+            //            }) {
+            //                NavigationLink(destination: BaseView()) {
+            //                    Text("여행 종료")
+            //                        .font(.pretendardBold18)
+            //                        .foregroundColor(.gray)
+            //                        .underline()
+            //                }
+            //            }
+            //            .padding(.trailing, 10)
+        } 
         .padding()
     }
     
