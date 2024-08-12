@@ -34,7 +34,7 @@ extension AlertView {
     private var textBox: some View {
         VStack(spacing: 0) {
             Text("여행을 종료하시겠어요?")
-                .font(.pretendardBold20)
+                .font(.pretendardBold18)
                 .foregroundStyle(.black)
                 .padding(.bottom, 12)
             Text("지금까지 작성된 계획은 저장되지 않아요.")
@@ -92,5 +92,5 @@ extension AlertView {
 }
 
 //#Preview {
-//    AlertView(showAlert: )
+//    AlertView(showAlert: showAlert, isNavigatingToEnd: isNavigatingToEnd)
 //}
