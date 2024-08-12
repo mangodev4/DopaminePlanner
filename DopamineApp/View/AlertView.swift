@@ -37,7 +37,7 @@ extension AlertView {
                 .font(.pretendardBold20)
                 .foregroundStyle(.black)
                 .padding(.bottom, 12)
-            Text("지금까지 작성한 계획은 저장되지 않아요.")
+            Text("지금까지 작성된 계획은 저장되지 않아요.")
                 .font(.pretendardMedium16)
                 .foregroundStyle(Color.gray2)
         }
