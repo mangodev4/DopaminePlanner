@@ -15,11 +15,11 @@ struct PlanSettingView: View {
     @State private var todoItems: [[String]] = []
     @FocusState private var focusedIndex: Int?
     @State var offset: CGSize = CGSize()
+    @State private var keyboardOffset: CGFloat = 0
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
     @State private var buttonHeight: CGFloat = 0
     
-    let autoCorrectionHeight: CGFloat = 57
     
     
     var numberOfDays: Int {
@@ -41,8 +41,8 @@ struct PlanSettingView: View {
                 VStack {
                     Spacer()
                     HeaderButton
-                    .padding(.horizontal, 45)
-                    .padding(.vertical, 20)
+                        .padding(.horizontal, 45)
+                        .padding(.vertical, 20)
                     
                     Spacer()
                     
@@ -51,19 +51,46 @@ struct PlanSettingView: View {
                         .font(.pretendardMedium18)
                         .foregroundStyle(Color.gray2)
                     
-                    
-                    ScrollView {
-                        todoListView
+                    ScrollViewReader { scrollViewProxy in
+                        ScrollView {
+                            todoListView
+//                                .offset(y: -keyboardOffset)
+                                .onChange(of: focusedIndex) { newValue in
+                                    withAnimation {
+                                        if let newValue = newValue {
+                                            scrollViewProxy.scrollTo(newValue, anchor: .center)
+                                        }
+                                    }
+                                }
+                        }
+                        .padding(.top, 5)
+                        .padding(.bottom, keyboardOffset)
                     }
-                    .padding(.top, 5)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             focusedIndex = 0
                         }
                     }
                     
-                    
-                    
+
+                    .onAppear {
+                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                                withAnimation {
+                                    self.keyboardOffset = keyboardFrame.height / 2
+                                }
+                            }
+                        }
+
+                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                            withAnimation {
+                                self.keyboardOffset = 0
+                            }
+                        }
+                    }
+                    .onDisappear {
+                        NotificationCenter.default.removeObserver(self)
+                    }
                     
                     
                     Spacer()
@@ -83,14 +110,6 @@ struct PlanSettingView: View {
                         }
 //                        .frame(width: geometry.size.width)
                         .padding(.bottom, 10)
-//                        .background {
-//                            GeometryReader { proxy in
-//                                Color.clear
-//                                    .onAppear {
-//                                        self.buttonHeight = proxy.size.height
-//                                    }
-//                            }
-//                        }
                         .zIndex(1)
 
                         //                .disabled()
@@ -102,10 +121,11 @@ struct PlanSettingView: View {
                         )
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
-                .contentShape(Rectangle()) 
+                .contentShape(Rectangle())
                 .onTapGesture {
                     hideKeyboard()
                 }
+                
             }
     }
             
@@ -184,6 +204,7 @@ struct PlanSettingView: View {
         VStack(spacing: 10) {
             ForEach(Array(todoItems[currentSettingPage - 1].prefix(10).enumerated()), id: \.offset) { index, item in
                 todoItemView(for: index)
+                    .id(index)
             }
         }
         .padding()
@@ -292,6 +313,7 @@ struct PlanSettingView: View {
                         focusedIndex = index
                     }
             }
+            
         }
     }
 }
