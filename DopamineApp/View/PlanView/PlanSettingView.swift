@@ -21,6 +21,7 @@ struct PlanSettingView: View {
     
     let autoCorrectionHeight: CGFloat = 57
     
+    
     var numberOfDays: Int {
         max(0,Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0) + 1
     }
