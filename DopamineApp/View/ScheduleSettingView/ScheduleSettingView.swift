@@ -14,7 +14,7 @@ struct ScheduleSettingView: View {
 //    @State private var isNavigating = false
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
-    @State private var isNavigatingToTitle = false
+//    @State private var isNavigatingToTitle = false
 
    
     var body: some View {
@@ -71,16 +71,16 @@ struct ScheduleSettingView: View {
         }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    isNavigatingToTitle = true
-                }) {
-                    Text("<뒤로")
-                        .font(.pretendardBold18)
-                        .foregroundColor(.gray)
-                        .underline()
-                }
-            }
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button(action: {
+//                    isNavigatingToTitle = true
+//                }) {
+//                    Text("<뒤로")
+//                        .font(.pretendardBold18)
+//                        .foregroundColor(.gray)
+//                        .underline()
+//                }
+//            }
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -93,9 +93,9 @@ struct ScheduleSettingView: View {
                 }
             }
         }
-        .navigationDestination(isPresented: $isNavigatingToTitle) {
-                TitleView()
-        }
+//        .navigationDestination(isPresented: $isNavigatingToTitle) {
+//                TitleView()
+//        }
         .navigationDestination(isPresented: $isNavigatingToBase) {
                 BaseView()
         }
