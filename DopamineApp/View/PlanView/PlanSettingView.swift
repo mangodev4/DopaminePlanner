@@ -40,42 +40,7 @@ struct PlanSettingView: View {
             GeometryReader { geometry in
                 VStack {
                     Spacer()
-                    
-                    HStack {
-                        Button(action: {
-                            if currentSettingPage > 1 {
-                                currentSettingPage -= 1
-                            }
-                        }, label: {
-                            Image(systemName: "arrowtriangle.left.fill")
-                                .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
-                                .font(.title)
-                        })
-                        .disabled(currentSettingPage <= 1)
-                        .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
-                        
-                        Spacer()
-                        
-                        Text("DAY \(currentSettingPage)")
-                            .font(.system(size: 35).bold())
-                            .foregroundStyle(Color.blue1)
-                        
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            if currentSettingPage < numberOfDays {
-                                currentSettingPage += 1
-                            }
-                        }, label: {
-                            Image(systemName: "arrowtriangle.right.fill")
-                                .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
-                                .font(.title)
-                        })
-                        .disabled(currentSettingPage >= numberOfDays)
-                        .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
-                        
-                    }
+                    HeaderButton
                     .padding(.horizontal, 45)
                     .padding(.vertical, 20)
                     
@@ -92,7 +57,7 @@ struct PlanSettingView: View {
                     }
                     .padding(.top, 5)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             focusedIndex = 0
                         }
                     }
@@ -171,6 +136,43 @@ struct PlanSettingView: View {
         }
     }
 
+    private var HeaderButton: some View {
+            HStack {
+                Button(action: {
+                    if currentSettingPage > 1 {
+                        currentSettingPage -= 1
+                    }
+                }, label: {
+                    Image(systemName: "arrowtriangle.left.fill")
+                        .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
+                        .font(.title)
+                })
+                .disabled(currentSettingPage <= 1)
+                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+                
+                Spacer()
+                
+                Text("DAY \(currentSettingPage)")
+                    .font(.system(size: 35).bold())
+                    .foregroundStyle(Color.blue1)
+                
+                
+                Spacer()
+                
+                Button(action: {
+                    if currentSettingPage < numberOfDays {
+                        currentSettingPage += 1
+                    }
+                }, label: {
+                    Image(systemName: "arrowtriangle.right.fill")
+                        .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
+                        .font(.title)
+                })
+                .disabled(currentSettingPage >= numberOfDays)
+                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+
+        }
+    }
     
     private var todoListView: some View {
         VStack(spacing: 10) {
@@ -232,6 +234,7 @@ struct PlanSettingView: View {
         }
     }
     
+
     
     struct TodoItemView: View {
         @Binding var todo: String
