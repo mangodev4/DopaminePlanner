@@ -15,7 +15,7 @@ struct PlanSettingView: View {
     @State private var todoItems: [[String]] = []
     @FocusState private var focusedIndex: Int?
     @State var offset: CGSize = CGSize()
-    @State private var keyboardOffset: CGFloat = 0
+    @State private var keyboardHeight: CGFloat = 0
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
     @State private var buttonHeight: CGFloat = 0
@@ -54,77 +54,83 @@ struct PlanSettingView: View {
                     ScrollViewReader { scrollViewProxy in
                         ScrollView {
                             todoListView
-//                                .offset(y: -keyboardOffset)
                                 .onChange(of: focusedIndex) { newValue in
                                     withAnimation {
                                         if let newValue = newValue {
-                                            scrollViewProxy.scrollTo(newValue, anchor: .center)
+                                            scrollViewProxy.scrollTo(newValue, anchor: .top)
                                         }
                                     }
                                 }
                         }
-                        .padding(.top, 5)
-                        .padding(.bottom, keyboardOffset)
-                    }
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            focusedIndex = 0
-                        }
-                    }
-                    
+//                                .padding(.top, 5)
+//                                .padding(.bottom, keyboardHeight)
+                        .onAppear {
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                                    withAnimation {
+                                        let keyboardHeight = keyboardFrame.height
+                                        self.keyboardHeight = keyboardHeight
 
-                    .onAppear {
-                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
-                            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                                        if let focusedIndex = focusedIndex {
+                                            scrollViewProxy.scrollTo(focusedIndex, anchor: .bottom)
+                                        }
+                                    }
+                                }
+                            }
+
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
                                 withAnimation {
-                                    self.keyboardOffset = keyboardFrame.height / 2
+                                    self.keyboardHeight = 0
                                 }
                             }
                         }
-
-                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                            withAnimation {
-                                self.keyboardOffset = 0
-                            }
+                        .onDisappear {
+                            NotificationCenter.default.removeObserver(self)
                         }
                     }
-                    .onDisappear {
-                        NotificationCenter.default.removeObserver(self)
+
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                focusedIndex = 0
+                            }
+                        
                     }
                     
                     
                     Spacer()
                     
-                        // MARK: 다음 버튼
-                        Button(action: {
-                            cleanUpTodoItems()
-                            isNavigatingToPlan = true
-                        }) {
-                            Text("다음")
-                                .frame(width: 300)
-                                .font(.pretendardBold18)
-                                .padding()
-                                .background(Color.blue1)
-                                .foregroundColor(.white)
-                                .cornerRadius(14)
-                        }
-//                        .frame(width: geometry.size.width)
-                        .padding(.bottom, 10)
-                        .zIndex(1)
-
-                        //                .disabled()
-                        
-                        NavigationLink(
-                            destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-                            isActive: $isNavigatingToPlan,
-                            label: { EmptyView() }
-                        )
+                    // MARK: 다음 버튼
+                    Button(action: {
+                        cleanUpTodoItems()
+                        isNavigatingToPlan = true
+                    }) {
+                        Text("다음")
+                            .frame(width: 300)
+                            .font(.pretendardBold18)
+                            .padding()
+                            .background(isNextButtonEnabled ? Color.blue1 : Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(14)
+                    }
+                    //                        .frame(width: geometry.size.width)
+                    .padding(.bottom, 10)
+                    .zIndex(1)
+                    .disabled(!isNextButtonEnabled)
+                    
+                    NavigationLink(
+                        destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+                        isActive: $isNavigatingToPlan,
+                        label: { EmptyView() }
+                    )
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     hideKeyboard()
                 }
+                
+                
+
                 
             }
     }
@@ -217,6 +223,11 @@ struct PlanSettingView: View {
             .padding(.trailing, 15)
     }
     
+    private var isNextButtonEnabled: Bool {
+        todoItems.allSatisfy { dayItems in
+            dayItems.contains { !$0.isEmpty }
+        }
+    }
     
     
     private func todoItemView(for index: Int) -> some View {
