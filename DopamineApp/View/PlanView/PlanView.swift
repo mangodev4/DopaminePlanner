@@ -87,10 +87,12 @@ struct PlanView: View {
                 changePage(by: -1)
             }){
                 Image(systemName: "chevron.left")
-                    .foregroundColor(Color.blue3)
+                    .foregroundColor(currentViewPage > startDate ? Color.blue3 : Color.gray)
                     .font(.title)
                 
             }
+            .disabled(currentViewPage < startDate)
+
             Spacer()
             
             Text(currentViewPage, formatter: Self.dateFormatter)
@@ -103,11 +105,11 @@ struct PlanView: View {
                 changePage(by: 1)
             }) {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(Color.blue3)
+                    .foregroundColor(currentViewPage < endDate ? Color.blue3 : Color.gray)
                     .font(.title)
                 
             }
-            //            .disabled(currentViewPage >= numberOfDays)
+                        .disabled(currentViewPage > endDate)
             //            .opacity(currentViewPage >= numberOfDays ? 0.2 : 1.0)
             
             
