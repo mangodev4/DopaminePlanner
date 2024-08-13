@@ -21,7 +21,6 @@ struct TitleView: View {
         NavigationStack {
             VStack {
                 HeaderButtons
-                //                Spacer()
                 
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 50, weight: .bold, design: .default))
@@ -29,7 +28,6 @@ struct TitleView: View {
                     .padding(.trailing, 200)
                     .padding(.vertical, 60)
                 
-                //                Spacer()
                 ZStack  {
                     Capsule()
                         .frame(width: 350, height: 60)

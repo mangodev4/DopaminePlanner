@@ -224,9 +224,10 @@ struct PlanSettingView: View {
     }
     
     private var isNextButtonEnabled: Bool {
-        todoItems.allSatisfy { dayItems in
+        let areAllTodoItemsValid = todoItems.allSatisfy { dayItems in
             dayItems.contains { !$0.isEmpty }
         }
+        return (startDate != nil && endDate != nil && startDate == endDate) || areAllTodoItemsValid
     }
     
     

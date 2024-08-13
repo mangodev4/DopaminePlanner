@@ -168,6 +168,8 @@ private func isDateInRange(_ date: Date) -> Bool {
 private struct CellView: View {
   var day: Int
   var clicked: Bool = false
+  var isSunday: Bool = false
+
   
   init(day: Int, clicked: Bool) {
     self.day = day

@@ -119,7 +119,7 @@ struct PlanView: View {
     
     private var pageView: some View {
         VStack {
-            Text("할 일 목록")
+            Text("오늘의 계획")
                 .font(.pretendardMedium18)
                 .foregroundStyle(Color.gray2)
         }
@@ -208,10 +208,11 @@ struct PlanView: View {
                 
                 HStack {
                 if isEditing {
-                    TextField("할 일을 입력하세요", text: $editedTodo, onCommit: saveChanges)
+                    TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
                         .font(.pretendardMedium16)
                         .foregroundColor(.gray1)
                         .padding(.leading, 20)
+                        .focused($isFocused)
                         .frame(width: 280, height: 60, alignment: .leading)
                         .submitLabel(.done)
                 } else {
@@ -224,14 +225,14 @@ struct PlanView: View {
                     //                    .onSubmit{
                     //                        onCommit()
                     //                    }
-                    //                    .onChange(of: todo) { newValue in
-                    //                        if newValue.count > 15 {
-                    //                            todo = String(newValue.prefix(15))
-                    //                        }
-                    //                    }
+                        .onChange(of: editedTodo) { newValue in
+                            if newValue.count > 15 {
+                                todo = String(newValue.prefix(15))
+                            }
+                        }
                 }
                 
-                
+                    //  MARK: todoItem Right Button
                     
                     Button(action: {
                         if isEditing {
