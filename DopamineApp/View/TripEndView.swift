@@ -14,7 +14,7 @@ struct TripEndView: View {
                 Spacer()
                 VStack {
                     Text("모든 여행이 종료되었어요!")
-                    Text("여행 내용을 저장할까요?")
+//                    Text("여행 내용을 저장할까요?")
                 }
                 .padding()
                 .font(.pretendardBold20)
@@ -34,23 +34,23 @@ struct TripEndView: View {
                 
                 
                 
-                Button(action: {
-                }, label: {
-                    ZStack {
-                        Capsule()
-                            .stroke(Color.gray2, lineWidth: 1)
-                            .frame(width: 100, height: 40)
-                        
-                        Text("저장하기")
-                            .foregroundStyle(Color.blue1)
-                        
-                    }
-                })
+//                Button(action: {
+//                }, label: {
+//                    ZStack {
+//                        Capsule()
+//                            .stroke(Color.gray2, lineWidth: 1)
+//                            .frame(width: 100, height: 40)
+//                        
+//                        Text("저장하기")
+//                            .foregroundStyle(Color.blue1)
+//                        
+//                    }
+//                })
                 
                 Spacer()
                 
                 NavigationLink(destination: BaseView()) {
-                    Text("처음으로")
+                    Text("확인")
                         .frame(width: 300)
                         .font(.pretendardBold18)
                         .padding()
