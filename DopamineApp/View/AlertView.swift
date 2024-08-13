@@ -67,7 +67,6 @@ extension AlertView {
             )
             .onTapGesture {
                 showAlert = false
-                isNavigatingToEnd = true
             }
         
     }
@@ -86,6 +85,7 @@ extension AlertView {
             )
             .onTapGesture {
                 showAlert = false
+                isNavigatingToEnd = true
             }
     }
     
