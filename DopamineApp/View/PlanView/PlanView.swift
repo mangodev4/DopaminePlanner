@@ -261,6 +261,7 @@ struct PlanView: View {
 
                 }
                 HStack(spacing: 0) {
+                    //  MARK: todoItem Check Button
                     Button {
                         HapticManager.shared.mediumHaptic()
                         isChecked.toggle()
@@ -271,6 +272,7 @@ struct PlanView: View {
                     }
                     .frame(width: 30, height: 30, alignment: .center)
                     .padding(.leading, 10)
+                    .disabled(focusedIndex == index)
                     
                     if focusedIndex == index {
                         TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
