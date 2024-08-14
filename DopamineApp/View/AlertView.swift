@@ -66,6 +66,7 @@ extension AlertView {
                 }
             )
             .onTapGesture {
+                HapticManager.shared.mediumHaptic()
                 showAlert = false
             }
         
@@ -84,6 +85,7 @@ extension AlertView {
                 }
             )
             .onTapGesture {
+                HapticManager.shared.mediumHaptic()
                 showAlert = false
                 isNavigatingToEnd = true
             }

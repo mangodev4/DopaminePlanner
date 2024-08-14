@@ -43,14 +43,16 @@ struct ScheduleSettingView: View {
                 
                 Spacer()
                 Button(action: {
-                    if startDate != nil && endDate != nil {
-                        isNavigatingToPlan = true
+                    HapticManager.shared.mediumHaptic()
+                    withAnimation(.bouncy) {
+                        if startDate != nil && endDate != nil {
+                            isNavigatingToPlan = true
+                        }
                     }
                 }) {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
-                    
                         .padding()
                         .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
                         .foregroundColor(.white)
@@ -84,6 +86,7 @@ struct ScheduleSettingView: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")

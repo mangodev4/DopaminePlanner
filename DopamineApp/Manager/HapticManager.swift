@@ -7,9 +7,17 @@
 
 import SwiftUI
 
-struct HapticManager: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    final class HapticManager {
+        static let shared = HapticManager()
+        private init() { }
+        
+        private let heavy = UIImpactFeedbackGenerator(style: .heavy)
+        private let medium = UIImpactFeedbackGenerator(style: .medium)
+        
+        func heavyHaptic() {
+            heavy.impactOccurred()
+        }
+        func mediumHaptic() {
+            medium.impactOccurred()
+        }
     }
-}
-

@@ -97,6 +97,9 @@ struct BaseView: View {
                 .padding(.bottom, 50)
                 .navigationTitle("")
                 .navigationBarBackButtonHidden(true)
+                .onTapGesture {
+                    HapticManager.shared.mediumHaptic()
+                }
             }
         }
     }

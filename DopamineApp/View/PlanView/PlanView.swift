@@ -61,6 +61,7 @@ struct PlanView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     showAlert = true
                 }) {
                     Text("여행 종료")
@@ -92,6 +93,7 @@ struct PlanView: View {
             Spacer()
             
             Button(action: {
+                HapticManager.shared.mediumHaptic()
                 changePage(by: -1)
             }){
                 Image(systemName: "chevron.left")
@@ -115,6 +117,7 @@ struct PlanView: View {
             Spacer()
             
             Button(action: {
+                HapticManager.shared.mediumHaptic()
                 changePage(by: 1)
             }) {
                 Image(systemName: "chevron.right")
@@ -232,9 +235,11 @@ struct PlanView: View {
                     
                     //  MARK: todoItem Edit Button
                     Button(action: {
+                        HapticManager.shared.mediumHaptic()
                         if focusedIndex == index {
                             saveChanges()
                         } else {
+                            HapticManager.shared.mediumHaptic()
                             onEditingChanged(index)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isFocused = true
@@ -257,6 +262,7 @@ struct PlanView: View {
                 }
                 HStack(spacing: 0) {
                     Button {
+                        HapticManager.shared.mediumHaptic()
                         isChecked.toggle()
                     } label: {
                        Image(systemName: "checkmark.square.fill")
@@ -276,6 +282,7 @@ struct PlanView: View {
                             .submitLabel(.done)
                             .onChange(of: editedTodo) { newValue in
                                 if newValue.count > 15 {
+                                    HapticManager.shared.heavyHaptic()
                                     editedTodo = String(newValue.prefix(15))
                                 }
                             }

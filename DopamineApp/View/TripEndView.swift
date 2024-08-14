@@ -59,6 +59,9 @@ struct TripEndView: View {
                         .cornerRadius(14)
                 }
                 .padding(.bottom, 30)
+                .onTapGesture {
+                    HapticManager.shared.mediumHaptic()
+                }
             }
         }
         .navigationBarBackButtonHidden(true)

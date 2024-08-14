@@ -42,6 +42,7 @@ struct TitleView: View {
                                     print("submission!")
                                     subtitleFocused = true
                                 } else if newValue.count > 15 {
+                                    HapticManager.shared.heavyHaptic()
                                     title = String(newValue.prefix(15))
                                 }
                                 checkButtonState()
@@ -72,6 +73,7 @@ struct TitleView: View {
                             .frame(width: 300)
                             .onChange(of: subtitle) { newValue in
                                 if newValue.count > 15 {
+                                    HapticManager.shared.heavyHaptic()
                                     subtitle = String(newValue.prefix(15))}
                                 checkButtonState()
                             }

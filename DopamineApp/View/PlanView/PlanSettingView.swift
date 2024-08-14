@@ -101,9 +101,11 @@ struct PlanSettingView: View {
                     
                     // MARK: 다음 버튼
                     Button(action: {
-                        
-                        cleanUpTodoItems()
-                        isNavigatingToPlan = true
+                        HapticManager.shared.mediumHaptic()
+                        withAnimation(.bouncy) {
+                            cleanUpTodoItems()
+                            isNavigatingToPlan = true
+                        }
                     }) {
                         Text("다음")
                             .frame(width: 300)
@@ -139,6 +141,7 @@ struct PlanSettingView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")
@@ -178,6 +181,7 @@ struct PlanSettingView: View {
     private var HeaderButton: some View {
             HStack {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     if currentSettingPage > 1 {
                         currentSettingPage -= 1
                     }
@@ -199,6 +203,7 @@ struct PlanSettingView: View {
                 Spacer()
                 
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     if currentSettingPage < numberOfDays {
                         currentSettingPage += 1
                     }
@@ -266,6 +271,7 @@ struct PlanSettingView: View {
             //  MARK: todoItem Cancel Button
             if focusedIndex != index {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     deleteTodo(at: index)
                 }, label: {
                     Image(systemName: "xmark")
@@ -320,6 +326,7 @@ struct PlanSettingView: View {
                             onCommit()
                         }
                         if newValue.count > 15 {
+                            HapticManager.shared.heavyHaptic()
                             todo = String(newValue.prefix(15))
                         }
                         if todo.isEmpty {
