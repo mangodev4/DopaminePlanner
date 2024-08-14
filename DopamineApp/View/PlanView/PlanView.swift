@@ -108,9 +108,8 @@ struct PlanView: View {
                 .foregroundStyle(Color.blue1)
                 .overlay {
                     Rectangle()
-                        .foregroundColor(.blue)
-                        .frame(width: 170, height: 30)
-                        .opacity(0.3)
+                        .foregroundColor(.clear)
+                        .frame(width: 150, height: 30)
                 }
             
             Spacer()
@@ -274,8 +273,11 @@ struct PlanView: View {
                     //                        onCommit()
                     //                    }
                         .onChange(of: editedTodo) { newValue in
+                            if newValue != todo {
+                                editedTodo = newValue
+                            }
                             if newValue.count > 15 {
-                                todo = String(newValue.prefix(15))
+                                editedTodo = String(newValue.prefix(15))
                             }
                         }
                 
