@@ -62,9 +62,15 @@ struct PlanView: View {
                     showAlert = true
                 }) {
                     Text("여행 종료")
-                        .font(.pretendardBold18)
+                        .font(.pretendardMedium16)
                         .foregroundColor(.gray)
                         .underline()
+                        .baselineOffset(2)
+                        .overlay {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 100, height: 50)
+                        }
                 }
             }
         }
@@ -87,18 +93,24 @@ struct PlanView: View {
                 changePage(by: -1)
             }){
                 Image(systemName: "chevron.left")
-                    .foregroundColor(currentViewPage > startDate ? Color.blue3 : Color.gray)
+                    .foregroundColor(startDate < currentViewPage ? Color.blue3 : Color.gray)
                     .font(.title)
                 
             }
-            .disabled(currentViewPage < startDate)
+            .disabled(startDate > currentViewPage)
 
             Spacer()
             
-            Text(currentViewPage, formatter: Self.dateFormatter)
-                .font(.pretendardBold24)
-                .foregroundStyle(Color.blue1)
             
+            ZStack {
+                Text(currentViewPage, formatter: Self.dateFormatter)
+                    .font(.pretendardBold24)
+                    .foregroundStyle(Color.blue1)
+                
+                Rectangle()
+                    .frame(width: 150, height: 30)
+                    .foregroundColor(.red)
+            }
             Spacer()
             
             Button(action: {

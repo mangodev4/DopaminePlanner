@@ -28,6 +28,7 @@
 		A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */; };
 		A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */; };
 		A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6F12C60BE89003AF62A /* TravelingView.swift */; };
+		A5FAA06C2C6C4887000DE919 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FAA06B2C6C4887000DE919 /* HapticManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
 		A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A5ABD6F12C60BE89003AF62A /* TravelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelingView.swift; sourceTree = "<group>"; };
+		A5FAA06B2C6C4887000DE919 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				A5596D552C63242900491C70 /* KeyboardManager.swift */,
+				A5FAA06B2C6C4887000DE919 /* HapticManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
 				A5596D582C63654D00491C70 /* DateExtension.swift in Sources */,
+				A5FAA06C2C6C4887000DE919 /* HapticManager.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
 				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,

@@ -87,9 +87,15 @@ struct ScheduleSettingView: View {
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")
-                        .font(.pretendardBold18)
+                        .font(.pretendardMedium16)
                         .foregroundColor(.gray)
                         .underline()
+                        .baselineOffset(2)
+                        .overlay {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 100, height: 50)
+                        }
                 }
             }
         }

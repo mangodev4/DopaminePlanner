@@ -101,6 +101,7 @@ struct PlanSettingView: View {
                     
                     // MARK: 다음 버튼
                     Button(action: {
+                        
                         cleanUpTodoItems()
                         isNavigatingToPlan = true
                     }) {
@@ -141,9 +142,15 @@ struct PlanSettingView: View {
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")
-                        .font(.pretendardBold18)
+                        .font(.pretendardMedium16)
                         .foregroundColor(.gray)
                         .underline()
+                        .baselineOffset(2)
+                        .overlay {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 100, height: 50)
+                        }
                 }
             }
         }
