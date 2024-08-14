@@ -16,6 +16,8 @@ struct PlanView: View {
     @Binding var todoItems: [[String]]
     
     @State private var showAlert = false
+    @State private var focusedIndex: Int?
+
 
 //    @FocusState private var focusedIndex: Int?
 
@@ -164,10 +166,17 @@ struct PlanView: View {
                         }
                     }
                 ),
-                index: index
+                index: index,
+                focusedIndex: focusedIndex,
+                onEditingChanged: { newIndex in
+                    if newIndex == nil {
+                        focusedIndex = nil
+                    } else {
+                        focusedIndex = newIndex
+                    }
+                }
             )
-            
-            
+
             
 //            Button(action: {
 //                //                    deleteTodo(at: index)
@@ -197,15 +206,19 @@ struct PlanView: View {
     struct TodoItemView: View {
         @Binding var todo: String
         let index: Int
-        @FocusState private var isFocused: Bool
+        let focusedIndex: Int?
+        let onEditingChanged: (Int?) -> Void
 
-        @State private var isEditing = false
+//        @State private var isEditing = false
         @State private var editedTodo: String
+        @FocusState private var isFocused: Bool
         
-        init(todo: Binding<String>, index: Int) {
+        init(todo: Binding<String>, index: Int, focusedIndex: Int?, onEditingChanged: @escaping (Int?) -> Void) {
             self._todo = todo
             self.index = index
             self._editedTodo = State(initialValue: todo.wrappedValue)
+            self.focusedIndex = focusedIndex
+            self.onEditingChanged = onEditingChanged
         }
         
         var body: some View {
@@ -214,21 +227,21 @@ struct PlanView: View {
                     Rectangle()
                         .stroke(Color.gray2, lineWidth: 1)
                         .frame(width: 300, height: 60)
-                        .background(isFocused ? Color.gray4 : Color.white )
+                        .background(focusedIndex == index ? Color.gray4 : Color.white )
                         .opacity(0.5)
                     
                     //  MARK: todoItem Right Button
                     Button(action: {
-                        isEditing.toggle()
-                        if !isEditing {
+                        if focusedIndex == index {
                         saveChanges()
                         } else {
+                            onEditingChanged(index)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isFocused = true
                             }
                         }
                     }) {
-                        if isEditing {
+                        if focusedIndex == index {
                             Text("저장")
                                 .font(.pretendardMedium16)
                                 .foregroundColor(.blue3)
@@ -242,7 +255,7 @@ struct PlanView: View {
                     .foregroundColor(.blue)
                     .opacity(0.6)
                 }
-                if isEditing {
+                if focusedIndex == index {
                     TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
                         .font(.pretendardMedium16)
                         .foregroundColor(.gray1)
@@ -269,6 +282,12 @@ struct PlanView: View {
 //.padding(.trailing, 15)
                 }
             }
+            .onChange(of: isFocused) { newValue in
+                if !newValue && focusedIndex == index {
+                    saveChanges()
+                }
+            }
+
 //            .onTapGesture {
 //                isFocused = true
 //            }
@@ -276,8 +295,7 @@ struct PlanView: View {
         
         private func saveChanges() {
             todo = editedTodo
-            isEditing = false
-            isFocused = false
+            onEditingChanged(nil)
         }
     }
 }
