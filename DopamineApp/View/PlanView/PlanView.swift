@@ -211,6 +211,7 @@ struct PlanView: View {
 //        @State private var isEditing = false
         @State private var editedTodo: String
         @FocusState private var isFocused: Bool
+        @State private var isChecked = false
         
         init(todo: Binding<String>, index: Int, focusedIndex: Int?, onEditingChanged: @escaping (Int?) -> Void) {
             self._todo = todo
@@ -229,10 +230,10 @@ struct PlanView: View {
                         .background(focusedIndex == index ? Color.gray4 : Color.white )
                         .opacity(0.5)
                     
-                    //  MARK: todoItem Right Button
+                    //  MARK: todoItem Edit Button
                     Button(action: {
                         if focusedIndex == index {
-                        saveChanges()
+                            saveChanges()
                         } else {
                             onEditingChanged(index)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -247,48 +248,61 @@ struct PlanView: View {
                         } else {
                             Image(systemName: "arrow.2.squarepath")
                                 .font(.headline)
-                                .foregroundColor(.blue3)
+                                .foregroundColor(isChecked ? Color.gray3 : Color.blue3)
                         }
                     }
-                    .frame(width: 50, height: 50, alignment: .leading)
-                    .foregroundColor(.blue)
-                    .opacity(0.6)
+                    .frame(width: 40, height: 50, alignment: .leading)
+                    .disabled(isChecked == true)
+
                 }
-                if focusedIndex == index {
-                    TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                        .padding(.leading, 20)
-                        .focused($isFocused)
-                        .frame(width: 250, height: 60, alignment: .leading)
-                        .submitLabel(.done)
-                        .onChange(of: editedTodo) { newValue in
-                            if newValue.count > 15 {
-                                editedTodo = String(newValue.prefix(15))
+                HStack(spacing: 0) {
+                    Button {
+                        isChecked.toggle()
+                    } label: {
+                       Image(systemName: "checkmark.square.fill")
+                            .font(.title2)
+                            .foregroundColor(isChecked ? Color.blue5 : Color.gray3)
+                    }
+                    .frame(width: 30, height: 30, alignment: .center)
+                    .padding(.leading, 10)
+                    
+                    if focusedIndex == index {
+                        TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
+                            .font(.pretendardMedium16)
+                            .foregroundColor(.gray1)
+                            .padding(.leading, 5)
+                            .focused($isFocused)
+                            .frame(width: 230, height: 60, alignment: .leading)
+                            .submitLabel(.done)
+                            .onChange(of: editedTodo) { newValue in
+                                if newValue.count > 15 {
+                                    editedTodo = String(newValue.prefix(15))
+                                }
                             }
-}
-                } else {
-                    Text(todo)
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                        .padding(.leading, 20)
-                        .frame(width: 280, height: 60, alignment: .leading)
-                    //                    .submitLabel(.next)
-                    //                    .onSubmit{
-                    //                        onCommit()
-                    //                    }
-                        .onChange(of: editedTodo) { newValue in
-                            if newValue != todo {
-                                editedTodo = newValue
+                    } else {
+                        Text(todo)
+                            .font(.pretendardMedium16)
+                            .foregroundColor(.gray1)
+                            .strikethrough(isChecked, color: Color.peach)
+                            .padding(.leading, 5)
+                            .frame(width: 230, height: 60, alignment: .leading)
+                        //                    .submitLabel(.next)
+                        //                    .onSubmit{
+                        //                        onCommit()
+                        //                    }
+                            .onChange(of: editedTodo) { newValue in
+                                if newValue != todo {
+                                    editedTodo = newValue
+                                }
                             }
-                        }
-                
-//.padding(.trailing, 15)
+                        
+                        //.padding(.trailing, 15)
+                    }
                 }
-            }
-            .onChange(of: isFocused) { newValue in
-                if !newValue && focusedIndex == index {
-                    saveChanges()
+                .onChange(of: isFocused) { newValue in
+                    if !newValue && focusedIndex == index {
+                        saveChanges()
+                    }
                 }
             }
 
