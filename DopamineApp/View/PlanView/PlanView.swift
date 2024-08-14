@@ -262,6 +262,11 @@ struct PlanView: View {
                         .focused($isFocused)
                         .frame(width: 250, height: 60, alignment: .leading)
                         .submitLabel(.done)
+                        .onChange(of: editedTodo) { newValue in
+                            if newValue.count > 15 {
+                                editedTodo = String(newValue.prefix(15))
+                            }
+}
                 } else {
                     Text(todo)
                         .font(.pretendardMedium16)
@@ -275,9 +280,6 @@ struct PlanView: View {
                         .onChange(of: editedTodo) { newValue in
                             if newValue != todo {
                                 editedTodo = newValue
-                            }
-                            if newValue.count > 15 {
-                                editedTodo = String(newValue.prefix(15))
                             }
                         }
                 
@@ -296,7 +298,9 @@ struct PlanView: View {
         }
         
         private func saveChanges() {
-            todo = editedTodo
+            if editedTodo != todo {
+                todo = editedTodo
+            }
             onEditingChanged(nil)
         }
     }
