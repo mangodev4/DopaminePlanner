@@ -34,7 +34,7 @@ struct TitleView: View {
                         .foregroundColor(titleFocused ? Color.blue4 : Color.gray4)
                     HStack {
                         TextField("제목을 입력해 주세요.", text: $title, axis: .vertical)
-                            .font(.pretendardBold20)
+                            .font(.pretendardBold18)
                             .frame(width: 300)
                             .onChange(of: title) { newValue in
                                 if let newLineIndex = title.lastIndex(of: "\n") {
@@ -68,7 +68,7 @@ struct TitleView: View {
                         .foregroundColor(subtitleFocused ? Color.blue4 : Color.gray4)
                     HStack {
                         TextField("부제를 입력해 주세요.", text: $subtitle)
-                            .font(.pretendardMedium20)
+                            .font(.pretendardMedium18)
                             .frame(width: 300)
                             .onChange(of: subtitle) { newValue in
                                 if newValue.count > 15 {
@@ -117,7 +117,7 @@ struct TitleView: View {
             Spacer()
             
             Text("\(count)/15")
-                .font(.pretendardBold14)
+                .font(.pretendardRegular14)
                 .foregroundColor(count >= 15 ? Color.peach : .gray2)
                 .padding(.trailing, 25)
                 .padding()
@@ -135,12 +135,22 @@ struct TitleView: View {
                 }
             }) {
                 NavigationLink(destination: BaseView()) {
-                    Text("<뒤로")
-                        .font(.pretendardBold18)
-                        .foregroundColor(.gray)
-                        .underline()
+                    HStack(spacing: 1) {
+                        Image(systemName: "chevron.left")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        Text("뒤로")
+                            .font(.pretendardMedium16)
+                            .foregroundColor(.gray)
+                            .underline()
+                            .baselineOffset(2)
+                            .overlay {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 100, height: 50)
+                            }
+                    }
                 }
-                
             }
             .padding(.leading, 10)
             
