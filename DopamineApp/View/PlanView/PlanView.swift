@@ -101,16 +101,16 @@ struct PlanView: View {
 
             Spacer()
             
+            Text(currentViewPage, formatter: Self.dateFormatter)
+                .font(.pretendardBold24)
+                .foregroundStyle(Color.blue1)
+                .overlay {
+                    Rectangle()
+                        .foregroundColor(.blue)
+                        .frame(width: 170, height: 30)
+                        .opacity(0.3)
+                }
             
-            ZStack {
-                Text(currentViewPage, formatter: Self.dateFormatter)
-                    .font(.pretendardBold24)
-                    .foregroundStyle(Color.blue1)
-                
-                Rectangle()
-                    .frame(width: 150, height: 30)
-                    .foregroundColor(.red)
-            }
             Spacer()
             
             Button(action: {
@@ -121,15 +121,12 @@ struct PlanView: View {
                     .font(.title)
                 
             }
-                        .disabled(currentViewPage > endDate)
-            //            .opacity(currentViewPage >= numberOfDays ? 0.2 : 1.0)
-            
+            .disabled(currentViewPage > endDate)
             
             Spacer()
         }
         .padding(.top, 10)
     }
-    
     
     private var pageView: some View {
         VStack {
@@ -171,6 +168,7 @@ struct PlanView: View {
             )
             
             
+            
 //            Button(action: {
 //                //                    deleteTodo(at: index)
 //            }, label: {
@@ -179,8 +177,6 @@ struct PlanView: View {
 //                    .foregroundColor(.blue3)
 //            })
 //            .padding(.trailing, 15)
-            
-            
         }
     }
     
@@ -214,20 +210,45 @@ struct PlanView: View {
         
         var body: some View {
             ZStack(alignment: .leading) {
-                Rectangle()
-                    .stroke(Color.gray2, lineWidth: 1)
-                    .frame(width: 300, height: 60)
-                    .background(isFocused ? Color.gray4 : Color.white )
-                    .opacity(0.5)
-                
-                HStack {
+                ZStack(alignment: .trailing) {
+                    Rectangle()
+                        .stroke(Color.gray2, lineWidth: 1)
+                        .frame(width: 300, height: 60)
+                        .background(isFocused ? Color.gray4 : Color.white )
+                        .opacity(0.5)
+                    
+                    //  MARK: todoItem Right Button
+                    Button(action: {
+                        isEditing.toggle()
+                        if !isEditing {
+                        saveChanges()
+                        } else {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                isFocused = true
+                            }
+                        }
+                    }) {
+                        if isEditing {
+                            Text("저장")
+                                .font(.pretendardMedium16)
+                                .foregroundColor(.blue3)
+                        } else {
+                            Image(systemName: "arrow.2.squarepath")
+                                .font(.headline)
+                                .foregroundColor(.blue3)
+                        }
+                    }
+                    .frame(width: 50, height: 50, alignment: .leading)
+                    .foregroundColor(.blue)
+                    .opacity(0.6)
+                }
                 if isEditing {
                     TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
                         .font(.pretendardMedium16)
                         .foregroundColor(.gray1)
                         .padding(.leading, 20)
                         .focused($isFocused)
-                        .frame(width: 280, height: 60, alignment: .leading)
+                        .frame(width: 250, height: 60, alignment: .leading)
                         .submitLabel(.done)
                 } else {
                     Text(todo)
@@ -244,29 +265,8 @@ struct PlanView: View {
                                 todo = String(newValue.prefix(15))
                             }
                         }
-                }
                 
-                    //  MARK: todoItem Right Button
-                    
-                    Button(action: {
-                        if isEditing {
-                            saveChanges()
-                        } else {
-                            isEditing = true
-                            isFocused = true
-                        }
-                    }) {
-                        if isEditing {
-                            Text("저장")
-                                .font(.pretendardMedium16)
-                                .foregroundColor(.blue3)
-                        } else {
-                            Image(systemName: "arrow.2.squarepath")
-                                .font(.headline)
-                                .foregroundColor(.blue3)
-                        }
-                    }
-                    .padding(.trailing, 15)
+//.padding(.trailing, 15)
                 }
             }
 //            .onTapGesture {

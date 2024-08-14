@@ -263,7 +263,7 @@ struct PlanSettingView: View {
                     deleteTodo(at: index)
                 }
             )
-            
+            //  MARK: todoItem Cancel Button
             if focusedIndex != index {
                 Button(action: {
                     deleteTodo(at: index)
