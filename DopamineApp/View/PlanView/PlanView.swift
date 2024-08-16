@@ -17,6 +17,12 @@ struct PlanView: View {
     
     @State private var showAlert = false
     @State private var focusedIndex: Int?
+    
+    @State private var editedItems: [String] = []
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
 
 
 //    @FocusState private var focusedIndex: Int?
@@ -26,11 +32,13 @@ struct PlanView: View {
     //        startDate.numberOfDays(to: endDate)
     //    }
     
-    init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>) {
+    init(startDate: Date, endDate: Date, todoItems: Binding<[[String]]>, modifiedCount: Binding<Int>, unplannedCount: Binding<Int>) {
         self.startDate = startDate
         self.endDate = endDate
         self._todoItems = todoItems
         self._currentViewPage = State(initialValue: startDate)
+        self._modifiedCount = modifiedCount
+        self._unplannedCount = unplannedCount
     }
     
     var body: some View {
@@ -78,7 +86,12 @@ struct PlanView: View {
             }
         }
         .navigationDestination(isPresented: $isNavigatingToEnd) {
-            TripEndView()
+            TripEndView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
+                .onAppear {
+                    modifiedCount = todoItems.flatMap { $0 }.count - modifiedCount
+                    unplannedCount += 1
+
+                }
         }
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)

@@ -15,6 +15,8 @@ struct TitleView: View {
     @FocusState private var titleFocused: Bool
     @FocusState private var subtitleFocused: Bool
     
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
     
     
     var body: some View {
@@ -92,7 +94,7 @@ struct TitleView: View {
                 //                Spacer()
                 
                 
-                NavigationLink(destination: ScheduleSettingView()) {
+                NavigationLink(destination: ScheduleSettingView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)) {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
@@ -136,7 +138,7 @@ struct TitleView: View {
                     }
                 }
             }) {
-                NavigationLink(destination: BaseView()) {
+                NavigationLink(destination: BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)) {
                     HStack(spacing: 1) {
                         Image(systemName: "chevron.left")
                             .font(.caption)
@@ -176,6 +178,6 @@ struct TitleView: View {
     
 }
 
-#Preview {
-    TitleView()
-}
+//#Preview {
+//    TitleView()
+//}

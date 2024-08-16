@@ -9,11 +9,18 @@ import SwiftUI
 
 
 struct BaseView: View {
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
+    
     @State var title: String = ""
     @State var subtitle: String = ""
     
     @State private var goesToSetting: Bool = false
 //    @State private var showTitleAndSubtitle: Bool = true
+    
+
     
     var body: some View {
         NavigationStack {
@@ -42,14 +49,14 @@ struct BaseView: View {
                 HStack{
                     Text("무계획 여행")
                         .font(.pretendardSemiBold16)
-                    Text("누적 00건")
+                    Text("누적 \(unplannedCount)건")
                         .font(.pretendardMedium16)
                         .foregroundColor(.gray1)
                 }
                 HStack{
                     Text("수정된 일정")
                         .font(.pretendardSemiBold16)
-                    Text("누적 00건")
+                    Text("누적 \(modifiedCount)건")
                         .font(.pretendardMedium16)
                         .foregroundColor(.gray1)
                 }
@@ -85,7 +92,7 @@ struct BaseView: View {
 
 
                 
-                NavigationLink(destination: TitleView()) {
+                NavigationLink(destination: TitleView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)) {
                                     Text("여행 시작하기")
                                         .frame(width: 300)
                                         .font(.pretendardBold18)
@@ -112,6 +119,6 @@ struct BaseView: View {
 }
             
 
-#Preview {
-    BaseView()
-}
+//#Preview {
+//    BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
+//}

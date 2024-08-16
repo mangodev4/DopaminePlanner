@@ -15,6 +15,10 @@ struct ScheduleSettingView: View {
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
 //    @State private var isNavigatingToTitle = false
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
 
    
     var body: some View {
@@ -64,7 +68,7 @@ struct ScheduleSettingView: View {
 
                 
                 NavigationLink(
-                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date(), modifiedCount: $modifiedCount,unplannedCount: $unplannedCount),
                     isActive: $isNavigatingToPlan,
                     label: { EmptyView() }
                 )
@@ -106,7 +110,7 @@ struct ScheduleSettingView: View {
 //                TitleView()
 //        }
         .navigationDestination(isPresented: $isNavigatingToBase) {
-                BaseView()
+                BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
         }
         .navigationBarBackButtonHidden(true)
         
@@ -124,6 +128,6 @@ struct ScheduleSettingView: View {
 
 
 
-#Preview {
-    ScheduleSettingView()
-}
+//#Preview {
+//    ScheduleSettingView()
+//}

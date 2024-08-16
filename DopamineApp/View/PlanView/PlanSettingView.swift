@@ -20,6 +20,9 @@ struct PlanSettingView: View {
     @State private var isNavigatingToPlan = false
     @State private var buttonHeight: CGFloat = 0
     
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
     
     
     var numberOfDays: Int {
@@ -27,11 +30,13 @@ struct PlanSettingView: View {
     }
     
     
-    init(startDate: Date, endDate: Date) {
+    init(startDate: Date, endDate: Date, modifiedCount: Binding<Int>, unplannedCount: Binding<Int>) {
         self.startDate = startDate
         self.endDate = endDate
         let days = max(1, Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0) + 1
         _todoItems = State(initialValue: Array(repeating: [""], count: days))
+        self._modifiedCount = modifiedCount
+        self._unplannedCount = unplannedCount
     }
     
     
@@ -121,7 +126,7 @@ struct PlanSettingView: View {
                     .disabled(!isNextButtonEnabled)
                     
                     NavigationLink(
-                        destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
+                        destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems, modifiedCount: $modifiedCount,unplannedCount: $unplannedCount),
                         isActive: $isNavigatingToPlan,
                         label: { EmptyView() }
                     )
@@ -158,7 +163,7 @@ struct PlanSettingView: View {
             }
         }
         .navigationDestination(isPresented: $isNavigatingToBase) {
-            BaseView()
+            BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -336,6 +341,7 @@ struct PlanSettingView: View {
                         }
                     }
                     .onTapGesture {
+                        HapticManager.shared.mediumHaptic()
                         focusedIndex = index
                     }
             }
@@ -352,6 +358,6 @@ extension View {
 }
 #endif
 
-#Preview {
-    PlanSettingView(startDate: Date(), endDate: Date())
-}
+//#Preview {
+//    PlanSettingView(startDate: Date(), endDate: Date(),modifiedPlan: Binding<Int>, unplannedCount: Binding<Int>)
+//}

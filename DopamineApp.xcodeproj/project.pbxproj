@@ -29,6 +29,7 @@
 		A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */; };
 		A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6F12C60BE89003AF62A /* TravelingView.swift */; };
 		A5FAA06C2C6C4887000DE919 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FAA06B2C6C4887000DE919 /* HapticManager.swift */; };
+		A5FAA06E2C6EDB00000DE919 /* PlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A5ABD6F12C60BE89003AF62A /* TravelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelingView.swift; sourceTree = "<group>"; };
 		A5FAA06B2C6C4887000DE919 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		A5ABD6CA2C5244AD003AF62A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
 				A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */,
 				A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */,
+				A5FAA06E2C6EDB00000DE919 /* PlanViewModel.swift in Sources */,
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,

@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct TripEndView: View {
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -28,28 +32,10 @@ struct TripEndView: View {
                     .font(.system(size: 90, weight: .regular, design: .default))
                     .foregroundColor(.blue1)
                     .padding(.bottom, 50)
-                //            Text("여행 종료")
-                //                .font(.pretendardBold20)
-                //                .foregroundStyle(Color.blue1)
-                
-                
-                
-//                Button(action: {
-//                }, label: {
-//                    ZStack {
-//                        Capsule()
-//                            .stroke(Color.gray2, lineWidth: 1)
-//                            .frame(width: 100, height: 40)
-//                        
-//                        Text("저장하기")
-//                            .foregroundStyle(Color.blue1)
-//                        
-//                    }
-//                })
                 
                 Spacer()
                 
-                NavigationLink(destination: BaseView()) {
+                NavigationLink(destination: BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)) {
                     Text("확인")
                         .frame(width: 300)
                         .font(.pretendardBold18)
@@ -68,6 +54,6 @@ struct TripEndView: View {
     }
 }
 
-#Preview {
-    TripEndView()
-}
+//#Preview {
+//    TripEndView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
+//}
