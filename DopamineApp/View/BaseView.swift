@@ -47,20 +47,30 @@ struct BaseView: View {
                     .padding(.bottom, 30)
                 
                 HStack{
-                    Text("무계획 여행")
-                        .font(.pretendardSemiBold16)
-                    Text("누적 \(unplannedCount)건")
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                }
-                HStack{
-                    Text("수정된 일정")
-                        .font(.pretendardSemiBold16)
-                    Text("누적 \(modifiedCount)건")
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                }
-                .padding(.bottom, 50)
+                      Text("무계획 여행")
+                          .font(.pretendardSemiBold16)
+                      Text("누적")
+                          .font(.pretendardMedium16)
+                      Text("\(unplannedCount)건")
+                          .font(.pretendardMedium16)
+  //                        .foregroundColor(.gray1)
+                          .frame(width: 25, alignment: .trailing)
+
+                  }
+                  HStack{
+                      Text("수정된 일정")
+                          .font(.pretendardSemiBold16)
+                      Text("누적")
+                          .font(.pretendardMedium16)
+                      Text("\(modifiedCount)건")
+                          .font(.pretendardMedium16)
+  //                        .foregroundColor(.gray1)
+                          .frame(width: 25, alignment: .trailing)
+                  }
+                
+                Spacer()
+
+                
                 ZStack{
                     Circle()
                         .fill(.white)
