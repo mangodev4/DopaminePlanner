@@ -16,12 +16,15 @@ struct PlanView: View {
     @Binding var todoItems: [[String]]
     
     @State private var showAlert = false
-    @State private var focusedIndex: Int?
-    
-    @State private var editedItems: [String] = []
+    @State private var focusedItem: (dayIndex: Int, itemIndex: Int)?
+
+    @State private var editedItems: [[String]]
+
     
     @Binding var modifiedCount: Int
     @Binding var unplannedCount: Int
+
+    @State private var isCheckedList: [[Bool]]
 
 
 
@@ -39,6 +42,8 @@ struct PlanView: View {
         self._currentViewPage = State(initialValue: startDate)
         self._modifiedCount = modifiedCount
         self._unplannedCount = unplannedCount
+        self._editedItems = State(initialValue: todoItems.wrappedValue)
+        self._isCheckedList = State(initialValue: Array(repeating: Array(repeating: false, count: todoItems.wrappedValue.first?.count ?? 0), count: todoItems.wrappedValue.count))
     }
     
     var body: some View {
@@ -172,35 +177,37 @@ struct PlanView: View {
         ZStack(alignment: .trailing) {
             TodoItemView(
                 todo: Binding(
-                    get: { index < todoItems[dayIndex].count ? todoItems[dayIndex][index] : "" },
+                    get: { self.todoItems[dayIndex][index] },
                     set: { newValue in
-                        if index < todoItems[dayIndex].count {
-                            todoItems[dayIndex][index] = newValue
-                        } else if !newValue.isEmpty {
-                            todoItems[dayIndex].append(newValue)
+                        self.todoItems[dayIndex][index] = newValue
+                        if self.editedItems[dayIndex][index] != newValue {
+                            self.editedItems[dayIndex][index] = newValue
+                            self.modifiedCount += 1
                         }
                     }
                 ),
-                index: index,
-                focusedIndex: focusedIndex,
-                onEditingChanged: { newIndex in
-                    if newIndex == nil {
-                        focusedIndex = nil
-                    } else {
-                        focusedIndex = newIndex
+                isChecked: $isCheckedList[dayIndex][index],
+                dayIndex: dayIndex,
+                itemIndex: index,
+                focusedItem: $focusedItem,
+                onEditingChanged: { newDayIndex, newItemIndex in
+                    if newDayIndex == nil && newItemIndex == nil {
+                        focusedItem = nil
+                    } else if let newDayIndex = newDayIndex, let newItemIndex = newItemIndex {
+                        focusedItem = (newDayIndex, newItemIndex)
                     }
                 }
             )
-
             
-//            Button(action: {
-//                //                    deleteTodo(at: index)
-//            }, label: {
-//                Image(systemName: "arrow.2.squarepath")
-//                    .font(.headline)
-//                    .foregroundColor(.blue3)
-//            })
-//            .padding(.trailing, 15)
+            
+            //            Button(action: {
+            //                //                    deleteTodo(at: index)
+            //            }, label: {
+            //                Image(systemName: "arrow.2.squarepath")
+            //                    .font(.headline)
+            //                    .foregroundColor(.blue3)
+            //            })
+            //            .padding(.trailing, 15)
         }
     }
     
@@ -218,22 +225,33 @@ struct PlanView: View {
         return formatter
     }()
     
+    
     struct TodoItemView: View {
         @Binding var todo: String
-        let index: Int
-        let focusedIndex: Int?
-        let onEditingChanged: (Int?) -> Void
+        @Binding var isChecked: Bool
+        let dayIndex: Int
+        let itemIndex: Int
+        @Binding var focusedItem: (dayIndex: Int, itemIndex: Int)?
+        let onEditingChanged: (Int?, Int?) -> Void
 
 //        @State private var isEditing = false
-        @State private var editedTodo: String
+//        @State private var editedTodo: String
         @FocusState private var isFocused: Bool
-        @State private var isChecked = false
+//        @State private var isChecked = false
         
-        init(todo: Binding<String>, index: Int, focusedIndex: Int?, onEditingChanged: @escaping (Int?) -> Void) {
+        init(
+            todo: Binding<String>,
+            isChecked: Binding<Bool>,
+            dayIndex: Int,
+            itemIndex: Int,
+            focusedItem: Binding<(dayIndex: Int, itemIndex: Int)?>,
+            onEditingChanged: @escaping (Int?, Int?) -> Void) 
+        {
             self._todo = todo
-            self.index = index
-            self._editedTodo = State(initialValue: todo.wrappedValue)
-            self.focusedIndex = focusedIndex
+            self._isChecked = isChecked
+            self.dayIndex = dayIndex
+            self.itemIndex = itemIndex
+            self._focusedItem = focusedItem
             self.onEditingChanged = onEditingChanged
         }
         
@@ -243,23 +261,23 @@ struct PlanView: View {
                     Rectangle()
                         .stroke(Color.gray2, lineWidth: 1)
                         .frame(width: 300, height: 60)
-                        .background(focusedIndex == index ? Color.gray4 : Color.white )
+                        .background(focusedItem.map { $0 == (dayIndex, itemIndex) } == true ? Color.gray4 : Color.white )
                         .opacity(0.5)
                     
                     //  MARK: todoItem Edit Button
                     Button(action: {
                         HapticManager.shared.mediumHaptic()
-                        if focusedIndex == index {
+                        if let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
                             saveChanges()
                         } else {
                             HapticManager.shared.mediumHaptic()
-                            onEditingChanged(index)
+                            onEditingChanged(dayIndex, itemIndex)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isFocused = true
                             }
                         }
                     }) {
-                        if focusedIndex == index {
+                        if let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
                             Text("저장")
                                 .font(.pretendardMedium16)
                                 .foregroundColor(.blue3)
@@ -285,20 +303,21 @@ struct PlanView: View {
                     }
                     .frame(width: 30, height: 30, alignment: .center)
                     .padding(.leading, 10)
-                    .disabled(focusedIndex == index)
-                    
-                    if focusedIndex == index {
-                        TextField("새로운 계획을 입력하세요", text: $editedTodo, onCommit: saveChanges)
+                    .disabled(isFocused ==  true)
+
+                    if let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
+                        TextField("새로운 계획을 입력하세요", text: $todo, onCommit: saveChanges)
                             .font(.pretendardMedium16)
                             .foregroundColor(.gray1)
                             .padding(.leading, 5)
                             .focused($isFocused)
                             .frame(width: 230, height: 60, alignment: .leading)
                             .submitLabel(.done)
-                            .onChange(of: editedTodo) { newValue in
+                            .onChange(of: todo) { newValue in
                                 if newValue.count > 15 {
                                     HapticManager.shared.heavyHaptic()
-                                    editedTodo = String(newValue.prefix(15))
+                                    todo = String(newValue.prefix(15))
+                                    
                                 }
                             }
                     } else {
@@ -312,17 +331,12 @@ struct PlanView: View {
                         //                    .onSubmit{
                         //                        onCommit()
                         //                    }
-                            .onChange(of: editedTodo) { newValue in
-                                if newValue != todo {
-                                    editedTodo = newValue
-                                }
-                            }
-                        
+
                         //.padding(.trailing, 15)
                     }
                 }
                 .onChange(of: isFocused) { newValue in
-                    if !newValue && focusedIndex == index {
+                    if !newValue, let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
                         saveChanges()
                     }
                 }
@@ -334,12 +348,24 @@ struct PlanView: View {
         }
         
         private func saveChanges() {
-            if editedTodo != todo {
-                todo = editedTodo
-            }
-            onEditingChanged(nil)
+//            if editedTodo != todo {
+//                todo = editedTodo
+//            }
+            onEditingChanged(nil, nil)
         }
     }
+    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
+        isCheckedList[dayIndex][itemIndex].toggle()
+    }
+
+    func isChecked(for dayIndex: Int, at itemIndex: Int) -> Bool {
+        isCheckedList[dayIndex][itemIndex]
+    }
+    
+//    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
+//        isCheckedList[dayIndex][itemIndex].toggle()
+//    }
+
 }
 
 
