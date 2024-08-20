@@ -37,6 +37,7 @@ struct TitleView: View {
                     HStack {
                         TextField("제목을 입력해 주세요.", text: $title, axis: .vertical)
                             .font(.pretendardBold18)
+                            .foregroundColor(Color.gray1)
                             .frame(width: 300)
                             .onChange(of: title) { newValue in
                                 if let newLineIndex = title.lastIndex(of: "\n") {
@@ -72,6 +73,7 @@ struct TitleView: View {
                     HStack {
                         TextField("부제를 입력해 주세요.", text: $subtitle)
                             .font(.pretendardMedium18)
+                            .foregroundColor(Color.gray2)
                             .frame(width: 300)
                             .onChange(of: subtitle) { newValue in
                                 if newValue.count > 15 {
