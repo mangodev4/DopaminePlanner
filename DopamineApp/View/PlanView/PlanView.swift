@@ -25,6 +25,7 @@ struct PlanView: View {
     @Binding var unplannedCount: Int
 
     @State private var isCheckedList: [[Bool]]
+    @State private var isEdited: [[Bool]]
 
 
 
@@ -44,6 +45,7 @@ struct PlanView: View {
         self._unplannedCount = unplannedCount
         self._editedItems = State(initialValue: todoItems.wrappedValue)
         self._isCheckedList = State(initialValue: Array(repeating: Array(repeating: false, count: todoItems.wrappedValue.first?.count ?? 0), count: todoItems.wrappedValue.count))
+        self._isEdited = State(initialValue: Array(repeating: Array(repeating: false, count: todoItems.wrappedValue.first?.count ?? 0), count: todoItems.wrappedValue.count))
     }
     
     var body: some View {
@@ -180,8 +182,8 @@ struct PlanView: View {
                     get: { self.todoItems[dayIndex][index] },
                     set: { newValue in
                         self.todoItems[dayIndex][index] = newValue
-                        if self.editedItems[dayIndex][index] != newValue {
-                            self.editedItems[dayIndex][index] = newValue
+                        if !self.isEdited[dayIndex][index] {
+                            self.isEdited[dayIndex][index] = true
                             self.modifiedCount += 1
                         }
                     }
