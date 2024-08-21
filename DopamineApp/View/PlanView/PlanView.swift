@@ -121,7 +121,7 @@ struct PlanView: View {
                     .font(.title)
                 
             }
-            .disabled(startDate > currentViewPage)
+            .disabled(startDate >= currentViewPage)
 
             Spacer()
             
@@ -145,7 +145,7 @@ struct PlanView: View {
                     .font(.title)
                 
             }
-            .disabled(currentViewPage > endDate)
+            .disabled(currentViewPage >= endDate)
             
             Spacer()
         }
@@ -263,7 +263,7 @@ struct PlanView: View {
                     Rectangle()
                         .stroke(Color.gray2, lineWidth: 1)
                         .frame(width: 300, height: 60)
-                        .background(focusedItem.map { $0 == (dayIndex, itemIndex) } == true ? Color.gray4 : Color.white )
+                        .background(focusedItem.map { $0 == (dayIndex, itemIndex) } == true ? Color.blue4 : Color.white )
                         .opacity(0.5)
                     
                     //  MARK: todoItem Edit Button
@@ -310,7 +310,7 @@ struct PlanView: View {
                     if let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
                         TextField("새로운 계획을 입력하세요", text: $todo, onCommit: saveChanges)
                             .font(.pretendardMedium16)
-                            .foregroundColor(.gray1)
+                            .foregroundColor(Color.blue1)
                             .padding(.leading, 5)
                             .focused($isFocused)
                             .frame(width: 230, height: 60, alignment: .leading)
