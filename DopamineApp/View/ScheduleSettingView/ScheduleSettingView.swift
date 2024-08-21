@@ -64,7 +64,7 @@ struct ScheduleSettingView: View {
                 }
                 .disabled(startDate == nil || endDate == nil)
                 .frame(width: geometry.size.width)
-                .padding(.bottom, 30)
+                .padding(.vertical, 30)
 
                 
                 NavigationLink(

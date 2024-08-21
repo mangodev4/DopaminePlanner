@@ -44,7 +44,6 @@ struct PlanSettingView: View {
         NavigationStack {
             GeometryReader { geometry in
                 VStack {
-                    Spacer()
                     HeaderButton
                         .padding(.horizontal, 45)
                         .padding(.vertical, 20)

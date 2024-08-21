@@ -17,20 +17,20 @@ struct PlanView: View {
     
     @State private var showAlert = false
     @State private var focusedItem: (dayIndex: Int, itemIndex: Int)?
-
+    
     @State private var editedItems: [[String]]
-
+    
     
     @Binding var modifiedCount: Int
     @Binding var unplannedCount: Int
-
+    
     @State private var isCheckedList: [[Bool]]
     @State private var isEdited: [[Bool]]
-
-
-
-//    @FocusState private var focusedIndex: Int?
-
+    
+    
+    
+    //    @FocusState private var focusedIndex: Int?
+    
     
     //    var numberOfDays: Int {
     //        startDate.numberOfDays(to: endDate)
@@ -52,7 +52,9 @@ struct PlanView: View {
         ZStack {
             VStack {
                 headerView
+                    .padding(.top, 10)
                 pageView
+                    .padding(.top, 5)
                 
                 ScrollView {
                     todoListView
@@ -60,17 +62,17 @@ struct PlanView: View {
                 Spacer()
             }
             .zIndex(1)
-                
-                if showAlert {
-                        Color.black
-                            .opacity(0.5)
-                            .ignoresSafeArea()
-                            .zIndex(2)
-                        AlertView(showAlert: $showAlert, isNavigatingToEnd: $isNavigatingToEnd)
-                            .transition(.scale)
-                            .zIndex(3)
-                }
-                
+            
+            if showAlert {
+                Color.black
+                    .opacity(0.5)
+                    .ignoresSafeArea()
+                    .zIndex(2)
+                AlertView(showAlert: $showAlert, isNavigatingToEnd: $isNavigatingToEnd)
+                    .transition(.scale)
+                    .zIndex(3)
+            }
+            
             
         }
         .toolbar {
@@ -99,9 +101,11 @@ struct PlanView: View {
                 .onAppear {
                     modifiedCount = todoItems.flatMap { $0 }.count - modifiedCount
                     unplannedCount += 1
-
+                    
                 }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+//        .ignoresSafeArea(.keyboard)
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
         
@@ -124,7 +128,7 @@ struct PlanView: View {
                 
             }
             .disabled(startDate >= currentViewPage)
-
+            
             Spacer()
             
             Text(currentViewPage, formatter: Self.dateFormatter)
@@ -151,7 +155,7 @@ struct PlanView: View {
             
             Spacer()
         }
-        .padding(.top, 10)
+        //        .padding(.top, 10)
     }
     
     private var pageView: some View {
@@ -163,7 +167,6 @@ struct PlanView: View {
         .onAppear{
             currentViewPage = startDate
         }
-        .padding(.top, 5)
     }
     
     //  MARK: TodoListView
@@ -181,16 +184,23 @@ struct PlanView: View {
         ZStack(alignment: .trailing) {
             TodoItemView(
                 todo: Binding(
-                    get: { self.todoItems[dayIndex][index] },
+                       get: { self.todoItems[dayIndex][index] },
+                       set: { newValue in
+                           self.todoItems[dayIndex][index] = newValue
+                           if dayIndex < self.isEdited.count && index < self.isEdited[dayIndex].count {
+                               if !self.isEdited[dayIndex][index] {
+                                   self.isEdited[dayIndex][index] = true
+                                   self.modifiedCount += 1
+                               }
+                           }
+                       }
+                ),
+                isChecked: Binding(
+                    get: { self.isChecked(for: dayIndex, at: index) },
                     set: { newValue in
-                        self.todoItems[dayIndex][index] = newValue
-                        if !self.isEdited[dayIndex][index] {
-                            self.isEdited[dayIndex][index] = true
-                            self.modifiedCount += 1
-                        }
+                        self.toggleCheck(for: dayIndex, at: index)
                     }
                 ),
-                isChecked: $isCheckedList[dayIndex][index],
                 dayIndex: dayIndex,
                 itemIndex: index,
                 focusedItem: $focusedItem,
@@ -237,11 +247,11 @@ struct PlanView: View {
         let itemIndex: Int
         @Binding var focusedItem: (dayIndex: Int, itemIndex: Int)?
         let onEditingChanged: (Int?, Int?) -> Void
-
-//        @State private var isEditing = false
-//        @State private var editedTodo: String
+        
+        //        @State private var isEditing = false
+        //        @State private var editedTodo: String
         @FocusState private var isFocused: Bool
-//        @State private var isChecked = false
+        //        @State private var isChecked = false
         
         init(
             todo: Binding<String>,
@@ -249,7 +259,7 @@ struct PlanView: View {
             dayIndex: Int,
             itemIndex: Int,
             focusedItem: Binding<(dayIndex: Int, itemIndex: Int)?>,
-            onEditingChanged: @escaping (Int?, Int?) -> Void) 
+            onEditingChanged: @escaping (Int?, Int?) -> Void)
         {
             self._todo = todo
             self._isChecked = isChecked
@@ -293,7 +303,7 @@ struct PlanView: View {
                     }
                     .frame(width: 40, height: 50, alignment: .leading)
                     .disabled(isChecked == true)
-
+                    
                 }
                 HStack(spacing: 0) {
                     //  MARK: todoItem Check Button
@@ -301,14 +311,14 @@ struct PlanView: View {
                         HapticManager.shared.mediumHaptic()
                         isChecked.toggle()
                     } label: {
-                       Image(systemName: "checkmark.square.fill")
+                        Image(systemName: "checkmark.square.fill")
                             .font(.title2)
                             .foregroundColor(isChecked ? Color.blue5 : Color.gray3)
                     }
                     .frame(width: 30, height: 30, alignment: .center)
                     .padding(.leading, 10)
                     .disabled(isFocused ==  true)
-
+                    
                     if let focusedItem = focusedItem, focusedItem == (dayIndex, itemIndex) {
                         TextField("새로운 계획을 입력하세요", text: $todo, onCommit: saveChanges)
                             .font(.pretendardMedium16)
@@ -335,7 +345,7 @@ struct PlanView: View {
                         //                    .onSubmit{
                         //                        onCommit()
                         //                    }
-
+                        
                         //.padding(.trailing, 15)
                     }
                 }
@@ -345,33 +355,41 @@ struct PlanView: View {
                     }
                 }
             }
-
-//            .onTapGesture {
-//                isFocused = true
-//            }
+            
+            //            .onTapGesture {
+            //                isFocused = true
+            //            }
         }
         
         private func saveChanges() {
-//            if editedTodo != todo {
-//                todo = editedTodo
-//            }
+            //            if editedTodo != todo {
+            //                todo = editedTodo
+            //            }
             onEditingChanged(nil, nil)
         }
     }
-    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
-        isCheckedList[dayIndex][itemIndex].toggle()
+        
+    
+    private func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
+        if dayIndex < isCheckedList.count && itemIndex < isCheckedList[dayIndex].count {
+            isCheckedList[dayIndex][itemIndex].toggle()
+        }
     }
 
-    func isChecked(for dayIndex: Int, at itemIndex: Int) -> Bool {
-        isCheckedList[dayIndex][itemIndex]
+    private func isChecked(for dayIndex: Int, at itemIndex: Int) -> Bool {
+        if dayIndex < isCheckedList.count && itemIndex < isCheckedList[dayIndex].count {
+            return isCheckedList[dayIndex][itemIndex]
+        } else {
+            return false
+        }
     }
     
-//    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
-//        isCheckedList[dayIndex][itemIndex].toggle()
-//    }
-
+    //    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
+    //        isCheckedList[dayIndex][itemIndex].toggle()
+    //    }
+    
+    
 }
-
 
 
 //#Preview {
