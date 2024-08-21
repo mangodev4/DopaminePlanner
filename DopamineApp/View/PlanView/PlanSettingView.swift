@@ -225,7 +225,7 @@ struct PlanSettingView: View {
     
     private var todoListView: some View {
         VStack(spacing: 10) {
-            ForEach(Array(todoItems[currentSettingPage - 1].prefix(10).enumerated()), id: \.offset) { index, item in
+            ForEach(Array(todoItems[currentSettingPage - 1].prefix(5).enumerated()), id: \.offset) { index, item in     //  임시로 최대 5개로 수정.
                 todoItemView(for: index)
                     .id(index)
             }

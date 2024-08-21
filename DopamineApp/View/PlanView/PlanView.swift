@@ -84,12 +84,14 @@ struct PlanView: View {
                         .foregroundColor(.gray)
                         .underline()
                         .baselineOffset(2)
+                        .opacity(showAlert ? 0.3 : 1)
                         .overlay {
                             Rectangle()
                                 .foregroundColor(.clear)
                                 .frame(width: 100, height: 50)
                         }
                 }
+                .disabled(showAlert)
             }
         }
         .navigationDestination(isPresented: $isNavigatingToEnd) {
