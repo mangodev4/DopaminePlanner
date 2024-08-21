@@ -44,7 +44,9 @@ struct PlanView: View {
         self._modifiedCount = modifiedCount
         self._unplannedCount = unplannedCount
         self._editedItems = State(initialValue: todoItems.wrappedValue)
-        self._isCheckedList = State(initialValue: Array(repeating: Array(repeating: false, count: todoItems.wrappedValue.first?.count ?? 0), count: todoItems.wrappedValue.count))
+        self._isCheckedList = State(initialValue: todoItems.wrappedValue.map { dayItems in
+            Array(repeating: false, count: dayItems.count)
+        })
         self._isEdited = State(initialValue: Array(repeating: Array(repeating: false, count: todoItems.wrappedValue.first?.count ?? 0), count: todoItems.wrappedValue.count))
     }
     
@@ -196,9 +198,9 @@ struct PlanView: View {
                        }
                 ),
                 isChecked: Binding(
-                    get: { self.isChecked(for: dayIndex, at: index) },
+                    get: { self.isCheckedList[dayIndex][index] },
                     set: { newValue in
-                        self.toggleCheck(for: dayIndex, at: index)
+                        self.isCheckedList[dayIndex][index] = newValue
                     }
                 ),
                 dayIndex: dayIndex,
@@ -379,9 +381,8 @@ struct PlanView: View {
     private func isChecked(for dayIndex: Int, at itemIndex: Int) -> Bool {
         if dayIndex < isCheckedList.count && itemIndex < isCheckedList[dayIndex].count {
             return isCheckedList[dayIndex][itemIndex]
-        } else {
-            return false
         }
+        return false
     }
     
     //    func toggleCheck(for dayIndex: Int, at itemIndex: Int) {
