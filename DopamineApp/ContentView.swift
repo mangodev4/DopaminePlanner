@@ -10,14 +10,19 @@ import Combine
 import Foundation
 
 struct ContentView: View {
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
+    
     var body: some View {
         
 //        ScheduleSettingView()
-        BaseView()
+        BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
         
     }
 }
-
-#Preview {
-    ContentView()
-}
+//
+//#Preview {
+//    ContentView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
+//}

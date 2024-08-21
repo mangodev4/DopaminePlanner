@@ -16,6 +16,7 @@ extension Color {
     static let blue2 = Color(hex: "F7FDFF") //  plan box selected
     static let blue3 = Color(hex: "68D2FF")
     static let blue4 = Color(hex: "EAF9FF") //  circle border
+    static let blue5 = Color(hex: "2C90FA") //  check mark
     
     //MARK: Gray Scale
     static let gray1 = Color(hex: "6D6D6D")

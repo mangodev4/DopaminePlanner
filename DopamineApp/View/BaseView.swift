@@ -9,11 +9,18 @@ import SwiftUI
 
 
 struct BaseView: View {
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
+    
     @State var title: String = ""
     @State var subtitle: String = ""
     
     @State private var goesToSetting: Bool = false
 //    @State private var showTitleAndSubtitle: Bool = true
+    
+
     
     var body: some View {
         NavigationStack {
@@ -40,20 +47,30 @@ struct BaseView: View {
                     .padding(.bottom, 30)
                 
                 HStack{
-                    Text("무계획 여행")
-                        .font(.pretendardSemiBold16)
-                    Text("누적 00건")
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                }
-                HStack{
-                    Text("수정된 일정")
-                        .font(.pretendardSemiBold16)
-                    Text("누적 00건")
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.gray1)
-                }
-                .padding(.bottom, 50)
+                      Text("무계획 여행")
+                          .font(.pretendardSemiBold16)
+                      Text("누적")
+                          .font(.pretendardMedium16)
+                      Text("\(unplannedCount)건")
+                          .font(.pretendardMedium16)
+  //                        .foregroundColor(.gray1)
+                          .frame(width: 25, alignment: .trailing)
+
+                  }
+                  HStack{
+                      Text("수정된 일정")
+                          .font(.pretendardSemiBold16)
+                      Text("누적")
+                          .font(.pretendardMedium16)
+                      Text("\(modifiedCount)건")
+                          .font(.pretendardMedium16)
+  //                        .foregroundColor(.gray1)
+                          .frame(width: 25, alignment: .trailing)
+                  }
+                
+                Spacer()
+
+                
                 ZStack{
                     Circle()
                         .fill(.white)
@@ -66,26 +83,11 @@ struct BaseView: View {
 
                 Spacer()
                 
-                Button(action: {
-                    if let url = URL(string: "https://jigu1.notion.site/61491e311eba4793890149494fc46f09") {
-                        UIApplication.shared.open(url)
-                    }
-                }) {
-                    HStack(spacing: 1) {
-                        Image(systemName: "info.circle")
-                            .foregroundStyle(Color.gray2)
-                            .font(.caption)
-                        Text("무계획의 계획 알아보기")
-                            .font(.pretendardRegular14)
-                            .foregroundStyle(Color.gray2)
-                            .underline() // 링크에 밑줄 추가
-                    }
-                }
-                .padding(.bottom, 10)
+                
 
 
                 
-                NavigationLink(destination: TitleView()) {
+                NavigationLink(destination: TitleView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)) {
                                     Text("여행 시작하기")
                                         .frame(width: 300)
                                         .font(.pretendardBold18)
@@ -94,9 +96,18 @@ struct BaseView: View {
                                         .foregroundColor(.white)
                                         .cornerRadius(14)
                                 }
-                .padding(.bottom, 50)
+//                .padding(.bottom, 50)
                 .navigationTitle("")
                 .navigationBarBackButtonHidden(true)
+                .onTapGesture {
+                    HapticManager.shared.mediumHaptic()
+                }
+                
+                AppInfo
+                .padding(.top, 10)
+                .padding(.bottom, 20)
+
+
             }
         }
     }
@@ -107,8 +118,27 @@ struct BaseView: View {
     }
 
 }
+
+private var AppInfo: some View {
+    Button(action: {
+        if let url = URL(string: "https://jigu1.notion.site/61491e311eba4793890149494fc46f09") {
+            UIApplication.shared.open(url)
+        }
+    }) {
+        HStack(spacing: 1) {
+            Image(systemName: "info.circle")
+                .foregroundStyle(Color.gray2)
+                .font(.caption)
+            Text("무계획의 계획 알아보기")
+                .font(.pretendardRegular14)
+                .foregroundStyle(Color.gray2)
+                .underline() // 링크에 밑줄 추가
+        }
+    }
+}
+
             
 
-#Preview {
-    BaseView()
-}
+//#Preview {
+//    BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
+//}

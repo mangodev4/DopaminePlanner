@@ -15,11 +15,14 @@ struct PlanSettingView: View {
     @State private var todoItems: [[String]] = []
     @FocusState private var focusedIndex: Int?
     @State var offset: CGSize = CGSize()
+    @State private var keyboardHeight: CGFloat = 0
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
     @State private var buttonHeight: CGFloat = 0
     
-    let autoCorrectionHeight: CGFloat = 57
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
     
     
     var numberOfDays: Int {
@@ -27,11 +30,13 @@ struct PlanSettingView: View {
     }
     
     
-    init(startDate: Date, endDate: Date) {
+    init(startDate: Date, endDate: Date, modifiedCount: Binding<Int>, unplannedCount: Binding<Int>) {
         self.startDate = startDate
         self.endDate = endDate
         let days = max(1, Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0) + 1
         _todoItems = State(initialValue: Array(repeating: [""], count: days))
+        self._modifiedCount = modifiedCount
+        self._unplannedCount = unplannedCount
     }
     
     
@@ -39,45 +44,9 @@ struct PlanSettingView: View {
         NavigationStack {
             GeometryReader { geometry in
                 VStack {
-                    Spacer()
-                    
-                    HStack {
-                        Button(action: {
-                            if currentSettingPage > 1 {
-                                currentSettingPage -= 1
-                            }
-                        }, label: {
-                            Image(systemName: "arrowtriangle.left.fill")
-                                .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
-                                .font(.title)
-                        })
-                        .disabled(currentSettingPage <= 1)
-                        .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
-                        
-                        Spacer()
-                        
-                        Text("DAY \(currentSettingPage)")
-                            .font(.system(size: 35).bold())
-                            .foregroundStyle(Color.blue1)
-                        
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            if currentSettingPage < numberOfDays {
-                                currentSettingPage += 1
-                            }
-                        }, label: {
-                            Image(systemName: "arrowtriangle.right.fill")
-                                .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
-                                .font(.title)
-                        })
-                        .disabled(currentSettingPage >= numberOfDays)
-                        .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
-                        
-                    }
-                    .padding(.horizontal, 45)
-                    .padding(.vertical, 20)
+                    HeaderButton
+                        .padding(.horizontal, 45)
+                        .padding(.vertical, 20)
                     
                     Spacer()
                     
@@ -86,72 +55,114 @@ struct PlanSettingView: View {
                         .font(.pretendardMedium18)
                         .foregroundStyle(Color.gray2)
                     
-                    
-                    ScrollView {
-                        todoListView
-                    }
-                    .padding(.top, 5)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            focusedIndex = 0
+                    ScrollViewReader { scrollViewProxy in
+                        ScrollView {
+                            todoListView
+                                .onChange(of: focusedIndex) { newValue in
+                                    withAnimation {
+                                        if let newValue = newValue {
+                                            scrollViewProxy.scrollTo(newValue, anchor: .top)
+                                        }
+                                    }
+                                }
+                        }
+//                                .padding(.top, 5)
+//                                .padding(.bottom, keyboardHeight)
+                        .onAppear {
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                                    withAnimation {
+                                        let keyboardHeight = keyboardFrame.height
+                                        self.keyboardHeight = keyboardHeight
+
+                                        if let focusedIndex = focusedIndex {
+                                            scrollViewProxy.scrollTo(focusedIndex, anchor: .bottom)
+                                        }
+                                    }
+                                }
+                            }
+
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                                withAnimation {
+                                    self.keyboardHeight = 0
+                                }
+                            }
+                        }
+                        .onDisappear {
+                            NotificationCenter.default.removeObserver(self)
                         }
                     }
-                    
-                    
-                    
+
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                focusedIndex = 0
+                            }
+                        
+                    }
                     
                     
                     Spacer()
                     
-                        // MARK: 다음 버튼
-                        Button(action: {
+                    // MARK: 다음 버튼
+                    Button(action: {
+                        HapticManager.shared.mediumHaptic()
+                        withAnimation(.bouncy) {
                             cleanUpTodoItems()
                             isNavigatingToPlan = true
-                        }) {
-                            Text("다음")
-                                .frame(width: 300)
-                                .font(.pretendardBold18)
-                                .padding()
-                                .background(Color.blue1)
-                                .foregroundColor(.white)
-                                .cornerRadius(14)
                         }
-                        .frame(width: geometry.size.width)
-                        .padding(.bottom, 10)
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear
-                                    .onAppear {
-                                        self.buttonHeight = proxy.size.height
-                                    }
-                            }
-                        }
-
-                        //                .disabled()
-                        
-                        NavigationLink(
-                            destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems),
-                            isActive: $isNavigatingToPlan,
-                            label: { EmptyView() }
-                        )
+                    }) {
+                        Text("다음")
+                            .frame(width: 300)
+                            .font(.pretendardBold18)
+                            .padding()
+                            .background(isNextButtonEnabled ? Color.blue1 : Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(14)
+                    }
+                    //                        .frame(width: geometry.size.width)
+                    .padding(.bottom, 10)
+                    .zIndex(1)
+                    .disabled(!isNextButtonEnabled)
+                    
+                    NavigationLink(
+                        destination: PlanView(startDate: startDate, endDate: endDate, todoItems: $todoItems, modifiedCount: $modifiedCount,unplannedCount: $unplannedCount),
+                        isActive: $isNavigatingToPlan,
+                        label: { EmptyView() }
+                    )
                 }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    hideKeyboard()
+                }
+                
+                
+
+                
             }
     }
             
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")
-                        .font(.pretendardBold18)
+                        .font(.pretendardMedium16)
                         .foregroundColor(.gray)
                         .underline()
+                        .baselineOffset(2)
+                        .overlay {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 100, height: 50)
+                        }
                 }
             }
         }
         .navigationDestination(isPresented: $isNavigatingToBase) {
-            BaseView()
+            BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -171,11 +182,51 @@ struct PlanSettingView: View {
         }
     }
 
+    private var HeaderButton: some View {
+            HStack {
+                Button(action: {
+                    HapticManager.shared.mediumHaptic()
+                    if currentSettingPage > 1 {
+                        currentSettingPage -= 1
+                    }
+                }, label: {
+                    Image(systemName: "arrowtriangle.left.fill")
+                        .foregroundColor((currentSettingPage <= 1) ? Color.gray : Color.blue1)
+                        .font(.title)
+                })
+                .disabled(currentSettingPage <= 1)
+                .opacity(currentSettingPage <= 1 ? 0.5 : 1.0)
+                
+                Spacer()
+                
+                Text("DAY \(currentSettingPage)")
+                    .font(.system(size: 35).bold())
+                    .foregroundStyle(Color.blue1)
+                
+                
+                Spacer()
+                
+                Button(action: {
+                    HapticManager.shared.mediumHaptic()
+                    if currentSettingPage < numberOfDays {
+                        currentSettingPage += 1
+                    }
+                }, label: {
+                    Image(systemName: "arrowtriangle.right.fill")
+                        .foregroundColor((currentSettingPage >= numberOfDays) ? Color.gray : Color.blue1)
+                        .font(.title)
+                })
+                .disabled(currentSettingPage >= numberOfDays)
+                .opacity(currentSettingPage >= numberOfDays ? 0.5 : 1.0)
+
+        }
+    }
     
     private var todoListView: some View {
         VStack(spacing: 10) {
-            ForEach(Array(todoItems[currentSettingPage - 1].prefix(10).enumerated()), id: \.offset) { index, item in
+            ForEach(Array(todoItems[currentSettingPage - 1].prefix(5).enumerated()), id: \.offset) { index, item in     //  임시로 최대 5개로 수정.
                 todoItemView(for: index)
+                    .id(index)
             }
         }
         .padding()
@@ -188,6 +239,12 @@ struct PlanSettingView: View {
             .padding(.trailing, 15)
     }
     
+    private var isNextButtonEnabled: Bool {
+        let areAllTodoItemsValid = todoItems.allSatisfy { dayItems in
+            dayItems.contains { !$0.isEmpty }
+        }
+        return (startDate != nil && endDate != nil && startDate == endDate) || areAllTodoItemsValid
+    }
     
     
     private func todoItemView(for index: Int) -> some View {
@@ -215,9 +272,10 @@ struct PlanSettingView: View {
                     deleteTodo(at: index)
                 }
             )
-            
+            //  MARK: todoItem Cancel Button
             if focusedIndex != index {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     deleteTodo(at: index)
                 }, label: {
                     Image(systemName: "xmark")
@@ -232,6 +290,7 @@ struct PlanSettingView: View {
         }
     }
     
+
     
     struct TodoItemView: View {
         @Binding var todo: String
@@ -271,6 +330,7 @@ struct PlanSettingView: View {
                             onCommit()
                         }
                         if newValue.count > 15 {
+                            HapticManager.shared.heavyHaptic()
                             todo = String(newValue.prefix(15))
                         }
                         if todo.isEmpty {
@@ -280,13 +340,23 @@ struct PlanSettingView: View {
                         }
                     }
                     .onTapGesture {
+                        HapticManager.shared.mediumHaptic()
                         focusedIndex = index
                     }
             }
+            
         }
     }
 }
 
-#Preview {
-    PlanSettingView(startDate: Date(), endDate: Date())
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
+#endif
+
+//#Preview {
+//    PlanSettingView(startDate: Date(), endDate: Date(),modifiedPlan: Binding<Int>, unplannedCount: Binding<Int>)
+//}

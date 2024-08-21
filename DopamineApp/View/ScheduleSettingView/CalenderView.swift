@@ -42,6 +42,7 @@ struct CalenderView: View {
         VStack {
             HStack {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     changeMonth(by: -1)
                 }) {
                     Image(systemName: "chevron.left")
@@ -55,6 +56,7 @@ struct CalenderView: View {
                     .font(.pretendardSemiBold28)
                     .padding(.bottom)
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     changeMonth(by: 1)
                 }) {
                     Image(systemName: "chevron.right")
@@ -136,8 +138,10 @@ struct CalenderView: View {
                                     }
                                     }
                                 if clicked {
+                                    HapticManager.shared.mediumHaptic()
                                     clickedDates.remove(date)
                                 } else {
+                                    HapticManager.shared.mediumHaptic()
                                     clickedDates.insert(date)
                                 }
                             }
@@ -168,6 +172,8 @@ private func isDateInRange(_ date: Date) -> Bool {
 private struct CellView: View {
   var day: Int
   var clicked: Bool = false
+  var isSunday: Bool = false
+
   
   init(day: Int, clicked: Bool) {
     self.day = day

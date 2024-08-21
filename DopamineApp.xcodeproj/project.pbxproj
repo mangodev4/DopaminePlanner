@@ -28,6 +28,8 @@
 		A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */; };
 		A5ABD6EE2C5D30AA003AF62A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */; };
 		A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABD6F12C60BE89003AF62A /* TravelingView.swift */; };
+		A5FAA06C2C6C4887000DE919 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FAA06B2C6C4887000DE919 /* HapticManager.swift */; };
+		A5FAA06E2C6EDB00000DE919 /* PlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		A5ABD6E52C5C78EB003AF62A /* PlanSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingView.swift; sourceTree = "<group>"; };
 		A5ABD6ED2C5D30AA003AF62A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A5ABD6F12C60BE89003AF62A /* TravelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelingView.swift; sourceTree = "<group>"; };
+		A5FAA06B2C6C4887000DE919 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 		A5ABD6CA2C5244AD003AF62A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A5FAA06D2C6EDB00000DE919 /* PlanViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				A5596D552C63242900491C70 /* KeyboardManager.swift */,
+				A5FAA06B2C6C4887000DE919 /* HapticManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -260,6 +266,7 @@
 			files = (
 				A5ABD6DD2C53952E003AF62A /* FontExtension.swift in Sources */,
 				A5596D582C63654D00491C70 /* DateExtension.swift in Sources */,
+				A5FAA06C2C6C4887000DE919 /* HapticManager.swift in Sources */,
 				A5ABD6D12C5384EA003AF62A /* ColorExtension.swift in Sources */,
 				A5ABD6E62C5C78EC003AF62A /* PlanSettingView.swift in Sources */,
 				A5ABD6DF2C5397BB003AF62A /* ScheduleSettingView.swift in Sources */,
@@ -267,6 +274,7 @@
 				A5ABD6CC2C5244D1003AF62A /* BaseView.swift in Sources */,
 				A5ABD6F22C60BE89003AF62A /* TravelingView.swift in Sources */,
 				A5596D562C63242A00491C70 /* KeyboardManager.swift in Sources */,
+				A5FAA06E2C6EDB00000DE919 /* PlanViewModel.swift in Sources */,
 				A5ABD6E12C54BBD9003AF62A /* PlanView.swift in Sources */,
 				A5ABD6BE2C522F2B003AF62A /* ContentView.swift in Sources */,
 				A5ABD6CE2C5353E7003AF62A /* CalenderView.swift in Sources */,
@@ -331,7 +339,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -388,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -410,11 +418,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DopamineApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "무계획의 계획";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -422,9 +433,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dopaminePlanner.DopamineApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -440,11 +454,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DopamineApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "무계획의 계획";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,9 +469,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dopaminePlanner.DopamineApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

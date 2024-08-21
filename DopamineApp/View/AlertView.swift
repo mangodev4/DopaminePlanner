@@ -34,10 +34,10 @@ extension AlertView {
     private var textBox: some View {
         VStack(spacing: 0) {
             Text("여행을 종료하시겠어요?")
-                .font(.pretendardBold20)
+                .font(.pretendardBold18)
                 .foregroundStyle(.black)
                 .padding(.bottom, 12)
-            Text("지금까지 작성된 계획은 저장되지 않아요.")
+            Text("지금까지 작성된 내용은 저장되지 않아요.")
                 .font(.pretendardMedium16)
                 .foregroundStyle(Color.gray2)
         }
@@ -66,8 +66,8 @@ extension AlertView {
                 }
             )
             .onTapGesture {
+                HapticManager.shared.mediumHaptic()
                 showAlert = false
-                isNavigatingToEnd = true
             }
         
     }
@@ -85,12 +85,14 @@ extension AlertView {
                 }
             )
             .onTapGesture {
+                HapticManager.shared.mediumHaptic()
                 showAlert = false
+                isNavigatingToEnd = true
             }
     }
     
 }
 
 //#Preview {
-//    AlertView(showAlert: )
+//    AlertView(showAlert: showAlert, isNavigatingToEnd: isNavigatingToEnd)
 //}

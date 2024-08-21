@@ -14,7 +14,11 @@ struct ScheduleSettingView: View {
 //    @State private var isNavigating = false
     @State private var isNavigatingToBase = false
     @State private var isNavigatingToPlan = false
-    @State private var isNavigatingToTitle = false
+//    @State private var isNavigatingToTitle = false
+    
+    @Binding var modifiedCount: Int
+    @Binding var unplannedCount: Int
+
 
    
     var body: some View {
@@ -25,7 +29,7 @@ struct ScheduleSettingView: View {
 //                Spacer()
                 
                 Text("여행 기간을 선택해 주세요.")
-                    .font(.pretendardMedium24)
+                    .font(.pretendardMedium20)
                     .padding(.vertical, 60)
                     .frame(width: geometry.size.width)
 
@@ -43,14 +47,16 @@ struct ScheduleSettingView: View {
                 
                 Spacer()
                 Button(action: {
-                    if startDate != nil && endDate != nil {
-                        isNavigatingToPlan = true
+                    HapticManager.shared.mediumHaptic()
+                    withAnimation(.bouncy) {
+                        if startDate != nil && endDate != nil {
+                            isNavigatingToPlan = true
+                        }
                     }
                 }) {
                     Text("다음")
                         .frame(width: 300)
                         .font(.pretendardBold18)
-                    
                         .padding()
                         .background(startDate != nil && endDate != nil ? Color.blue1 : Color.gray)
                         .foregroundColor(.white)
@@ -58,11 +64,11 @@ struct ScheduleSettingView: View {
                 }
                 .disabled(startDate == nil || endDate == nil)
                 .frame(width: geometry.size.width)
-                .padding(.bottom, 30)
+                .padding(.vertical, 30)
 
                 
                 NavigationLink(
-                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date()),
+                    destination: PlanSettingView(startDate: startDate ?? Date(), endDate: endDate ?? Date(), modifiedCount: $modifiedCount,unplannedCount: $unplannedCount),
                     isActive: $isNavigatingToPlan,
                     label: { EmptyView() }
                 )
@@ -71,33 +77,40 @@ struct ScheduleSettingView: View {
         }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    isNavigatingToTitle = true
-                }) {
-                    Text("<뒤로")
-                        .font(.pretendardBold18)
-                        .foregroundColor(.gray)
-                        .underline()
-                }
-            }
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button(action: {
+//                    isNavigatingToTitle = true
+//                }) {
+//                    Text("<뒤로")
+//                        .font(.pretendardBold18)
+//                        .foregroundColor(.gray)
+//                        .underline()
+//                }
+//            }
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    HapticManager.shared.mediumHaptic()
                     isNavigatingToBase = true
                 }) {
                     Text("여행 종료")
-                        .font(.pretendardBold18)
+                        .font(.pretendardMedium16)
                         .foregroundColor(.gray)
                         .underline()
+                        .baselineOffset(2)
+                        .overlay {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 100, height: 50)
+                        }
                 }
             }
         }
-        .navigationDestination(isPresented: $isNavigatingToTitle) {
-                TitleView()
-        }
+//        .navigationDestination(isPresented: $isNavigatingToTitle) {
+//                TitleView()
+//        }
         .navigationDestination(isPresented: $isNavigatingToBase) {
-                BaseView()
+                BaseView(modifiedCount: $modifiedCount,unplannedCount: $unplannedCount)
         }
         .navigationBarBackButtonHidden(true)
         
@@ -115,6 +128,6 @@ struct ScheduleSettingView: View {
 
 
 
-#Preview {
-    ScheduleSettingView()
-}
+//#Preview {
+//    ScheduleSettingView()
+//}
